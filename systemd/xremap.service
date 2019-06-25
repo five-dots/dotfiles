@@ -1,0 +1,13 @@
+[Unit]
+Description=xremap
+
+[Service]
+KillMode=process
+ExecStart=/home/shun/bin/xremap /home/shun/.xremap.rb
+ExecStop=/usr/bin/killall xremap
+Restart=always
+Environment=DISPLAY=:0.0
+
+[Install]
+WantedBy=graphical.target
+
