@@ -13,10 +13,7 @@
 }
 
 .getGlobalIp <- function() {
-  ip <- system("curl inet-ip.info",
-               intern = TRUE,
-               ignore.stderr = TRUE)
-  return(ip)
+  system("curl inet-ip.info", intern = TRUE, ignore.stderr = TRUE)
 }
 
 .First <- function() {
@@ -24,8 +21,8 @@
   .switchLibPath()
   # Set default options
   options(
-    # repos = "http://cran.rstudio.com/",
-    stringsAsFactors = FALSE,
+    ## repos = "http://cran.rstudio.com/",
+    ## stringsAsFactors = FALSE,
     max.print = 1000,
     devtools.name = "Shun Asai",
     devtools.desc.author = 'c(person(given = "Shun", family = "Asai",
@@ -37,57 +34,55 @@
     blogdown.author	= "Shun Asai",
 	  blogdown.ext = ".Rmd"
   )
-  # Load libraries
-  suppressMessages(library(pacman))
-  p_load(stats) # Must be loaded before dplyr
-  p_load(
+  ## Load libraries
+  ## suppressMessages(library(pacman))
+  ## p_load(stats) # Must be loaded before dplyr
+  ## p_load(
     ## Backtest,
     ## MarketData,
     ## Utils,
-    devtools,
-    fs,
-    glue,
-    hms,
-    lubridate,
-    magrittr,
-    rlang,
-    tidyverse # ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, forcat
-  )
+    ## devtools,
+    ## fs,
+    ## glue,
+    ## hms,
+    ## lubridate,
+    ## magrittr,
+    ## rlang,
+    ## tidyverse # ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, forcat
+  ## )
 }
 
-# Shared vars
+## Shared vars
 .nodename <- Sys.info()["nodename"]
 .home <- Sys.getenv()["HOME"]
 
-# Load security info
+## Load security info
 source(paste0(.home, "/.secret.R"))
 
-# Store settings
+## Store settings
 settings <- as.environment(list())
-settings$quandl.key <- .quandl_key
+settings$quandl_key <- .quandl_key
+settings$polygon_key <- .polygon_key
 
-### MSSQL DB settings ----------------------------------------------------------
-
-# From home
+### MSSQL DB settings
+## From home
 if (.nodename == "DESK1") {
   .mssql_server <- paste0("127.0.0.1", ";")
-
-# From GCP instance
+## From GCP instance
 } else if (.nodename == "remoter01") {
   .mssql_server <- paste0(.home_gip, ";")
-
-# From notebook
+## From notebook
 } else {
-  # From home
+  ## From home
   if (.getGlobalIp() == .home_gip) {
     .mssql_server <- paste0(.desk1_lip, ";")
-  # From outside
+  ## From outside
   } else {
     .mssql_server <- paste0(.home_gip, ";")
   }
 }
 
-# Switch driver based on OS
+## Switch driver based on OS
 if (startsWith(.home, "/")) {
   .mssql_driver <- "ODBC Driver 17 for SQL Server;"
 } else {
@@ -99,13 +94,13 @@ if (startsWith(.home, "/")) {
 
 settings$strategy.db <- paste0(.masql_base, "strategy;")
 
-### SQLite DB settings ---------------------------------------------------------
+### SQLite DB settings
 settings$sharadar.sqli   <- paste0(.home, "/Dropbox/sqlite/sharadar.sqlite3")
 settings$quotemedia.sqli <- paste0(.home, "/Dropbox/sqlite/quotemedia.sqlite3")
 settings$strategy.sqli   <- paste0(.home, "/Dropbox/sqlite/strategy.sqlite3")
 settings$trading.sqli    <- paste0(.home, "/Dropbox/sqlite/trading.sqlite3")
 
-# Plus DB
+## Plus DB
 .plus_date <- "2019-01-11"
 settings$sharadar_plus.sqli <- paste0(.home,
                                       "/Dropbox/sqlite/sharadar_plus_",
@@ -115,14 +110,14 @@ settings$sharadar_plus.sqli <- paste0(.home,
 settings$sharadar_plus_20181214.sqli <- paste0(
   .home, "/Dropbox/sqlite/sharadar_plus_2018-12-14.sqlite3")
 
-### IB setings -----------------------------------------------------------------
+### IB setings
 settings$ib_account_pers  <- .ib_account_pers
 settings$ib_account_corp  <- .ib_account_corp
 settings$ib_account_demo  <- .ib_account_demo
 settings$ib_fq_token_pers <- .fq_token_pers
 settings$ib_fq_token_corp <- .fq_token_corp
 
-### Google setings -------------------------------------------------------------
+### Google setings
 settings$gmail_address <- .gmail_address
 settings$gmail_app_pwd <- .gmail_app_pwd
 

@@ -34,3 +34,6 @@ ln -sf $REPO/secret.R ~/.secret.R
 
 # systemd
 ln -sf $REPO/systemd/xremap.service ~/.config/systemd/user/xremap.service
+
+# git
+ln -sf $REPO/gitconfig ~/.gitconfig

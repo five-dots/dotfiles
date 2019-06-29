@@ -54,7 +54,7 @@ This function should only modify configuration layer settings."
      ;; html
      ;; ivy
      japanese
-     ;; javascript
+     javascript
      markdown
      multiple-cursors
      (org :variables
@@ -70,7 +70,7 @@ This function should only modify configuration layer settings."
      syntax-checking
      treemacs
      ;; vimscript
-     ;; windows-scripts
+     windows-scripts
      yaml
      ;; spell-checking
      ;; version-control
@@ -85,7 +85,8 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
    '(
-     ;; ess-view
+     dotnet
+     ess-view
      eval-in-repl
      helm-posframe
      highlight-indent-guides

@@ -21,6 +21,8 @@
   (setq ess-use-R-completion nil)
   (setq ess-use-auto-complete nil)
   (setq ess-use-ido nil)
+  ;; iESS use deicated window
+  (setq display-buffer-alist '(("*R" nil (dedicated . t))))
   ;; ess-R-object-popup
   (add-to-list 'load-path "~/Dropbox/repos/github/myuhe/ess-R-object-popup.el")
   (use-package ess-R-object-popup)

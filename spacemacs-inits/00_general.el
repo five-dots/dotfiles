@@ -169,3 +169,10 @@
   (use-package eval-in-repl-python
     :init
     (bind-keys :map python-mode-map ("C-<return>" . eir-eval-in-python))))
+
+;;------------------------------------------------------------------------------
+;; dotnet
+;;------------------------------------------------------------------------------
+(use-package dotnet
+  :init
+  (add-hook 'csharp-mode-hook 'dotnet-mode))
