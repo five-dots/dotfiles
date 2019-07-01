@@ -1,0 +1,16 @@
+{
+    "editor.fontFamily": "'Consolas NF'",
+    "workbench.colorTheme": "Dracula",
+    "window.zoomLevel": 0,
+    "vim.useSystemClipboard": true,
+    "vim.visualstar": true,
+    "vim.leader": "<space>",
+    "vim.easymotion": true,
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["j"],
+            "after": ["g", "j"]
+        },
+    ],
+    "workbench.sideBar.location": "right",
+}
