@@ -3,9 +3,11 @@
 ;; https://qiita.com/Duct-and-rice/items/ad77ab8b41b0cd83f1ec (文芸用エディタ)
 ;;------------------------------------------------------------------------------
 (set-fontset-font nil 'japanese-jisx0213.2004-1
+                  ;; (font-spec :family "Yu Mincho")
                   (font-spec :family "MeiryoKe_Console"))
 
 (add-to-list 'face-font-rescale-alist '(".*Meiryo*." . 1.1))
+(add-to-list 'face-font-rescale-alist '(".*Yu Mincho*." . 1.1))
 
 ;; Set proportional font
 ;; (set-face-attribute 'variable-pitch nil
