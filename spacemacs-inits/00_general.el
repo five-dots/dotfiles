@@ -18,7 +18,7 @@
 (setq read-buffer-completion-ignore-case t)
 
 ;; Frame size
-(set-frame-size (selected-frame) 130 60)
+(set-frame-size (selected-frame) 130 50)
 
 ;; Trancate line
 ;; (setq-default truncate-lines t)
