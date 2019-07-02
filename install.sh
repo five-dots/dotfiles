@@ -37,3 +37,9 @@ ln -sf $REPO/systemd/xremap.service ~/.config/systemd/user/xremap.service
 
 # git
 ln -sf $REPO/gitconfig ~/.gitconfig
+
+# vscode
+ln -sf $REPO/vscode/settings.json ~/.config/Code/User/settings.json
+
+# Fontconfig
+ln -sf $REPO/fonts.conf ~/.config/fontconfig/fonts.conf
