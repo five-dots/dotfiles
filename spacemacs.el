@@ -62,6 +62,7 @@ This function should only modify configuration layer settings."
           ;; org-enable-org-journal-support t
           org-enable-hugo-support t)
      python
+     ruby
      ;; rust
      (shell :variables
             shell-default-height 30
@@ -242,8 +243,7 @@ It should only modify the values of Spacemacs settings."
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    ;; https://www.reddit.com/r/spacemacs/comments/8dm398/set_font_size_depending_on_systemname/
    dotspacemacs-default-font `("Consolas NF"
-                               ;; :size ,(if (string-equal (system-name) "desk1") 15 13)
-                               :size 13
+                               :size ,(if (string-equal (system-name) "desk1") 15 13)
                                :weight normal
                                :width normal)
 
