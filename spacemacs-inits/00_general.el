@@ -56,7 +56,8 @@
 ;;------------------------------------------------------------------------------
 (use-package treemacs
   :init
-  (setq treemacs-position 'right))
+  (setq treemacs-position 'right)
+  (setq treemacs-width 40))
 
 ;;------------------------------------------------------------------------------
 ;; highlight-indent-guides
