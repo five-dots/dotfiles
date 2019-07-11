@@ -1,6 +1,6 @@
 {
     "editor.fontFamily": "'Consolas NF'",
-    "editor.fontSize": 12,
+    "editor.fontSize": 11,
     "workbench.colorTheme": "Dracula",
     "workbench.sideBar.location": "right",
     "window.zoomLevel": 1,
@@ -1144,4 +1144,5 @@
             ]
         }
     ],
+    "explorer.confirmDelete": false,
 }
