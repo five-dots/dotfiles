@@ -21,7 +21,9 @@ ln -sf $REPO/xkeysnail.py ~/.xkeysnail.py
 ln -sf $REPO/xremap.rb ~/.xremap.rb
 
 # emacs
-# ln -sf ~/Dropbox/repos/github/syl20bnr/spacemacs ~/.emacs.d
+ln -sf ~/Dropbox/repos/github/syl20bnr/spacemacs ~/.spacemacs.d
+ln -sf $REPO/emacs.d ~/.emacs.d
+ln -sf $REPO/emacs.el ~/.emacs
 ln -sf $REPO/spacemacs.el ~/.spacemacs
 
 # vim
