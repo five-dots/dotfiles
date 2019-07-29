@@ -40,42 +40,29 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      (auto-completion :variables
-                     ;; auto-completion-private-snippets-directory nil
-                     ;; auto-completion-enable-help-tooltip 'manual ; M-h
-                     auto-completion-enable-snippets-in-popup t
-                     auto-completion-enable-sort-by-usage t
-                     auto-completion-tab-key-behavior 'complete)
-     ;; better-defaults
+                      auto-completion-enable-help-tooltip 'manual ; M-h
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-tab-key-behavior 'complete)
      csharp
      csv
      emacs-lisp
      ess
      git
-     ;; html
-     ;; ivy
+     helm
+     (ivy :variables ivy-enable-advanced-buffer-information t)
      japanese
-     javascript
      markdown
      multiple-cursors
      (org :variables
-          ;; org-enable-github-support t
-          ;; org-enable-org-journal-support t
-          org-enable-hugo-support t)
-     python
-     ruby
-     rust
+          org-enable-hugo-support t
+          org-enable-github-support t)
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     shell-scripts
-     systemd
      syntax-checking
      treemacs
-     ;; vimscript
-     windows-scripts
-     yaml
-     ;; spell-checking
-     ;; version-control
+     version-control
      )
 
    ;; List of additional packages that will be installed without being
@@ -87,19 +74,20 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
    '(
+     company-box
      dotnet
      ess-view
      eval-in-repl
-     helm-posframe
+     evil-vimish-fold
      highlight-indent-guides
      init-loader
-     ;; ivy-posframe
+     ivy-posframe
      lispxmp
+     org-variable-pitch
      mozc
-     ;; mozc-im
-     ;; mozc-popup
-     ;; org-babel-eval-in-repl
-     ;; which-key-posframe
+     mozc-im
+     mozc-popup
+     recentf-ext
      )
 
    ;; A list of packages that cannot be updated.
@@ -131,10 +119,10 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-enable-emacs-pdumper nil
 
-   ;; File path pointing to emacs 27.1 executable compiled with support
-   ;; for the portable dumper (this is currently the branch pdumper).
-   ;; (default "emacs-27.0.50")
-   dotspacemacs-emacs-pdumper-executable-file "emacs-27.0.50"
+   ;; Name of executable file pointing to emacs 27+. This executable must be
+   ;; in your PATH.
+   ;; (default "emacs")
+   dotspacemacs-emacs-pdumper-executable-file "emacs"
 
    ;; Name of the Spacemacs dump file. This is the file will be created by the
    ;; portable dumper in the cache directory under dumps sub-directory.
@@ -213,6 +201,11 @@ It should only modify the values of Spacemacs settings."
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
 
+   ;; Default major mode for a new empty buffer. Possible values are mode
+   ;; names such as `text-mode'; and `nil' to use Fundamental mode.
+   ;; (default `text-mode')
+   dotspacemacs-new-empty-buffer-major-mode 'text-mode
+
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'lisp-interaction-mode
 
@@ -237,14 +230,20 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-mode-line-theme '(doom :separator wave :separator-scale 1.5)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
-   ;; (default t)a
+   ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
 
-   ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
-   ;; quickly tweak the mode-line size to make separators look not too crappy.
-   ;; https://www.reddit.com/r/spacemacs/comments/8dm398/set_font_size_depending_on_systemname/
+   ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font `("Consolas NF"
-                               :size ,(if (string-equal (system-name) "desk1") 13 13)
+                               :size ,(let ((name (system-name))
+                                            (num-disp (length (display-monitor-attributes-list)))
+                                            (default-size 9.8))
+                                        (cond
+                                         ((equal name "desk1") default-size)
+                                         ;; High DPI Display
+                                         ((and (equal name "x1") (= num-disp 1)) 14.3)
+                                         ((and (equal name "x1") (> num-disp 1)) default-size)
+                                         (t default-size)))
                                :weight normal
                                :width normal)
 
@@ -379,10 +378,14 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-smooth-scrolling t
 
    ;; Control line numbers activation.
-   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
-   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; If set to `t', `relative' or `visual' then line numbers are enabled in all
+   ;; `prog-mode' and `text-mode' derivatives. If set to `relative', line
+   ;; numbers are relative. If set to `visual', line numbers are also relative,
+   ;; but lines are only visual lines are counted. For example, folded lines
+   ;; will not be counted and wrapped lines are counted as multiple lines.
    ;; This variable can also be set to a property list for finer control:
    ;; '(:relative nil
+   ;;   :visual nil
    ;;   :disabled-for-modes dired-mode
    ;;                       doc-view-mode
    ;;                       markdown-mode
@@ -390,12 +393,13 @@ It should only modify the values of Spacemacs settings."
    ;;                       pdf-view-mode
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
+   ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers 'relative
+   dotspacemacs-line-numbers nil
 
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
-   dotspacemacs-folding-method 'origami
+   dotspacemacs-folding-method 'evil
 
    ;; If non-nil `smartparens-strict-mode' will be enabled in programming modes.
    ;; (default nil)
@@ -413,7 +417,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server nil
+   dotspacemacs-enable-server t
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
@@ -500,8 +504,32 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-  ;; init-loader
-  (init-loader-load "~/Dropbox/repos/github/five-dots/dotfiles/spacemacs-inits"))
+  ;; Load org config file
+  (org-babel-load-file
+   (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/spacemacs_init.org"))
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yasnippet-snippets xterm-color ws-butler writeroom-mode winum which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons smex smeargle shell-pop restart-emacs request recentf-ext rainbow-delimiters popwin persp-mode pcre2el password-generator paradox pangu-spacing ox-hugo overseer orgit org-variable-pitch org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file omnisharp nameless multi-term mozc-popup mozc-im move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum lispxmp link-hint japanese-holidays ivy-yasnippet ivy-xref ivy-rich ivy-purpose ivy-posframe ivy-hydra init-loader indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation highlight-indent-guides helm-make google-translate golden-ratio gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-vimish-fold evil-unimpaired evil-tutor-ja evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eval-in-repl ess-view ess-R-data-view eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump dotnet dotenv-mode doom-themes doom-modeline diminish diff-hl devdocs define-word ddskk csv-mode counsel-projectile company-statistics company-quickhelp company-box column-enforce-mode clean-aindent-mode centered-cursor-mode browse-at-remote avy-migemo auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ivy-posframe ((t (:background "#282a36"))))
+ '(ivy-posframe-border ((t (:background "#6272a4"))))
+ '(ivy-posframe-cursor ((t (:background "#61bfff")))))
+)

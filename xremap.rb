@@ -5,5 +5,6 @@ end
 # Check WM_CLASS by wmctrl -x -l
 remap 'M-b', to: activate('google-chrome.Google-chrome', '/opt/google/chrome/chrome')
 remap 'M-e', to: activate('emacs.Emacs', '/usr/bin/emacs')
+remap 'M-s', to: activate('spacemacs.Emacs', '/usr/bin/spacemacs')
 remap 'M-t', to: activate('gnome-terminal-server.Gnome-terminal', '/usr/bin/gnome-terminal')
 remap 'M-f', to: activate('nautilus.Nautilus', '/usr/bin/nautilus')
