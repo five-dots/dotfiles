@@ -21,10 +21,10 @@ ln -sf $REPO/xkeysnail.py ~/.xkeysnail.py
 ln -sf $REPO/xremap.rb ~/.xremap.rb
 
 # emacs
-ln -sf ~/Dropbox/repos/github/syl20bnr/spacemacs ~/.spacemacs.d
-ln -sf $REPO/emacs.d ~/.emacs.d
+# ln -sf ~/Dropbox/repos/github/syl20bnr/spacemacs ~/.spacemacs.d
+# ln -sf $REPO/emacs.d ~/.emacs.d
 ln -sf $REPO/emacs.el ~/.emacs
-ln -sf $REPO/spacemacs.el ~/.spacemacs
+ln -sf $REPO/spacemacs.d/spacemacs.el ~/.spacemacs
 
 # vim
 # ln -sf $REPO/vimrc.vim ~/.vimrc
@@ -45,3 +45,7 @@ ln -sf $REPO/vscode/settings.json ~/.config/Code/User/settings.json
 
 # Fontconfig
 ln -sf $REPO/fonts.conf ~/.config/fontconfig/fonts.conf
+
+# Gnome Apps
+ln -sf $REPO/gnome-apps/spacemacs.desktop ~/.local/share/applications/spacemacs.desktop
+ln -sf $REPO/gnome-apps/spacemacsclient.desktop ~/.local/share/applications/spacemacsclient.desktop
