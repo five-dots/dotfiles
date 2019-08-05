@@ -1,3 +1,4 @@
 secret.R
 emacs.d/
-spacemacs_init.el
+spacemacs.d/spacemacs.el
+spacemacs.d/my-secret-vars.el
