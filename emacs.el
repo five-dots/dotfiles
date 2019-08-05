@@ -13,23 +13,15 @@
 ;;; Check the current executable file and assign the appropriate user directory.
 ;; The unless is to avoid executing this script twice.
 (unless (boundp 'dot-emacs-loaded)
-  (let ((emacs-exec-path (expand-file-name
-                          ;; The program name that was used to run Emacs.
-                          invocation-name
-                          ;; The directory in which the Emacs executable was found, to run it.
-                          invocation-directory)))
-    ;;
-    ;; Check if executable path contains spacemacs
-    ;; Duplicate Emacs.app and rename it to Spacemacs.app
-    (when (string-match ".*spacemacs*" (downcase emacs-exec-path))
-      ;; If so, change user-emacs-directory to spacemacs one
-      ;; Directory beneath which additional per-user Emacs-specific files are placed.
-      ;;
-      ;; Clone spacemacs configurations into ~/.spacemacs.d.
-      ;; An empty ~/.spacemacs file is also necessary.
-      ;; As of 2016-12-25, only the develop branch is compatible.
+  (let ((emacs-exec-path (expand-file-name invocation-name invocation-directory)))
+    (cond
+     ;; Check if executable path contains spacemacs
+     ((string-match ".*spacemacs*" (downcase emacs-exec-path))
       (setq user-emacs-directory "~/.spacemacs.d/"))
-    ;;
+     ;; Check if executable path contains doom-emacs
+     ((string-match ".*doom-emacs*" (downcase emacs-exec-path))
+      (setq user-emacs-directory "~/.doom-emacs.d/"))
+     )
     ;; Load init.el under user directory.
     (load (expand-file-name "init.el" user-emacs-directory))
     ;; Create a variable to indicate this script has been run.

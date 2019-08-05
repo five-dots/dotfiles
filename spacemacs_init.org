@@ -4,8 +4,9 @@
 ** Custom variables/functions
 
 #+begin_src emacs-lisp
-(load "~/.spacemacs.d/private/elisp/my-vars.el")
-(load "~/.spacemacs.d/private/elisp/my-funs.el")
+(load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/spacemacs.d/my-vars.el"))
+(load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/spacemacs.d/my-secret-vars.el"))
+(load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/spacemacs.d/my-funs.el"))
 #+end_src
 
 ** use-package
@@ -259,6 +260,18 @@
   (setq highlight-indent-guides-method 'character))
 #+end_src
 
+** window-purpose
+
+#+begin_src emacs-lisp
+(use-package window-purpose
+  :config
+  (add-to-list 'purpose-user-mode-purposes '(ess-r-mode . r-dev-code))
+  (add-to-list 'purpose-user-mode-purposes '(inferior-ess-r-mode . r-dev-repl))
+  ;; (add-to-list 'purpose-user-name-purposes '(<name> . <purpose>))
+  ;; (add-to-list 'purpose-user-regexp-purposes '(<pattern> . <purpose>))
+  (purpose-compile-user-configuration))
+#+end_src
+
 * Auto complete
 ** auto-complete
 
@@ -340,13 +353,24 @@
 
   ;; Per command settings
   (setq ivy-posframe-display-functions-alist
-		'((swiper . nil)
-		  (t      . ivy-posframe-display-at-frame-center)))
+		'(
+          ;; (counsel-M-x               . ivy-posframe-display-at-frame-center)
+          ;; (counsel-apropos           . ivy-posframe-display-at-frame-center)
+          ;; (counsel-describe-function . ivy-posframe-display-at-frame-center)
+          ;; (counsel-describe-variable . ivy-posframe-display-at-frame-center)
+          ;; (counsel-linux-app         . ivy-posframe-display-at-frame-center)
+          ;; (counsel-recentf           . ivy-posframe-display-at-frame-center)
+          ;; (counsel-find-file         . ivy-posframe-display-at-frame-center)
+          ;; (package-install           . ivy-posframe-display-at-frame-center)
+          ;; (ivy-switch-buffer         . ivy-posframe-display-at-frame-center)
+          (swiper . nil)
+		  (t . ivy-posframe-display-at-frame-center)
+          ))
 
   ;; Per command height settings
   (setq ivy-posframe-height-alist
-				'((swiper . 20)
-				  (t      . 10)))
+        '((swiper . 20)
+          (t      . 10)))
 
   (ivy-posframe-mode)
   :custom-face
@@ -540,7 +564,22 @@ Set the fonts to format correctly for specific modes. Default is set for fixed
 #+begin_src emacs-lisp
 (use-package paradox
   :config
-  (setq paradox-github-token "144882f652e8d571fa68755827e29defe71d7b21"))
+  (setq paradox-github-token my-vars/paradox-github-token))
+#+end_src
+
+** zeal
+
+#+begin_src emacs-lisp
+(use-package zeal-at-point
+  :config
+  (setq dash-docs-docsets-path (expand-file-name "~/.local/share/Zeal/Zeal/docsets"))
+  (add-to-list 'zeal-at-point-mode-alist '(ess-r-mode . "r")))
+
+(use-package counsel-dash
+  ;; :config
+  ;; (setq counsel-dash-docsets-path (expand-file-name "~/.local/share/Zeal/Zeal/docsets"))
+  ;; (add-hook 'ruby-mode-hook (lambda () (setq-local counsel-dash-docsets '("Ruby"))))
+  )
 #+end_src
 
 * Japanese
