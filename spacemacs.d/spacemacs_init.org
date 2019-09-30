@@ -1,6 +1,6 @@
 #+STARTUP: overview indent
 
-* System
+* System [0/2]
 ** Custom variables/functions
 
 #+begin_src emacs-lisp
@@ -9,7 +9,7 @@
 (load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/spacemacs.d/my-funs.el"))
 #+end_src
 
-** Backup file
+** TODO +Backup file+
 
 - http://yohshiy.blog.fc2.com/blog-entry-319.html
 
@@ -24,16 +24,16 @@
 ;;         (cons ".*" (expand-file-name "~/.emacs.d/backup")))
 #+end_src
 
-** recentf
+** TODO +recentf+
 
 #+begin_src emacs-lisp
-(use-package recentf-ext
-  :config
-  (setq recentf-max-saved-items 2000)
-  (setq recentf-exclude '(".recentf"))
-  (setq recentf-auto-cleanup 10)
-  (run-with-idle-timer 30 t 'recentf-save-list)
-  (recentf-mode 1))
+;; (use-package recentf-ext
+;;   :config
+;;   (setq recentf-max-saved-items 2000)
+;;   (setq recentf-exclude '(".recentf"))
+;;   (setq recentf-auto-cleanup 10)
+;;   (run-with-idle-timer 30 t 'recentf-save-list)
+;;   (recentf-mode 1))
 #+end_src
 
 ** Tab width
@@ -48,10 +48,10 @@
 (setq vc-follow-symlinks t)
 #+end_src
 
-* UI
+* UI [0/2]
 ** Theme
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
 (use-package doom-themes
   :config
   ;; (doom-themes-treemacs-config)
@@ -67,11 +67,12 @@
 ;;   (spaceline-toggle-minor-modes-off)
 ;;   (spaceline-toggle-version-control-on)
 ;;   (spaceline-toggle-nyan-cat-on))
+#+end_src
 
+#+begin_src emacs-lisp :results silent
 (use-package doom-modeline
   :config
-  (setq doom-modeline-buffer-file-name-style 'file-name)
-  )
+  (setq doom-modeline-buffer-file-name-style 'file-name))
 
 (use-package hide-mode-line
   :hook
@@ -80,14 +81,22 @@
 
 ** Frame size
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
 (when (display-graphic-p)
   (set-frame-size (selected-frame) 140 50))
 #+end_src
 
-** all-the-icons
+** Fringe
+
+- ブレイクポイント設定用の幅
 
 #+begin_src emacs-lisp
+;; (setq left-fringe-width 15)
+#+end_src
+
+** all-the-icons
+
+#+begin_src emacs-lisp :results silent
 (use-package all-the-icons
   :config
   (add-to-list
@@ -117,6 +126,7 @@
 
 *** Usage
 **** Workflow
+
 1. カスタムの fontset を作成する
    ~create-fontset-from-ascii-font~
 2. fontset の特定の character-set (文字コード)に対して、font-spec でフォントを指定
@@ -188,46 +198,49 @@
 
 *** Settings
 
-#+begin_src emacs-lisp
+- variable pitch の下記設定を実行すると、クラッシュする・modeline がずれる
+
+#+begin_src emacs-lisp :results silent
 ;;; fontset-default
 (set-fontset-font t 'japanese-jisx0213.2004-1 (font-spec :family my-vars/fixed-jp-sans-font))
 (set-fontset-font t 'katakana-jisx0201 (font-spec :family my-vars/fixed-jp-sans-font))
 (my-funs/set-latin-greek-fonts t my-vars/fixed-latin-sans-font)
 
-;; fontset of current frame
+;;; fontset of current frame
 (set-fontset-font nil 'japanese-jisx0213.2004-1 (font-spec :family my-vars/fixed-jp-sans-font))
 (set-fontset-font nil 'katakana-jisx0201 (font-spec :family my-vars/fixed-latin-sans-font))
 (my-funs/set-latin-greek-fonts nil my-vars/fixed-latin-sans-font)
 
 ;;; variable-pitch face
-(create-fontset-from-ascii-font my-vars/variable-latin-sans-font nil "variable")
-(set-fontset-font "fontset-variable" 'japanese-jisx0213.2004-1
-                  (font-spec :family my-vars/fixed-jp-sans-font))
-(set-fontset-font "fontset-variable" 'katakana-jisx0201
-                  (font-spec :family my-vars/fixed-jp-sans-font))
-(my-funs/set-latin-greek-fonts "fontset-variable" my-vars/variable-latin-sans-font)
+;; (create-fontset-from-ascii-font my-vars/variable-latin-sans-font nil "variable")
+;; (set-fontset-font "fontset-variable" 'japanese-jisx0213.2004-1
+;;                   (font-spec :family my-vars/fixed-jp-sans-font))
+;; (set-fontset-font "fontset-variable" 'katakana-jisx0201
+;;                   (font-spec :family my-vars/fixed-jp-sans-font))
+;; (my-funs/set-latin-greek-fonts "fontset-variable" my-vars/variable-latin-sans-font)
 
-(set-face-attribute 'variable-pitch nil
-            :fontset "fontset-variable"
-            :font "fontset-variable"
-            :weight 'normal
-            :slant 'normal
-            :inherit 'default)
+;; (set-face-attribute 'variable-pitch nil
+;;             :fontset "fontset-variable"
+;;             :font "fontset-variable"
+;;             :weight 'normal
+;;             :slant 'normal
+;;             :inherit 'default)
 
 ;;; Adjust scale
 (add-to-list 'face-font-rescale-alist '(".*Meiryo*." . 1.09))
 (add-to-list 'face-font-rescale-alist '(".*Yu Mincho*." . 1.09))
 #+end_src
 
-#+RESULTS:
-: ((.*Yu Mincho*. . 1.09) (.*Meiryo*. . 1.09) (-cdac$ . 1.3))
-
 ** treemacs
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
 (use-package treemacs
   :config
-  (setq treemacs-position 'right))
+  (treemacs-resize-icons 18)
+  (setq treemacs-position 'right)
+  (setq treemacs-lock-width t)
+  (treemacs-follow-mode -1)
+  (treemacs-git-mode 'simple))
 #+end_src
 
 ** highlight-indent-guides
@@ -243,15 +256,6 @@
   (setq highlight-indent-guides-method 'character))
 #+end_src
 
-** window-purpose
-
-#+begin_src emacs-lisp
-(use-package window-purpose
-  :config
-  (add-to-list 'purpose-user-mode-purposes '(inferior-ess-r-mode . iess))
-  (purpose-compile-user-configuration))
-#+end_src
-
 ** beacon
 
 #+begin_src emacs-lisp
@@ -262,7 +266,17 @@
   (beacon-mode 1))
 #+end_src
 
-** +tabbar+
+** TODO +window-purpose+
+
+#+begin_src emacs-lisp
+(use-package window-purpose
+  :disabled t
+  :config
+  (add-to-list 'purpose-user-mode-purposes '(inferior-ess-r-mode . iess))
+  (purpose-compile-user-configuration))
+#+end_src
+
+** TODO +tabbar+
 
 - 【Emacs】tabbarでタブエディター化
   https://www.yokoweb.net/2017/03/17/emacs-tabbar/
@@ -314,20 +328,155 @@
 ** +iflipb+
 
 #+begin_src emacs-lisp
-(use-package iflipb
-  :disabled t
-  :config
-  (setq iflipb-wrap-around t))
+;; (use-package iflipb
+;;   :disabled t
+;;   :config
+;;   (setq iflipb-wrap-around t))
 #+end_src
 
-* Auto complete
+* Auto complete [0/2]
 ** auto-complete
 
 #+begin_src emacs-lisp
 (setq completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
-(setq company-idle-delay 0)
+#+end_src
+
+** company
+
+- emacsの補完用パッケージcompany-mode
+  https://qiita.com/sune2/items/b73037f9e85962f5afb7
+
+_spacemacs のデフォルト値_
+- *company-backends* 候補リストの取得
+  - 同時に使われるのはひとつのみ
+  - 前頭から順に試して、該当するものを使う
+  - backends https://github.com/company-mode/company-mode/wiki/Third-Party-Packages
+  - capf = complete-at-point-functions (major-mode 毎に切り替える)
+  - dabbrev = 動的略語
+
+  ((company-capf . #1=(:with company-yasnippet))
+   (company-semantic
+    company-dabbrev-code
+    company-gtags
+    company-etags
+    company-keywords . #1#)
+   (company-files . #1#)
+   (company-dabbrev . #1#))
+ 
+- *company-transformers* 候補リストの変形・ソートなど
+  (spacemacs//company-transformer-cancel 
+   company-sort-by-occurrence 
+   company-sort-by-statistics)
+
+- *company-frontends*
+  (company-pseudo-tooltip-unless-just-one-frontend
+   company-preview-if-just-one-frontend)
+   
+#+begin_src emacs-lisp
+(use-package company
+  ;; :hook
+  ;; ((c++-mode
+  ;;   python-mode) .
+  ;;   (lambda () (set (make-local-variable 'company-backends)
+  ;;                   '((company-yasnippet
+  ;;                      company-lsp
+  ;;                      ;; company-dabbrev-code
+  ;;                      company-files)))))
+  :config
+  (setq company-idle-delay 0)
+  (setq company-echo-delay 0)
+  (setq company-minimum-prefix-length 1))
+#+end_src
+
+** +company-posframe+
+
+#+begin_src emacs-lisp
+(use-package company-posframe
+  :disabled t
+  :after (company)
+  :hook (company-mode . company-posframe-mode))
+#+end_src
+
+** +company-box+
+
+#+begin_src emacs-lisp
+(use-package company-box
+  :disabled t
+  :diminish
+  :after (company)
+  :hook (company-mode . company-box-mode)
+  :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
+  :config
+  (setq company-box-backends-colors nil)
+  (setq company-box-show-single-candidate t)
+  (setq company-box-max-candidates 50)
+  (defun company-box-icons--elisp (candidate)
+    (when (derived-mode-p 'emacs-lisp-mode)
+      (let ((sym (intern candidate)))
+        (cond ((fboundp sym) 'Function)
+              ((featurep sym) 'Module)
+              ((facep sym) 'Color)
+              ((boundp sym) 'Variable)
+              ((symbolp sym) 'Text)
+              (t . nil)))))
+  (with-eval-after-load 'all-the-icons
+    (declare-function all-the-icons-faicon 'all-the-icons)
+    (declare-function all-the-icons-fileicon 'all-the-icons)
+    (declare-function all-the-icons-material 'all-the-icons)
+    (declare-function all-the-icons-octicon 'all-the-icons)
+    (setq company-box-icons-all-the-icons
+          `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.7 :v-adjust -0.15))
+            (Text . ,(all-the-icons-faicon "book" :height 0.68 :v-adjust -0.15))
+            (Method . ,(all-the-icons-faicon "cube" :height 0.7 :v-adjust -0.05 :face 'font-lock-constant-face))
+            (Function . ,(all-the-icons-faicon "cube" :height 0.7 :v-adjust -0.05 :face 'font-lock-constant-face))
+            (Constructor . ,(all-the-icons-faicon "cube" :height 0.7 :v-adjust -0.05 :face 'font-lock-constant-face))
+            (Field . ,(all-the-icons-faicon "tags" :height 0.65 :v-adjust -0.15 :face 'font-lock-warning-face))
+            (Variable . ,(all-the-icons-faicon "tag" :height 0.7 :v-adjust -0.05 :face 'font-lock-warning-face))
+            (Class . ,(all-the-icons-faicon "clone" :height 0.65 :v-adjust 0.01 :face 'font-lock-constant-face))
+            (Interface . ,(all-the-icons-faicon "clone" :height 0.65 :v-adjust 0.01))
+            (Module . ,(all-the-icons-octicon "package" :height 0.7 :v-adjust -0.15))
+            (Property . ,(all-the-icons-octicon "package" :height 0.7 :v-adjust -0.05 :face 'font-lock-warning-face)) ;; Golang module
+            (Unit . ,(all-the-icons-material "settings_system_daydream" :height 0.7 :v-adjust -0.15))
+            (Value . ,(all-the-icons-material "format_align_right" :height 0.7 :v-adjust -0.15 :face 'font-lock-constant-face))
+            (Enum . ,(all-the-icons-material "storage" :height 0.7 :v-adjust -0.15 :face 'all-the-icons-orange))
+            (Keyword . ,(all-the-icons-material "filter_center_focus" :height 0.7 :v-adjust -0.15))
+            (Snippet . ,(all-the-icons-faicon "code" :height 0.7 :v-adjust 0.02 :face 'font-lock-variable-name-face))
+            (Color . ,(all-the-icons-material "palette" :height 0.7 :v-adjust -0.15))
+            (File . ,(all-the-icons-faicon "file-o" :height 0.7 :v-adjust -0.05))
+            (Reference . ,(all-the-icons-material "collections_bookmark" :height 0.7 :v-adjust -0.15))
+            (Folder . ,(all-the-icons-octicon "file-directory" :height 0.7 :v-adjust -0.05))
+            (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.7 :v-adjust -0.15 :face 'all-the-icons-blueb))
+            (Constant . ,(all-the-icons-faicon "tag" :height 0.7 :v-adjust -0.05))
+            (Struct . ,(all-the-icons-faicon "clone" :height 0.65 :v-adjust 0.01 :face 'font-lock-constant-face))
+            (Event . ,(all-the-icons-faicon "bolt" :height 0.7 :v-adjust -0.05 :face 'all-the-icons-orange))
+            (Operator . ,(all-the-icons-fileicon "typedoc" :height 0.65 :v-adjust 0.05))
+            (TypeParameter . ,(all-the-icons-faicon "hashtag" :height 0.65 :v-adjust 0.07 :face 'font-lock-const-face))
+            (Template . ,(all-the-icons-faicon "code" :height 0.7 :v-adjust 0.02 :face 'font-lock-variable-name-face))))))
+#+end_src
+
+** TODO company-quickhelp
+
+#+begin_src emacs-lisp
+(use-package company-quickhelp
+  :defines company-quickhelp-delay
+  :after (company)
+  :bind (:map company-active-map
+              ("M-h" . company-quickhelp-manual-begin))
+  :hook (global-company-mode . company-quickhelp-mode)
+  :custom (company-quickhelp-delay 0.8))
+#+end_src
+
+** TODO +company-dict+
+
+- company-keywords を代替する backends
+- stan-mode の keyword 補完に利用したい (が、動いていない)
+#+begin_src emacs-lisp
+;; (use-package company-dict
+;;   :config
+;;   (add-to-list 'company-backends 'company-dict)
+;;   (setq company-dict-dir (concat user-emacs-directory "dict/")))
 #+end_src
 
 ** ivy-rich
@@ -430,7 +579,248 @@
   (ivy-posframe-cursor ((t (:background "#61bfff")))))
 #+end_src
 
-* Org
+* Language/major-modes [0/1]
+** LSP
+*** lsp
+
+#+begin_src emacs-lisp
+(use-package lsp)
+#+end_src
+
+*** lsp-ui
+
+#+begin_src emacs-lisp
+(use-package lsp-ui
+  :config
+  ;; (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-doc-header nil)
+  (setq lsp-ui-doc-position 'at-point)
+  (setq lsp-ui-doc-use-childframe t)
+  (setq lsp-ui-doc-use-webkit nil) ; なぜか動かない
+  (setq lsp-ui-doc-max-height 30)
+  (setq lsp-ui-doc-max-width 150)
+  ;;; sideline
+  ;; (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-sideline-show-symbol t)
+  (setq lsp-ui-sideline-show-hover t)
+  (setq lsp-ui-sideline-ignore-duplicate t)
+  (setq lsp-ui-sideline-show-diagnostics t)
+  (setq lsp-ui-sideline-show-code-actions t)
+  (setq lsp-ui-sideline-code-actions-prefix ""))
+#+end_src
+
+** R
+*** ess
+
+#+begin_src emacs-lisp
+(use-package ess
+  ;; Enable company for iESS
+  :hook (inferior-ess-r-mode . company-mode)
+  :config
+  (use-package ess-r-mode)
+  (setq ess-eldoc-show-on-symbol t)
+  (setq ess-history-file nil)
+  (setq ess-use-R-completion nil)
+  (setq ess-use-auto-complete nil)
+  (setq ess-use-ido nil)
+  ;; Object popup by tooltip
+  (setq ess-describe-at-point-method 'tooltip)
+  (setq x-gtk-use-system-tooltips nil)
+  (setq tooltip-hide-delay 60)
+  (setq ess-R-describe-object-at-point-commands
+        '(("str(%s)")
+          (".ess_htsummary(%s, hlength = 14, tlength = 14)")
+          ("summary(%s, maxsum = 20)")))
+  ;; (setq ess-ask-about-transfile nil)
+  ;; (setq inferior-R-args "")
+  ;; (setq ess-indent-with-fancy-comments nil)
+  (spacemacs/set-leader-keys-for-major-mode 'ess-r-mode
+    ;; "SPC" 'ess-view-inspect-df
+    ;; "" 'ess-describe-object-at-point
+    ;; "" 'ess-r-set-evaluation-env
+    "h d"   nil
+    "h s"   'ess-spreadsheet
+    "h RET" nil
+    "h TAB" nil
+    )
+  (spacemacs/set-leader-keys-for-major-mode 'inferior-ess-r-mode
+    "v" 'ess-view-inspect-df
+    "l" 'comint-clear-buffer
+    "r" 'inferior-ess-reload)
+
+  (dolist (m (list ess-r-mode-map inferior-ess-r-mode-map org-mode-map))
+    (bind-keys :map m
+               ("C-=" . my-funs/insert-R-assign)
+               ("C->" . my-funs/insert-R-pipe))))
+#+end_src
+
+*** ess-spreadsheet
+
+#+begin_src emacs-lisp
+(use-package ess-spreadsheet
+  :after (ess)
+  :load-path "~/Dropbox/repos/private/elisp/ess-spreadsheet")
+;; (spacemacs/set-leader-keys-for-major-mode 'ess-r-mode
+;;   "h SPC" 'ess-spreadsheet)
+#+end_src
+
+*** +ess-view+
+
+- Replaced by ess-spreadsheet
+
+#+begin_src emacs-lisp
+;; (use-package ess-view
+;;   :if (eq system-type 'gnu/linux)
+;;   :config
+;;   (setq ess-view--spreadsheet-program "/usr/bin/gnumeric")
+;;   :if (eq system-type 'windows-nt)
+;;   :config
+;;   (setq ess-view--spreadsheet-program
+;;         "c:/Program Files (x86)/Microsoft Office/root/Office16/EXCEL.EXE"))
+#+end_src
+
+*** +inlineR+
+
+#+begin_src emacs-lisp
+;; (add-to-list 'load-path "~/Dropbox/repos/github/myuhe/inlineR.el")
+;; (use-package inlineR)
+#+end_src
+
+** Python
+*** python
+
+補完機能の選択肢
+- anaconda-mode + company-anaconda
+- company-jedi
+- company-lsp (+pyls or mspyls)
+
+Jupyter を org-babel から利用するためのプラグイン
+- ob-jupyter from ~jupyter~ (269 stars) <- _org-mode からは最も使いやすい_
+- ipython from ~ob-ipython~ (641 stars)
+- ob-ein from ~ein~ (932 stars)
+
+#+begin_src emacs-lisp
+(use-package python
+  :after (org)
+  :config
+  (setq python-shell-interpreter "python3")
+  (add-to-list 'python-shell-completion-native-disabled-interpreters "python3")
+  (setq org-babel-python-command "python3"))
+#+end_src
+
+#+begin_src python :session
+import sys
+sys.version
+#+end_src
+
+#+RESULTS:
+: 3.6.8 (default, Aug 20 2019, 17:12:48) 
+: [GCC 8.3.0]
+
+*** +jupyter+
+
+#+begin_src emacs-lisp
+(use-package jupyter
+  :disabled t
+  :after (org)
+  :config
+  ;; ;; ob-jupyter を python のデフォルトにする
+  ;; (org-babel-jupyter-override-src-block "python"))
+  (setq org-babel-default-header-args:jupyter-python
+        '((:kernel . "python3"))))
+#+end_src
+
+- テスト
+- :session は必須
+- _Python3 で実行できない_
+#+begin_src jupyter-python :session py :kernel python3
+import sys
+sys.version
+#+end_src
+
+#+RESULTS:
+: 2.7.15+ (default, Jul  9 2019, 16:51:35) \n[GCC 7.4.0]
+
+*** +ein+
+
+#+begin_src emacs-lisp :results silent
+(use-package ein
+  :disabled t
+  :config
+  (setq ob-ein-inline-image-directory 
+    (expand-file-name "~/Dropbox/memo/img/babel-ein/")))
+#+end_src
+
+- Test
+#+NAME: 0b501ee1-bcee-48b3-b8c3-912c0d150754
+#+begin_src ein :session localhost :results raw drawer
+import numpy, math, matplotlib.pyplot as plt
+%matplotlib inline
+x = numpy.linspace(0, 2*math.pi)
+plt.plot(x, numpy.sin(x))
+#+end_src
+
+:results:
+[<matplotlib.lines.Line2D at 0x7fdc91e8f080>]
+[[file:/home/shun/Dropbox/memo/img/babel-ein//ob-ein-2c9ad5929050da5b1d26b499f8ad43cc.png]]
+
+#+NAME: 1cbb4663-0c3d-46b2-95a7-ef792f247d2b
+#+begin_src ein :session localhost :results raw drawer
+import sys
+sys.version
+#+end_src
+
+*** +ob-ipython+
+
+- https://github.com/gregsexton/ob-ipython
+
+#+begin_src emacs-lisp :results silent
+(use-package ob-ipython
+  :disabled t)
+#+end_src
+
+#+begin_src ipython :session :results raw drawer
+import sys
+sys.version
+#+end_src
+
+** TODO C#
+** C++
+
+#+begin_src emacs-lisp
+(use-package cc-mode
+  :after (lsp)
+  :config
+  (setq c-c++-lsp-cache-dir (expand-file-name "~/.spacemacs.d/.cache/lsp-ccls")))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package ccls
+  :config
+  (setq ccls-executable "/usr/local/bin/ccls")
+  (setq ccls-sem-highlight-method 'font-lock))
+#+end_src
+
+** crontab-mode
+
+#+begin_src emacs-lisp
+(use-package crontab-mode
+  :load-path "~/Dropbox/repos/private/elisp/crontab-mode"
+  :mode (("\\.cron\\(tab\\)?\\'" . crontab-mode)
+         ("cron\\(tab\\)?\\."    . crontab-mode)))
+#+end_src
+
+** Stan
+
+#+begin_src emacs-lisp
+(use-package stan-mode
+  :hook (stan-mode . company-mode)
+  :config
+  ;; (add-hook 'stan-mode (lambda () (setq company-backends '(company-dabbrev-code))))
+  (use-package stan-snippets))
+#+end_src
+
+* Org [0/2]
 ** org
 
 - Adding files to the agenda list recursively?
@@ -439,7 +829,7 @@
 - Aligned Agenda View. Anyway to make this more clean? IE, having the TODO Keywords all line up?
   https://www.reddit.com/r/orgmode/comments/6ybjjw/aligned_agenda_view_anyway_to_make_this_more/
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
 (use-package org
   :config
   ;;; Appearance
@@ -471,19 +861,40 @@
   (setq org-src-preserve-indentation t)
   (setq org-src-tab-acts-natively nil)
   ;; (setq org-image-actual-width nil)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (shell . t)
+     (R . t)
+     (C . t)
+     (stan . t)
+     (emacs-lisp . t)
+     (python . t)
+     ;; (ipython . t)
+     ;; (ein . t)
+     ;; (jupyter . t) ; jupyter は最後である必要あり
+     ))
+  ;; (org-babel-jupyter-override-src-block "python")
   ;;; Latex preview
   (setq org-preview-latex-image-directory "~/Dropbox/memo/img/latex/")
   ;; (setq org-preview-latex-default-process 'dvisvgm)
   (plist-put org-format-latex-options :scale 1.5)
   ;;; Custom function to get ramdom file name
   (cl-defun get-babel-file (&key
-                            (dir "~/Dropbox/memo/img/babel/")
-                            (prefix "fig-")
-                            (suffix ".png"))
+                             (dir (expand-file-name "~/Dropbox/memo/img/babel/"))
+                             (prefix "fig-")
+                             (suffix ".png"))
     (concat dir (make-temp-name prefix) suffix)))
 #+end_src
 
-#+RESULTS:
+** org-download
+
+#+begin_src emacs-lisp
+(use-package org-download
+  :config
+  (setq-default org-download-image-dir (expand-file-name "~/Dropbox/memo/img/download"))
+  (setq org-download-image-dir (expand-file-name "~/Dropbox/memo/img/download")))
+#+end_src
 
 ** org-bullets
 
@@ -494,14 +905,6 @@
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   :config
   (setq org-bullets-bullet-list '("" "" "" "" "" "" "" "" "" "")))
-#+end_src
-
-** org-babel-eval-in-repl
-
-#+begin_src emacs-lisp
-;; (use-package org-babel-eval-in-repl
-;;   :init
-;;   (bind-keys :map org-mode-map ("C-<return>" . ober-eval-in-repl)))
 #+end_src
 
 ** org-variable-pitch
@@ -517,104 +920,41 @@
     (set-face-attribute f nil :fontset "fontset-auto1" :font "fontset-auto1")))
 #+end_src
 
-* Language/major-modes
-** R
-*** ess
+** TODO +org-babel-eval-in-repl+
 
 #+begin_src emacs-lisp
-(use-package ess
-  ;; Enable company for iESS
-  :hook (inferior-ess-r-mode . company-mode)
+;; (use-package org-babel-eval-in-repl
+;;   :init
+;;   (bind-keys :map org-mode-map ("C-<return>" . ober-eval-in-repl)))
+#+end_src
+
+** TODO +poly-org+
+
+(use-package poly-org
   :config
-  (use-package ess-r-mode)
-  (setq ess-eldoc-show-on-symbol t)
-  (setq ess-history-file nil)
-  (setq ess-use-R-completion nil)
-  (setq ess-use-auto-complete nil)
-  (setq ess-use-ido nil)
-  ;; Object popup by tooltip
-  (setq ess-describe-at-point-method 'tooltip)
-  (setq x-gtk-use-system-tooltips nil)
-  (setq tooltip-hide-delay 60)
-  ;; (setq ess-ask-about-transfile nil)
-  ;; (setq inferior-R-args "")
-  ;; (setq ess-indent-with-fancy-comments nil)
-  (spacemacs/set-leader-keys-for-major-mode 'ess-r-mode
-    ;; "SPC" 'ess-view-inspect-df
-    ;; "" 'ess-describe-object-at-point
-    ;; "" 'ess-r-set-evaluation-env
-    "h d"   nil
-    "h s"   'ess-spreadsheet
-    "h RET" nil
-    "h TAB" nil
-    )
-  (spacemacs/set-leader-keys-for-major-mode 'inferior-ess-r-mode
-    "v" 'ess-view-inspect-df
-    "l" 'comint-clear-buffer
-    "r" 'inferior-ess-reload)
-
-  (dolist (m (list ess-r-mode-map inferior-ess-r-mode-map org-mode-map))
-    (bind-keys :map m
-               ("C-=" . my-funs/insert-R-assign)
-               ("C->" . my-funs/insert-R-pipe))))
-#+end_src
-
-*** ess-view
+  (add-to-list 'auto-mode-alist '("\\.org" . poly-org-mode)))
 
 #+begin_src emacs-lisp
-(use-package ess-view
-  :if (eq system-type 'gnu/linux)
-  :config
-  (setq ess-view--spreadsheet-program "/usr/bin/gnumeric")
-  :if (eq system-type 'windows-nt)
-  :config
-  (setq ess-view--spreadsheet-program
-        "c:/Program Files (x86)/Microsoft Office/root/Office16/EXCEL.EXE"))
 #+end_src
 
-*** ess-spreadsheet
-
-#+begin_src emacs-lisp
-(add-to-list 'load-path "~/Dropbox/repos/private/elisp/ess-spreadsheet")
-(require 'ess-spreadsheet)
-
-;; (spacemacs/set-leader-keys-for-major-mode 'ess-r-mode
-;;   "h SPC" 'ess-spreadsheet)
-#+end_src
-
-*** inlineR
-
-#+begin_src emacs-lisp
-(add-to-list 'load-path "~/Dropbox/repos/github/myuhe/inlineR.el")
-(use-package inlineR)
-#+end_src
-
-** C#
-** crontab-mode
-
-#+begin_src emacs-lisp
-(add-to-list 'load-path "~/Dropbox/repos/private/elisp/crontab-mode")
-(require 'crontab-mode)
-
-(add-to-list 'auto-mode-alist '("\\.cron\\(tab\\)?\\'" . crontab-mode))
-(add-to-list 'auto-mode-alist '("cron\\(tab\\)?\\."    . crontab-mode))
-#+end_src
-
-* Utility
+* Utility [0/0]
 ** Paradox
+
+- package list
+- github stars
 
 #+begin_src emacs-lisp
 (use-package paradox
   :config
-  (setq paradox-github-token "144882f652e8d571fa68755827e29defe71d7b21"))
+  (setq paradox-github-token my-vars/paradox-github-token))
 #+end_src
 
-** Zeal
+** +Zeal+
 
 #+begin_src emacs-lisp
-(use-package zeal-at-point
-  :config
-  (add-to-list 'zeal-at-point-mode-alist '(ess-r-mode . "r")))
+;; (use-package zeal-at-point
+;;   :config
+;;   (add-to-list 'zeal-at-point-mode-alist '(ess-r-mode . "r")))
 #+end_src
 
 ** evil-vimish-fold
@@ -623,10 +963,30 @@
 (use-package evil-vimish-fold
   :diminish
   :config
+  (setq vimish-fold-dir (expand-file-name "~/Dropbox/cache/spacemacs/vimish-fold/"))
   (evil-vimish-fold-mode 1))
 #+end_src
 
-* Japanese
+** page-break-line-mode
+
+#+begin_src emacs-lisp
+(use-package page-break-lines
+  :config
+  (add-to-list 'page-break-lines-modes 'ess-r-mode)
+  (add-to-list 'page-break-lines-modes 'python-mode)
+  (global-page-break-lines-mode))
+#+end_src
+
+** exec-path-from-shell
+
+- PATH 環境変数をシェルから引き継ぐ
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+#+end_src
+
+* Japanese [0/2]
 ** mozc
 
 #+begin_src emacs-lisp
@@ -634,7 +994,6 @@
   :config
   (setq default-input-method "japanese-mozc")
   (setq mozc-candidate-style 'echo-area)
-
   (bind-keys :map evil-insert-state-map
              ([muhenkan] . my-funs/toggle-ime)
              ([henkan]   . my-funs/deactivate-ime))
@@ -656,28 +1015,27 @@
 ** +mozc-im+
 
 #+begin_src emacs-lisp
-(use-package mozc-im
-  :disabled t
-  :config
-  (setq default-input-method "japanese-mozc-im"))
+;; (use-package mozc-im
+;;   :config
+;;   (setq default-input-method "japanese-mozc-im"))
 #+end_src
 
 ** +mozc-popup+
 
 #+begin_src emacs-lisp
-(use-package mozc-popup
-  :disabled t
-  :config
-  (setq mozc-candidate-style 'popup))
+;; (use-package mozc-popup
+;;   :config
+;;   (setq mozc-candidate-style 'popup))
 #+end_src
 
 ** mozc-el-extensions
 
 #+begin_src emacs-lisp
-(add-to-list 'load-path "~/Dropbox/repos/github/iRi-E/mozc-el-extensions")
-(require 'mozc-mode-line-indicator)
-(require 'mozc-isearch)
-;; (require 'mozc-cursor-color)
+(use-package mozc-mode-line-indicator
+  :load-path "~/Dropbox/repos/github/iRi-E/mozc-el-extensions")
+
+(use-package mozc-isearch
+  :load-path "~/Dropbox/repos/github/iRi-E/mozc-el-extensions")
 #+end_src
 
 ** +mozc-posframe+
@@ -688,7 +1046,7 @@
 ;; (setq mozc-candidate-style 'posframe)
 #+end_src
 
-** migemo
+** TODO migemo
 
 #+begin_src emacs-lisp
 (use-package migemo
@@ -701,6 +1059,7 @@
 #+end_src
 
 ** +ddskk+
+
 - http://quruli.ivory.ne.jp/document/ddskk_14.2/skk_toc.html#SEC_Contents
 
 #+begin_src emacs-lisp
@@ -764,10 +1123,11 @@
   :config (setq google-translate-default-target-language "ja"))
 #+end_src
 
-* Keymaps
+** TODO pangu-spacing
+* Keymaps [0/0]
 ** Evil state maps
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
 (dolist (m (list evil-normal-state-map evil-visual-state-map))
   (bind-keys :map m
               ("H"  . evil-first-non-blank-of-visual-line)
@@ -787,21 +1147,24 @@
 ** Leader keys for mode maps
 *** Global
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
 (spacemacs/set-leader-keys
   ","   'ivy-switch-buffer
   "."   'ivy-resume
   ;; ","   'tabbar-backward-tab
   ;; "."   'tabbar-forward-tab
-  "a l" 'counsel-linux-app)
+  "a l" 'counsel-linux-app
+  "w w" 'ace-window
+  "w W" 'other-window)
 #+end_src
 
 *** Per major modes
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
 (spacemacs/set-leader-keys-for-major-mode 'emacs-lisp-mode
   "e x" 'lispxmp)
 
 (spacemacs/set-leader-keys-for-major-mode 'lisp-interaction-mode
   "e x" 'lispxmp)
 #+end_src
+

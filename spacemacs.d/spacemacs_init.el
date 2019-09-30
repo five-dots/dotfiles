@@ -6,13 +6,13 @@
 ;; (add-to-list 'backup-directory-alist
 ;;         (cons ".*" (expand-file-name "~/.emacs.d/backup")))
 
-(use-package recentf-ext
-  :config
-  (setq recentf-max-saved-items 2000)
-  (setq recentf-exclude '(".recentf"))
-  (setq recentf-auto-cleanup 10)
-  (run-with-idle-timer 30 t 'recentf-save-list)
-  (recentf-mode 1))
+;; (use-package recentf-ext
+;;   :config
+;;   (setq recentf-max-saved-items 2000)
+;;   (setq recentf-exclude '(".recentf"))
+;;   (setq recentf-auto-cleanup 10)
+;;   (run-with-idle-timer 30 t 'recentf-save-list)
+;;   (recentf-mode 1))
 
 (setq-default tab-width 4)
 
@@ -32,8 +32,7 @@
 
 (use-package doom-modeline
   :config
-  (setq doom-modeline-buffer-file-name-style 'file-name)
-  )
+  (setq doom-modeline-buffer-file-name-style 'file-name))
 
 (use-package hide-mode-line
   :hook
@@ -41,6 +40,8 @@
 
 (when (display-graphic-p)
   (set-frame-size (selected-frame) 140 50))
+
+;; (setq left-fringe-width 15)
 
 (use-package all-the-icons
   :config
@@ -53,25 +54,25 @@
 (set-fontset-font t 'katakana-jisx0201 (font-spec :family my-vars/fixed-jp-sans-font))
 (my-funs/set-latin-greek-fonts t my-vars/fixed-latin-sans-font)
 
-;; fontset of current frame
+;;; fontset of current frame
 (set-fontset-font nil 'japanese-jisx0213.2004-1 (font-spec :family my-vars/fixed-jp-sans-font))
 (set-fontset-font nil 'katakana-jisx0201 (font-spec :family my-vars/fixed-latin-sans-font))
 (my-funs/set-latin-greek-fonts nil my-vars/fixed-latin-sans-font)
 
 ;;; variable-pitch face
-(create-fontset-from-ascii-font my-vars/variable-latin-sans-font nil "variable")
-(set-fontset-font "fontset-variable" 'japanese-jisx0213.2004-1
-                  (font-spec :family my-vars/fixed-jp-sans-font))
-(set-fontset-font "fontset-variable" 'katakana-jisx0201
-                  (font-spec :family my-vars/fixed-jp-sans-font))
-(my-funs/set-latin-greek-fonts "fontset-variable" my-vars/variable-latin-sans-font)
+;; (create-fontset-from-ascii-font my-vars/variable-latin-sans-font nil "variable")
+;; (set-fontset-font "fontset-variable" 'japanese-jisx0213.2004-1
+;;                   (font-spec :family my-vars/fixed-jp-sans-font))
+;; (set-fontset-font "fontset-variable" 'katakana-jisx0201
+;;                   (font-spec :family my-vars/fixed-jp-sans-font))
+;; (my-funs/set-latin-greek-fonts "fontset-variable" my-vars/variable-latin-sans-font)
 
-(set-face-attribute 'variable-pitch nil
-            :fontset "fontset-variable"
-            :font "fontset-variable"
-            :weight 'normal
-            :slant 'normal
-            :inherit 'default)
+;; (set-face-attribute 'variable-pitch nil
+;;             :fontset "fontset-variable"
+;;             :font "fontset-variable"
+;;             :weight 'normal
+;;             :slant 'normal
+;;             :inherit 'default)
 
 ;;; Adjust scale
 (add-to-list 'face-font-rescale-alist '(".*Meiryo*." . 1.09))
@@ -79,7 +80,11 @@
 
 (use-package treemacs
   :config
-  (setq treemacs-position 'right))
+  (treemacs-resize-icons 18)
+  (setq treemacs-position 'right)
+  (setq treemacs-lock-width t)
+  (treemacs-follow-mode -1)
+  (treemacs-git-mode 'simple))
 
 (use-package highlight-indent-guides
   ;; :hook
@@ -90,16 +95,17 @@
   ;; (setq highlight-indent-guides-responsive t)
   (setq highlight-indent-guides-method 'character))
 
-(use-package window-purpose
-  :config
-  (add-to-list 'purpose-user-mode-purposes '(inferior-ess-r-mode . iess))
-  (purpose-compile-user-configuration))
-
 (use-package beacon
   :diminish
   :config
   (setq beacon-blink-when-window-scrolls nil)
   (beacon-mode 1))
+
+(use-package window-purpose
+  :disabled t
+  :config
+  (add-to-list 'purpose-user-mode-purposes '(inferior-ess-r-mode . iess))
+  (purpose-compile-user-configuration))
 
 (use-package tabbar
   :commands tabbar-mode
@@ -143,15 +149,99 @@
     ;;                     :height 1.0)
     ))
 
-(use-package iflipb
-  :disabled t
-  :config
-  (setq iflipb-wrap-around t))
+;; (use-package iflipb
+;;   :disabled t
+;;   :config
+;;   (setq iflipb-wrap-around t))
 
 (setq completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
-(setq company-idle-delay 0)
+
+(use-package company
+  ;; :hook
+  ;; ((c++-mode
+  ;;   python-mode) .
+  ;;   (lambda () (set (make-local-variable 'company-backends)
+  ;;                   '((company-yasnippet
+  ;;                      company-lsp
+  ;;                      ;; company-dabbrev-code
+  ;;                      company-files)))))
+  :config
+  (setq company-idle-delay 0)
+  (setq company-echo-delay 0)
+  (setq company-minimum-prefix-length 1))
+
+(use-package company-posframe
+  :disabled t
+  :after (company)
+  :hook (company-mode . company-posframe-mode))
+
+(use-package company-box
+  :disabled t
+  :diminish
+  :after (company)
+  :hook (company-mode . company-box-mode)
+  :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
+  :config
+  (setq company-box-backends-colors nil)
+  (setq company-box-show-single-candidate t)
+  (setq company-box-max-candidates 50)
+  (defun company-box-icons--elisp (candidate)
+    (when (derived-mode-p 'emacs-lisp-mode)
+      (let ((sym (intern candidate)))
+        (cond ((fboundp sym) 'Function)
+              ((featurep sym) 'Module)
+              ((facep sym) 'Color)
+              ((boundp sym) 'Variable)
+              ((symbolp sym) 'Text)
+              (t . nil)))))
+  (with-eval-after-load 'all-the-icons
+    (declare-function all-the-icons-faicon 'all-the-icons)
+    (declare-function all-the-icons-fileicon 'all-the-icons)
+    (declare-function all-the-icons-material 'all-the-icons)
+    (declare-function all-the-icons-octicon 'all-the-icons)
+    (setq company-box-icons-all-the-icons
+          `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.7 :v-adjust -0.15))
+            (Text . ,(all-the-icons-faicon "book" :height 0.68 :v-adjust -0.15))
+            (Method . ,(all-the-icons-faicon "cube" :height 0.7 :v-adjust -0.05 :face 'font-lock-constant-face))
+            (Function . ,(all-the-icons-faicon "cube" :height 0.7 :v-adjust -0.05 :face 'font-lock-constant-face))
+            (Constructor . ,(all-the-icons-faicon "cube" :height 0.7 :v-adjust -0.05 :face 'font-lock-constant-face))
+            (Field . ,(all-the-icons-faicon "tags" :height 0.65 :v-adjust -0.15 :face 'font-lock-warning-face))
+            (Variable . ,(all-the-icons-faicon "tag" :height 0.7 :v-adjust -0.05 :face 'font-lock-warning-face))
+            (Class . ,(all-the-icons-faicon "clone" :height 0.65 :v-adjust 0.01 :face 'font-lock-constant-face))
+            (Interface . ,(all-the-icons-faicon "clone" :height 0.65 :v-adjust 0.01))
+            (Module . ,(all-the-icons-octicon "package" :height 0.7 :v-adjust -0.15))
+            (Property . ,(all-the-icons-octicon "package" :height 0.7 :v-adjust -0.05 :face 'font-lock-warning-face)) ;; Golang module
+            (Unit . ,(all-the-icons-material "settings_system_daydream" :height 0.7 :v-adjust -0.15))
+            (Value . ,(all-the-icons-material "format_align_right" :height 0.7 :v-adjust -0.15 :face 'font-lock-constant-face))
+            (Enum . ,(all-the-icons-material "storage" :height 0.7 :v-adjust -0.15 :face 'all-the-icons-orange))
+            (Keyword . ,(all-the-icons-material "filter_center_focus" :height 0.7 :v-adjust -0.15))
+            (Snippet . ,(all-the-icons-faicon "code" :height 0.7 :v-adjust 0.02 :face 'font-lock-variable-name-face))
+            (Color . ,(all-the-icons-material "palette" :height 0.7 :v-adjust -0.15))
+            (File . ,(all-the-icons-faicon "file-o" :height 0.7 :v-adjust -0.05))
+            (Reference . ,(all-the-icons-material "collections_bookmark" :height 0.7 :v-adjust -0.15))
+            (Folder . ,(all-the-icons-octicon "file-directory" :height 0.7 :v-adjust -0.05))
+            (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.7 :v-adjust -0.15 :face 'all-the-icons-blueb))
+            (Constant . ,(all-the-icons-faicon "tag" :height 0.7 :v-adjust -0.05))
+            (Struct . ,(all-the-icons-faicon "clone" :height 0.65 :v-adjust 0.01 :face 'font-lock-constant-face))
+            (Event . ,(all-the-icons-faicon "bolt" :height 0.7 :v-adjust -0.05 :face 'all-the-icons-orange))
+            (Operator . ,(all-the-icons-fileicon "typedoc" :height 0.65 :v-adjust 0.05))
+            (TypeParameter . ,(all-the-icons-faicon "hashtag" :height 0.65 :v-adjust 0.07 :face 'font-lock-const-face))
+            (Template . ,(all-the-icons-faicon "code" :height 0.7 :v-adjust 0.02 :face 'font-lock-variable-name-face))))))
+
+(use-package company-quickhelp
+  :defines company-quickhelp-delay
+  :after (company)
+  :bind (:map company-active-map
+              ("M-h" . company-quickhelp-manual-begin))
+  :hook (global-company-mode . company-quickhelp-mode)
+  :custom (company-quickhelp-delay 0.8))
+
+;; (use-package company-dict
+;;   :config
+;;   (add-to-list 'company-backends 'company-dict)
+;;   (setq company-dict-dir (concat user-emacs-directory "dict/")))
 
 (use-package ivy-rich
   :config
@@ -245,6 +335,130 @@
   (ivy-posframe-border ((t (:background "#6272a4"))))
   (ivy-posframe-cursor ((t (:background "#61bfff")))))
 
+(use-package lsp)
+
+(use-package lsp-ui
+  :config
+  ;; (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-doc-header nil)
+  (setq lsp-ui-doc-position 'at-point)
+  (setq lsp-ui-doc-use-childframe t)
+  (setq lsp-ui-doc-use-webkit nil) ; なぜか動かない
+  (setq lsp-ui-doc-max-height 30)
+  (setq lsp-ui-doc-max-width 150)
+  ;;; sideline
+  ;; (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-sideline-show-symbol t)
+  (setq lsp-ui-sideline-show-hover t)
+  (setq lsp-ui-sideline-ignore-duplicate t)
+  (setq lsp-ui-sideline-show-diagnostics t)
+  (setq lsp-ui-sideline-show-code-actions t)
+  (setq lsp-ui-sideline-code-actions-prefix ""))
+
+(use-package ess
+  ;; Enable company for iESS
+  :hook (inferior-ess-r-mode . company-mode)
+  :config
+  (use-package ess-r-mode)
+  (setq ess-eldoc-show-on-symbol t)
+  (setq ess-history-file nil)
+  (setq ess-use-R-completion nil)
+  (setq ess-use-auto-complete nil)
+  (setq ess-use-ido nil)
+  ;; Object popup by tooltip
+  (setq ess-describe-at-point-method 'tooltip)
+  (setq x-gtk-use-system-tooltips nil)
+  (setq tooltip-hide-delay 60)
+  (setq ess-R-describe-object-at-point-commands
+        '(("str(%s)")
+          (".ess_htsummary(%s, hlength = 14, tlength = 14)")
+          ("summary(%s, maxsum = 20)")))
+  ;; (setq ess-ask-about-transfile nil)
+  ;; (setq inferior-R-args "")
+  ;; (setq ess-indent-with-fancy-comments nil)
+  (spacemacs/set-leader-keys-for-major-mode 'ess-r-mode
+    ;; "SPC" 'ess-view-inspect-df
+    ;; "" 'ess-describe-object-at-point
+    ;; "" 'ess-r-set-evaluation-env
+    "h d"   nil
+    "h s"   'ess-spreadsheet
+    "h RET" nil
+    "h TAB" nil
+    )
+  (spacemacs/set-leader-keys-for-major-mode 'inferior-ess-r-mode
+    "v" 'ess-view-inspect-df
+    "l" 'comint-clear-buffer
+    "r" 'inferior-ess-reload)
+
+  (dolist (m (list ess-r-mode-map inferior-ess-r-mode-map org-mode-map))
+    (bind-keys :map m
+               ("C-=" . my-funs/insert-R-assign)
+               ("C->" . my-funs/insert-R-pipe))))
+
+(use-package ess-spreadsheet
+  :after (ess)
+  :load-path "~/Dropbox/repos/private/elisp/ess-spreadsheet")
+;; (spacemacs/set-leader-keys-for-major-mode 'ess-r-mode
+;;   "h SPC" 'ess-spreadsheet)
+
+;; (use-package ess-view
+;;   :if (eq system-type 'gnu/linux)
+;;   :config
+;;   (setq ess-view--spreadsheet-program "/usr/bin/gnumeric")
+;;   :if (eq system-type 'windows-nt)
+;;   :config
+;;   (setq ess-view--spreadsheet-program
+;;         "c:/Program Files (x86)/Microsoft Office/root/Office16/EXCEL.EXE"))
+
+;; (add-to-list 'load-path "~/Dropbox/repos/github/myuhe/inlineR.el")
+;; (use-package inlineR)
+
+(use-package python
+  :after (org)
+  :config
+  (setq python-shell-interpreter "python3")
+  (add-to-list 'python-shell-completion-native-disabled-interpreters "python3")
+  (setq org-babel-python-command "python3"))
+
+(use-package jupyter
+  :disabled t
+  :after (org)
+  :config
+  ;; ;; ob-jupyter を python のデフォルトにする
+  ;; (org-babel-jupyter-override-src-block "python"))
+  (setq org-babel-default-header-args:jupyter-python
+        '((:kernel . "python3"))))
+
+(use-package ein
+  :disabled t
+  :config
+  (setq ob-ein-inline-image-directory 
+    (expand-file-name "~/Dropbox/memo/img/babel-ein/")))
+
+(use-package ob-ipython
+  :disabled t)
+
+(use-package cc-mode
+  :after (lsp)
+  :config
+  (setq c-c++-lsp-cache-dir (expand-file-name "~/.spacemacs.d/.cache/lsp-ccls")))
+
+(use-package ccls
+  :config
+  (setq ccls-executable "/usr/local/bin/ccls")
+  (setq ccls-sem-highlight-method 'font-lock))
+
+(use-package crontab-mode
+  :load-path "~/Dropbox/repos/private/elisp/crontab-mode"
+  :mode (("\\.cron\\(tab\\)?\\'" . crontab-mode)
+         ("cron\\(tab\\)?\\."    . crontab-mode)))
+
+(use-package stan-mode
+  :hook (stan-mode . company-mode)
+  :config
+  ;; (add-hook 'stan-mode (lambda () (setq company-backends '(company-dabbrev-code))))
+  (use-package stan-snippets))
+
 (use-package org
   :config
   ;;; Appearance
@@ -276,16 +490,35 @@
   (setq org-src-preserve-indentation t)
   (setq org-src-tab-acts-natively nil)
   ;; (setq org-image-actual-width nil)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (shell . t)
+     (R . t)
+     (C . t)
+     (stan . t)
+     (emacs-lisp . t)
+     (python . t)
+     ;; (ipython . t)
+     ;; (ein . t)
+     ;; (jupyter . t) ; jupyter は最後である必要あり
+     ))
+  ;; (org-babel-jupyter-override-src-block "python")
   ;;; Latex preview
   (setq org-preview-latex-image-directory "~/Dropbox/memo/img/latex/")
   ;; (setq org-preview-latex-default-process 'dvisvgm)
   (plist-put org-format-latex-options :scale 1.5)
   ;;; Custom function to get ramdom file name
   (cl-defun get-babel-file (&key
-                            (dir "~/Dropbox/memo/img/babel/")
-                            (prefix "fig-")
-                            (suffix ".png"))
+                             (dir (expand-file-name "~/Dropbox/memo/img/babel/"))
+                             (prefix "fig-")
+                             (suffix ".png"))
     (concat dir (make-temp-name prefix) suffix)))
+
+(use-package org-download
+  :config
+  (setq-default org-download-image-dir (expand-file-name "~/Dropbox/memo/img/download"))
+  (setq org-download-image-dir (expand-file-name "~/Dropbox/memo/img/download")))
 
 (use-package org-bullets
   :commands (org-bullets-mode)
@@ -293,10 +526,6 @@
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   :config
   (setq org-bullets-bullet-list '("" "" "" "" "" "" "" "" "" "")))
-
-;; (use-package org-babel-eval-in-repl
-;;   :init
-;;   (bind-keys :map org-mode-map ("C-<return>" . ober-eval-in-repl)))
 
 (use-package org-variable-pitch
   :diminish
@@ -307,84 +536,40 @@
   (dolist (f org-variable-pitch-fixed-faces)
     (set-face-attribute f nil :fontset "fontset-auto1" :font "fontset-auto1")))
 
-(use-package ess
-  ;; Enable company for iESS
-  :hook (inferior-ess-r-mode . company-mode)
-  :config
-  (use-package ess-r-mode)
-  (setq ess-eldoc-show-on-symbol t)
-  (setq ess-history-file nil)
-  (setq ess-use-R-completion nil)
-  (setq ess-use-auto-complete nil)
-  (setq ess-use-ido nil)
-  ;; Object popup by tooltip
-  (setq ess-describe-at-point-method 'tooltip)
-  (setq x-gtk-use-system-tooltips nil)
-  (setq tooltip-hide-delay 60)
-  ;; (setq ess-ask-about-transfile nil)
-  ;; (setq inferior-R-args "")
-  ;; (setq ess-indent-with-fancy-comments nil)
-  (spacemacs/set-leader-keys-for-major-mode 'ess-r-mode
-    ;; "SPC" 'ess-view-inspect-df
-    ;; "" 'ess-describe-object-at-point
-    ;; "" 'ess-r-set-evaluation-env
-    "h d"   nil
-    "h s"   'ess-spreadsheet
-    "h RET" nil
-    "h TAB" nil
-    )
-  (spacemacs/set-leader-keys-for-major-mode 'inferior-ess-r-mode
-    "v" 'ess-view-inspect-df
-    "l" 'comint-clear-buffer
-    "r" 'inferior-ess-reload)
+;; (use-package org-babel-eval-in-repl
+;;   :init
+;;   (bind-keys :map org-mode-map ("C-<return>" . ober-eval-in-repl)))
 
-  (dolist (m (list ess-r-mode-map inferior-ess-r-mode-map org-mode-map))
-    (bind-keys :map m
-               ("C-=" . my-funs/insert-R-assign)
-               ("C->" . my-funs/insert-R-pipe))))
 
-(use-package ess-view
-  :if (eq system-type 'gnu/linux)
-  :config
-  (setq ess-view--spreadsheet-program "/usr/bin/gnumeric")
-  :if (eq system-type 'windows-nt)
-  :config
-  (setq ess-view--spreadsheet-program
-        "c:/Program Files (x86)/Microsoft Office/root/Office16/EXCEL.EXE"))
-
-(add-to-list 'load-path "~/Dropbox/repos/private/elisp/ess-spreadsheet")
-(require 'ess-spreadsheet)
-
-;; (spacemacs/set-leader-keys-for-major-mode 'ess-r-mode
-;;   "h SPC" 'ess-spreadsheet)
-
-(add-to-list 'load-path "~/Dropbox/repos/github/myuhe/inlineR.el")
-(use-package inlineR)
-
-(add-to-list 'load-path "~/Dropbox/repos/private/elisp/crontab-mode")
-(require 'crontab-mode)
-
-(add-to-list 'auto-mode-alist '("\\.cron\\(tab\\)?\\'" . crontab-mode))
-(add-to-list 'auto-mode-alist '("cron\\(tab\\)?\\."    . crontab-mode))
 
 (use-package paradox
   :config
-  (setq paradox-github-token "144882f652e8d571fa68755827e29defe71d7b21"))
+  (setq paradox-github-token my-vars/paradox-github-token))
 
-(use-package zeal-at-point
-  :config
-  (add-to-list 'zeal-at-point-mode-alist '(ess-r-mode . "r")))
+;; (use-package zeal-at-point
+;;   :config
+;;   (add-to-list 'zeal-at-point-mode-alist '(ess-r-mode . "r")))
 
 (use-package evil-vimish-fold
   :diminish
   :config
+  (setq vimish-fold-dir (expand-file-name "~/Dropbox/cache/spacemacs/vimish-fold/"))
   (evil-vimish-fold-mode 1))
+
+(use-package page-break-lines
+  :config
+  (add-to-list 'page-break-lines-modes 'ess-r-mode)
+  (add-to-list 'page-break-lines-modes 'python-mode)
+  (global-page-break-lines-mode))
+
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
 
 (use-package mozc
   :config
   (setq default-input-method "japanese-mozc")
   (setq mozc-candidate-style 'echo-area)
-
   (bind-keys :map evil-insert-state-map
              ([muhenkan] . my-funs/toggle-ime)
              ([henkan]   . my-funs/deactivate-ime))
@@ -402,20 +587,19 @@
   ;; Disable IME w/o insert mode
   (add-hook 'evil-insert-state-exit-hook 'my-funs/deactivate-ime))
 
-(use-package mozc-im
-  :disabled t
-  :config
-  (setq default-input-method "japanese-mozc-im"))
+;; (use-package mozc-im
+;;   :config
+;;   (setq default-input-method "japanese-mozc-im"))
 
-(use-package mozc-popup
-  :disabled t
-  :config
-  (setq mozc-candidate-style 'popup))
+;; (use-package mozc-popup
+;;   :config
+;;   (setq mozc-candidate-style 'popup))
 
-(add-to-list 'load-path "~/Dropbox/repos/github/iRi-E/mozc-el-extensions")
-(require 'mozc-mode-line-indicator)
-(require 'mozc-isearch)
-;; (require 'mozc-cursor-color)
+(use-package mozc-mode-line-indicator
+  :load-path "~/Dropbox/repos/github/iRi-E/mozc-el-extensions")
+
+(use-package mozc-isearch
+  :load-path "~/Dropbox/repos/github/iRi-E/mozc-el-extensions")
 
 ;; (add-to-list 'load-path "~/Dropbox/repos/github/derui/mozc-posframe")
 ;; (require 'mozc-posframe)
@@ -504,7 +688,9 @@
   "."   'ivy-resume
   ;; ","   'tabbar-backward-tab
   ;; "."   'tabbar-forward-tab
-  "a l" 'counsel-linux-app)
+  "a l" 'counsel-linux-app
+  "w w" 'ace-window
+  "w W" 'other-window)
 
 (spacemacs/set-leader-keys-for-major-mode 'emacs-lisp-mode
   "e x" 'lispxmp)

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: org-babel-r
+# key: bbl-r
+# --
+#+begin_src R
+$0
+#+end_src

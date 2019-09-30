@@ -1,4 +1,7 @@
 secret.R
+
 emacs.d/
-spacemacs.d/spacemacs.el
+doom-emacs.d/
+
+spacemacs.d/spacemacs_init.el
 spacemacs.d/my-secret-vars.el

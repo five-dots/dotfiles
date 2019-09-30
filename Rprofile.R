@@ -54,8 +54,8 @@
 
 ## Shared vars
 .nodename <- Sys.info()["nodename"]
-.home <- Sys.getenv()["HOME"]
-.dropbox <- paste(.home, "Dropbox", sep = "/")
+.home     <- Sys.getenv()["HOME"]
+.dropbox  <- paste(.home, "Dropbox", sep = "/")
 .mkt_data <- paste(.dropbox, "market_data", sep = "/")
 
 ## Load security info

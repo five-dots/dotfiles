@@ -21,6 +21,8 @@
      ;; Check if executable path contains doom-emacs
      ((string-match ".*doom-emacs*" (downcase emacs-exec-path))
       (setq user-emacs-directory "~/.doom-emacs.d/"))
+     ;; ((string-match ".*doom-emacs2*" (downcase emacs-exec-path))
+     ;; (setq user-emacs-directory "~/.doom-emacs2.d/"))
      )
     ;; Load init.el under user directory.
     (load (expand-file-name "init.el" user-emacs-directory))
