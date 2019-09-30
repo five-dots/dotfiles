@@ -151,6 +151,10 @@
   :defer t
   :hook (lsp-mode . dap-mode)
   :init
+  (setq dap-utils-extension-path
+        (expand-file-name "extension" doom-local-dir))
+  (setq dap-gdb-lldb-path
+        (expand-file-name "vscode/webfreak.debug" dap-utils-extension-path))
   (use-package! dap-ui
     :hook (dap-mode . dap-ui-mode))
   (use-package! dap-python
@@ -158,10 +162,6 @@
     (setq dap-python-executable "python3"))
   (use-package! dap-gdb-lldb)
   :config
-  (setq dap-utils-extension-path
-        (expand-file-name "extension" doom-local-dir))
-  (setq dap-gdb-lldb-path
-        (expand-file-name "vscode/webfreak.debug" dap-utils-extension-path))
   (setq dap-breakpoints-file
         (expand-file-name "dap-breakpoints" doom-cache-dir)))
 
