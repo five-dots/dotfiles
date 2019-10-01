@@ -21,12 +21,13 @@ ln -sf $REPO/xkeysnail.py ~/.xkeysnail.py
 ln -sf $REPO/xremap.rb ~/.xremap.rb
 
 # emacs
-ln -sf $REPO/emacs.el ~/.emacs
-ln -sf $REPO/spacemacs.d/spacemacs.el ~/.spacemacs
+ln -sf $REPO/emacsen/emacs.el ~/.emacs
+ln -sf $REPO/emacsen/spacemacs-config/spacemacs.el ~/.spacemacs
 
-ln -snf $REPO/emacs.d ~/.emacs.d
-ln -snf $REPO/doom.d ~/.doom.d
-# ln -snf $REPO/doom-emacs.d ~/.doom-emacs.d
+ln -snf $REPO/emacsen/spacemacs.d ~/.emacs.d
+ln -snf $REPO/emacsen/spacemacs.d ~/.spacemacs.d
+ln -snf $REPO/emacsen/vanilla-emacs.d ~/.vanilla-emacs.d
+ln -snf $REPO/emacsen/doom.d ~/.doom.d
 
 # vim
 # ln -sf $REPO/vimrc.vim ~/.vimrc

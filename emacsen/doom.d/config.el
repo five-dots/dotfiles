@@ -1,6 +1,10 @@
 ;;; Dropbox/repos/github/five-dots/dotfiles/doom.d/config.el -*- lexical-binding: t; -*-
 ;; Place your private configuration here
 
+(load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/elisp/vars.el"))
+(load (expand-file-name "vars-secret.el" my/elisp-dir))
+(load (expand-file-name "funcs" my/elisp-dir))
+
 
 ;;; completion
 
@@ -67,6 +71,9 @@
   (ivy-posframe-border ((t (:background "#6272a4"))))
   (ivy-posframe-cursor ((t (:background "#61bfff")))))
 
+(after! yasnippet
+  (add-to-list 'yas-snippet-dirs my/snippets-dir))
+
 
 ;;; ui
 
@@ -119,7 +126,9 @@
 (when (featurep! :ui popup)
   (set-popup-rules!
     '(
+      ("^\\*help[R](" :ignore t :side right :select t)
       ("^\\*R" :ignore t)
+      ("^\\*ess-describe\\*$" :ignore t) ; ess-describe-object-at-point
       ("^\\*General Keybindings\\*$" :ignore t)
       ("^\\*lsp session\\*$" :ignore t)
       ;; TODO google-translate
@@ -312,7 +321,7 @@
   (setq ess-use-auto-complete nil)
   (setq ess-use-ido nil)
   ;; object popup by tooltip
-  (setq ess-describe-at-point-method 'tooltip)
+  (setq ess-describe-at-point-method nil)
   (setq x-gtk-use-system-tooltips nil)
   (setq tooltip-hide-delay 10)
   (setq ess-R-describe-object-at-point-commands
@@ -451,6 +460,15 @@
      "C-s" nil
      "C-t" nil
      "C-w" nil))
+
+  (map!
+   :map inferior-ess-r-mode-map
+   :n "C-M-h" #'evil-window-left
+   :n "C-M-j" #'evil-window-down
+   :n "C-M-k" #'evil-window-up
+   :n "C-M-l" #'evil-window-right
+   :i "C-l" #'comint-clear-buffer)
+
   ;; ess-help-mode-map
   ;; (map!
   ;;  :localleader

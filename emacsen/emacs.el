@@ -15,15 +15,12 @@
 (unless (boundp 'dot-emacs-loaded)
   (let ((emacs-exec-path (expand-file-name invocation-name invocation-directory)))
     (cond
-     ;; Check if executable path contains spacemacs
+     ((string-match ".*vanilla-emacs*" (downcase emacs-exec-path))
+      (setq user-emacs-directory "~/.vanilla-emacs.d/"))
      ((string-match ".*spacemacs*" (downcase emacs-exec-path))
       (setq user-emacs-directory "~/.spacemacs.d/"))
-     ;; Check if executable path contains doom-emacs
      ((string-match ".*doom-emacs*" (downcase emacs-exec-path))
-      (setq user-emacs-directory "~/.doom-emacs.d/"))
-     ;; ((string-match ".*doom-emacs2*" (downcase emacs-exec-path))
-     ;; (setq user-emacs-directory "~/.doom-emacs2.d/"))
-     )
+      (setq user-emacs-directory "~/.doom-emacs.d/")))
     ;; Load init.el under user directory.
     (load (expand-file-name "init.el" user-emacs-directory))
     ;; Create a variable to indicate this script has been run.

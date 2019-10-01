@@ -20,7 +20,7 @@ This function should only modify configuration layer settings."
    ;; installation feature and you have to explicitly list a layer in the
    ;; variable `dotspacemacs-configuration-layers' to install it.
    ;; (default 'unused)
-   dotspacemacs-enable-lazy-installation nil
+   dotspacemacs-enable-lazy-installation 'nil
 
    ;; If non-nil then Spacemacs will ask for confirmation before installing
    ;; a layer lazily. (default t)
@@ -38,47 +38,68 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     (auto-completion :variables
-                      auto-completion-enable-help-tooltip 'manual ; M-h
-                      auto-completion-enable-snippets-in-popup t
-                      auto-completion-enable-sort-by-usage t
-                      auto-completion-tab-key-behavior 'complete)
+     (auto-completion
+      :variables
+      auto-completion-enable-help-tooltip 'manual ; M-h
+      auto-completion-enable-snippets-in-popup t
+      auto-completion-private-snippets-directory
+      (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/snippets")
+      auto-completion-enable-sort-by-usage t
+      auto-completion-tab-key-behavior 'complete)
+
      ;; better-defaults
      ;; csharp
-     csv
-     (c-c++ :variables
-            c-c++-default-mode-for-headers 'c++-mode
-            c-c++-backend 'lsp-ccls
-            c-c++-lsp-executable "/usr/local/bin/ccls"
-            c-c++-lsp-cache-dir (expand-file-name "~/.spacemacs.d/.cache/lsp-ccls")
-            c-c++-lsp-sem-highlight-method 'font-lock)
+     (c-c++
+      :variables
+      c-c++-backend 'lsp-ccls
+      c-c++-lsp-executable "/usr/local/bin/ccls"
+      c-c++-lsp-cache-dir (expand-file-name "~/.spacemacs.d/.cache/lsp-ccls")
+      c-c++-lsp-sem-highlight-method 'font-lock
+      ;; c-c++-enable-clang-support t ; disabled when use lsp
+      ;; c++-enable-organize-includes-on-save t
+      ;; c-c++-enable-clang-format-on-save t
+      ;; c-c++-enable-google-style t
+      ;; c-c++-enable-google-newline t
+      c-c++-default-mode-for-headers 'c++-mode)
+
+     dap
      emacs-lisp
-     ess
+     ;; ess
      git
      helm
-     (ivy :variables ivy-enable-advanced-buffer-information t)
-     lsp
-     markdown
+     ivy
+     ;; lsp
+     ;; markdown
      multiple-cursors
-     (org :variables
-          org-enable-hugo-support t
-          org-enable-github-support t)
-     (python :variables
-             python-backend 'lsp
-             python-lsp-server 'pyls
-             python-formatter 'lsp
-             python-formatter-on-save t
-             python-sort-imports-on-save t)
-     ;; semantic
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
+     (org
+      :variables
+      org-enable-hugo-support t
+      org-enable-github-support t)
+
+     (python
+      :variables
+      python-backend 'lsp
+      python-lsp-server 'mspyls ; or 'pyls
+      python-lsp-git-root "~/.spacemacs.d/.extension/mspyls"
+      python-formatter 'lsp
+      python-formatter-on-save t
+      ;; python-test-runner 'pytest ; or 'nose (or both)
+      python-sort-imports-on-save t)
+
+     (shell
+      :variables
+      shell-default-height 30
+      shell-default-position 'bottom)
+
      ;; spell-checking
-     ;; spacemacs-purpose
      syntax-checking
      treemacs
      ;; version-control
-     )
+
+     my-ess
+     my-japanese
+     my-tools
+     my-ui)
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -87,42 +108,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages
-   '(
-     beacon
-     company-box
-     company-posframe
-     ;; company-dict
-     ;; dotnet
-     ;; ein
-     ;; ess-view
-     ;; elscreen
-     ;; eval-in-repl
-     evil-vimish-fold
-     exec-path-from-shell
-     hide-mode-line
-     highlight-indent-guides
-     ;; highlight-symbol
-     ;; iflipb
-     ;; init-loader
-     ivy-posframe
-     ivy-rich
-     ;; jupyter
-     lispxmp
-     migemo
-     mozc
-     ;; mozc-im
-     ;; mozc-popup
-     ;; ob-ipython
-     org-variable-pitch
-     ;; poly-R
-     ;; poly-org
-     ;; recentf-ext
-     ;; tabbar
-     ;; shackle
-     stan-mode
-     stan-snippets
-     )
+   dotspacemacs-additional-packages '()
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -520,7 +506,10 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  )
+
+  (setq spacemacs-private-directory
+        (expand-file-name
+         "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/spacemacs-config/private/")))
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
@@ -538,9 +527,8 @@ before packages are loaded."
 
   ;; Load org config file
   (org-babel-load-file
-  (expand-file-name
-    "~/Dropbox/repos/github/five-dots/dotfiles/spacemacs.d/spacemacs_init.org"))
-  )
+   (expand-file-name
+    "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/spacemacs-config/config-babel.org")))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

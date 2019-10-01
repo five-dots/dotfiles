@@ -1,7 +1,7 @@
 secret.R
 
-emacs.d/
-doom-emacs.d/
-
-spacemacs.d/spacemacs_init.el
-spacemacs.d/my-secret-vars.el
+emacsen/spacemacs.d/
+emacsen/vanilla-emacs.d/
+emacsen/doom-emacs.d/
+emacsen/spacemacs-config/config-babel.el
+emacsen/elisp/vars-secret.el

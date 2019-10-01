@@ -1,0 +1,450 @@
+#+STARTUP: overview indent
+
+* system
+** libraries
+
+#+begin_src emacs-lisp :results silent
+(load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/elisp/vars.el"))
+(load (expand-file-name "vars-secret.el" my/elisp-dir))
+(load (expand-file-name "funcs" my/elisp-dir))
+#+end_src
+
+** evil
+
+#+begin_src emacs-lisp :results silent
+(use-package evil
+  :config
+  (dolist (m (list evil-normal-state-map evil-visual-state-map))
+    (bind-keys
+     :map m
+     ("H"  . evil-first-non-blank-of-visual-line)
+     ("J"  . evil-forward-paragraph)
+     ("K"  . evil-backward-paragraph)
+     ("L"  . evil-end-of-visual-line)
+     ("j"  . evil-next-visual-line)
+     ("k"  . evil-previous-visual-line)
+     ("gj" . evil-next-line)
+     ("gk" . evil-previous-line)))
+
+  (bind-keys
+   :map evil-normal-state-map
+   ("C-M-h" . evil-window-left)
+   ("C-M-j" . evil-window-down)
+   ("C-M-k" . evil-window-up)
+   ("C-M-l" . evil-window-right))
+
+  (bind-keys
+   :map evil-insert-state-map
+   ("M-," . company-manual-begin)))
+#+end_src
+
+* completion
+** company
+
+#+begin_src emacs-lisp :results silent
+(use-package company
+  :config
+  (setq completion-ignore-case t)
+  (setq read-file-name-completion-ignore-case t)
+  (setq read-buffer-completion-ignore-case t)
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 2)
+  (bind-keys
+   :map company-active-map
+   ("M-." . company-filter-candidates)
+   ("M-/" . company-search-candidates)
+   ("M-d" . company-next-page)
+   ("M-i" . company-show-doc-buffer)
+   ("M-p" . company-quickhelp-manual-begin)
+   ("M-u" . company-previous-page)
+   ("M-w" . company-show-location)))
+#+end_src
+
+* ui
+** doom-themes
+
+#+begin_src emacs-lisp :results silent
+(use-package doom-themes
+  :config
+  (doom-themes-org-config))
+#+end_src
+
+** treemacs
+
+#+begin_src emacs-lisp :results silent
+(use-package treemacs
+  :init
+  (setq treemacs-use-follow-mode nil)
+  :config
+  (setq treemacs-position 'right)
+  (setq treemacs-lock-width t)
+  (treemacs-resize-icons 18)
+  (bind-keys
+   :map treemacs-mode-map
+   ("C-M-h" . evil-window-left)
+   ("C-M-j" . evil-window-down)
+   ("C-M-k" . evil-window-up)
+   ("C-M-l" . evil-window-right)))
+#+end_src
+
+** frame size
+
+#+begin_src emacs-lisp :results silent
+(when (display-graphic-p)
+  (set-frame-size (selected-frame) 120 50))
+#+end_src
+
+** font
+
+|abcdef ghijkl|
+|ABCDEF GHIJKL|
+|'";:-+ =/\~`?|
+|∞≤≥∏∑∫ ×±⊆⊇|
+|αβγδεζ ηθικλμ|
+|ΑΒΓΔΕΖ ΗΘΙΚΛΜ|
+
+|abcdef ghijkl|
+|ABCDEF GHIJKL|
+|日本語 の美観|
+|あいう えおか|
+|アイウ エオカ|
+|ｱｲｳｴｵｶ ｷｸｹｺｻｼ|
+
+#+begin_src emacs-lisp :results silent
+
+;;; fontset-default
+(set-fontset-font t 'japanese-jisx0213.2004-1 (font-spec :family my/fixed-jp-sans-font))
+(set-fontset-font t 'katakana-jisx0201 (font-spec :family my/fixed-jp-sans-font))
+(my/set-latin-greek-fonts t my/fixed-latin-sans-font)
+
+;;; fontset of current frame
+;; (set-fontset-font nil 'japanese-jisx0213.2004-1 (font-spec :family my/fixed-jp-sans-font))
+;; (set-fontset-font nil 'katakana-jisx0201 (font-spec :family my/fixed-jp-sans-font))
+;; (my/set-latin-greek-fonts nil my/fixed-latin-sans-font)
+
+;;; variable-pitch face
+;; (create-fontset-from-ascii-font my/variable-latin-sans-font nil "variable")
+;; (set-fontset-font "fontset-variable" 'japanese-jisx0213.2004-1
+;;                   (font-spec :family my/fixed-jp-sans-font))
+;; (set-fontset-font "fontset-variable" 'katakana-jisx0201
+;;                   (font-spec :family my/fixed-jp-sans-font))
+;; (my/set-latin-greek-fonts "fontset-variable" my/variable-latin-sans-font)
+
+;; (set-face-attribute 'variable-pitch nil
+;;             :fontset "fontset-variable"
+;;             :font "fontset-variable"
+;;             :weight 'normal
+;;             :slant 'normal
+;;             :inherit 'default)
+
+;;; Adjust scale
+(add-to-list 'face-font-rescale-alist '(".*Meiryo*." . 1.09))
+;; (add-to-list 'face-font-rescale-alist '(".*Yu Mincho*." . 1.09))
+#+end_src
+
+** page-breake-lines
+
+#+begin_src emacs-lisp
+(use-package page-break-lines
+  :config
+  (add-to-list 'page-break-lines-modes 'ess-r-mode)
+  (add-to-list 'page-break-lines-modes 'python-mode)
+  (global-page-break-lines-mode))
+#+end_src
+
+** TODO fringe width
+** TODO all-the-icons
+
+#+begin_src emacs-lisp :results silent
+;; (use-package all-the-icons
+;;   :config
+;;   (add-to-list
+;;    'all-the-icons-mode-icon-alist
+;;    '(ess-r-mode all-the-icons-fileicon "R" :face all-the-icons-lblue)))
+#+end_src
+
+** TODO highlight-indent-guides
+
+#+begin_src emacs-lisp
+;; (use-package highlight-indent-guides
+;;   ;; :hook
+;;   ;; (emacs-lisp-mode . highlight-indent-guides-mode)
+;;   ;; (ess-r-mode      . highlight-indent-guides-mode)
+;;   ;; (csharp-mode     . highlight-indent-guides-mode)
+;;   :config
+;;   ;; (setq highlight-indent-guides-responsive t)
+;;   (setq highlight-indent-guides-method 'character))
+#+end_src
+
+* lang
+** lsp
+*** lsp-mode
+
+#+begin_src emacs-lisp :results silent
+(use-package lsp-mode
+  :init
+  (add-hook 'lsp-mode-hook 'my/set-company-backend-for-lsp)
+  :config
+  (setq lsp-document-sync-method 'incremental)
+  (setq lsp-enable-completion-at-point nil)
+  (setq lsp-prefer-flymake nil) ; flymake or lsp-ui
+  (setq lsp-session-file (expand-file-name ".cache/.lsp-session-v1" user-emacs-directory)))
+#+end_src
+
+*** lsp-ui
+
+#+begin_src emacs-lisp
+(use-package lsp-ui
+  :config
+  (defun my/toggle-lsp-ui-doc ()
+    (interactive)
+    (if lsp-ui-doc-mode
+        (progn
+          (lsp-ui-doc-mode -1)
+          (lsp-ui-doc--hide-frame))
+	    (lsp-ui-doc-mode 1)))
+  ;; lsp-ui-doc
+  (setq lsp-ui-doc-enable nil)
+  ;; (setq lsp-ui-doc-header nil)
+  ;; (setq lsp-ui-doc-include-signature nil)
+  ;; (setq lsp-ui-doc-position 'at-point)
+  ;; (setq lsp-ui-doc-max-width 150)
+  ;; (setq lsp-ui-doc-max-height 30)
+  ;; (setq lsp-ui-doc-use-childframe t)
+  ;; (setq lsp-ui-doc-use-webkit nil)
+
+  ;; lsp-ui-flycheck
+  ;; (setq lsp-ui-flycheck-enable t)
+
+  ;; lsp-ui-peek
+  ;; (setq lsp-ui-peek-enable t)
+  ;; (setq lsp-ui-peek-peek-height 20)
+  ;; (setq lsp-ui-peek-list-width 50)
+  ;; (setq lsp-ui-peek-fontify 'on-demand) ;; never, on-demand, or always
+
+  ;; lsp-ui-imenu
+  ;; (setq lsp-ui-imenu-enable nil)
+  ;; (setq lsp-ui-imenu-kind-position 'top)
+
+  ;; lsp-ui-sideline
+  ;; (setq lsp-ui-sideline-enable nil)
+  ;; (setq lsp-ui-sideline-enable nil)
+  ;; (setq lsp-ui-sideline-ignore-duplicate t) ; nil
+  ;; (setq lsp-ui-sideline-show-symbol t)
+  ;; (setq lsp-ui-sideline-show-hover t) ; nil
+  ;; (setq lsp-ui-sideline-show-diagnostics nil) ; t
+  ;; (setq lsp-ui-sideline-show-code-actions nil) ;t
+  ;; (setq lsp-ui-sideline-code-actions-prefix "")
+  )
+#+end_src
+
+*** lsp-python-ms
+
+#+begin_src emacs-lisp :results silent
+(use-package lsp-python-ms
+  :config
+  (setq lsp-python-ms-python-executable-cmd "python3"))
+#+end_src
+
+*** company-lsp
+
+#+begin_src emacs-lisp :results silent
+(use-package company-lsp
+  :config
+  (setq company-lsp-cache-candidates t)
+  (setq company-lsp-enable-recompletion nil))
+#+end_src
+
+** dap
+
+#+begin_src emacs-lisp :results silent
+(use-package dap-mode
+  :init
+  :config
+  (setq dap-breakpoints-file
+        (expand-file-name ".cache/.dap-breakpoints" user-emacs-directory))
+  ;; (add-to-list 'spacemacs--dap-supported-modes 'c++-mode)
+  (use-package dap-python
+    :config
+    (setq dap-python-executable "python3")))
+#+end_src
+
+** org [0/4]
+*** org
+
+- Adding files to the agenda list recursively?
+  https://www.reddit.com/r/orgmode/comments/6q6cdk/adding_files_to_the_agenda_list_recursively/
+
+- Aligned Agenda View. Anyway to make this more clean? IE, having the TODO Keywords all line up?
+  https://www.reddit.com/r/orgmode/comments/6ybjjw/aligned_agenda_view_anyway_to_make_this_more/
+
+#+begin_src emacs-lisp :results silent
+(use-package org
+  :init
+  (add-hook 'org-mode-hook 'my/set-company-backend-for-org)
+  :config
+  ;;; Appearance
+  ;; Replace "-" with "•"
+  (font-lock-add-keywords
+    'org-mode
+    '(("^ *\\([-]\\) "
+      (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  (setq org-hide-emphasis-markers t)
+  ;;; org faces
+  (set-face-attribute 'org-level-1 nil :slant 'italic :height 1.1)
+  ;; (set-face-attribute 'org-block-end-line nil :foreground "#23272e")
+  ;;; org-agenda
+  ;; Add agenda file recursively
+  ;; (setq org-agenda-files
+  ;; (apply 'append
+  ;;         (mapcar (lambda (directory)
+  ;;       (directory-files-recursively directory org-agenda-file-regexp))
+  ;;           '("~/Dropbox/memo"))))
+  ;; agenda format
+  ;; (setq org-agenda-prefix-format
+  ;;       (quote
+  ;;        ((agenda . " %i %-12:c%?12t% s")
+  ;;         (todo   . " %i %-12:c")
+  ;;         (tags   . " %i %-12:c")
+  ;;         (search . " %i %-12:c"))))
+  ;;; org-babel
+  (setq org-confirm-babel-evaluate nil)
+  (setq org-src-preserve-indentation t)
+  (setq org-src-tab-acts-natively nil)
+  ;; (setq org-image-actual-width nil)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (shell . t)
+     (R . t)
+     (C . t)
+     (stan . t)
+     (emacs-lisp . t)
+     (python . t)
+     ;; (ipython . t)
+     ;; (ein . t)
+     ;; (jupyter . t) ; jupyter は最後である必要あり
+     ))
+  ;; (org-babel-jupyter-override-src-block "python")
+  ;;; Latex preview
+  (setq org-preview-latex-image-directory "~/Dropbox/memo/img/latex/")
+  ;; (setq org-preview-latex-default-process 'dvisvgm)
+  (plist-put org-format-latex-options :scale 1.5))
+#+end_src
+
+*** org-download
+
+#+begin_src emacs-lisp
+(use-package org-download
+  :config
+  ;; (setq-default org-download-image-dir (expand-file-name "~/Dropbox/memo/img/download"))
+  (setq org-download-image-dir (expand-file-name "~/Dropbox/memo/img/download")))
+#+end_src
+
+*** org-bullets
+
+#+begin_src emacs-lisp
+(use-package org-bullets
+  :defer t
+  :hook (org-mode . org-bullets-mode)
+  :config
+  (setq org-bullets-bullet-list '("" "" "" "" "" "" "" "" "" "")))
+#+end_src
+
+*** TODO org-variable-pitch
+
+#+begin_src emacs-lisp
+;; (use-package org-variable-pitch
+;;   :diminish
+;;   :commands (org-variable-pitch-minor-mode)
+;;   ;; :init
+;;   ;; (add-hook 'org-mode-hook (lambda () (org-variable-pitch-minor-mode 1)))
+;;   :config
+;;   (dolist (f org-variable-pitch-fixed-faces)
+;;     (set-face-attribute f nil :fontset "fontset-auto1" :font "fontset-auto1")))
+#+end_src
+
+*** TODO org-babel-eval-in-repl
+
+#+begin_src emacs-lisp
+;; (use-package org-babel-eval-in-repl
+;;   :init
+;;   (bind-keys :map org-mode-map ("C-<return>" . ober-eval-in-repl)))
+#+end_src
+
+*** TODO poly-org
+
+(use-package poly-org
+  :config
+  (add-to-list 'auto-mode-alist '("\\.org" . poly-org-mode)))
+
+#+begin_src emacs-lisp
+#+end_src
+*** TODO evil-org
+** emacs-lisp
+
+#+begin_src emacs-lisp :results silent
+(add-hook 'emacs-lisp-mode-hook 'my/set-company-backend-for-el)
+#+end_src
+
+** stan
+
+#+begin_src emacs-lisp :results silent
+(use-package stan-mode
+  :load-path "~/Dropbox/repos/github/kaz-yos/stan-mode/stan-mode"
+  :mode ("\\.stan\\'" . stan-mode)
+  :hook (stan-mode . stan-mode-setup)
+  :init
+  ;; company
+  (use-package company-stan
+    :load-path "~/Dropbox/repos/github/kaz-yos/stan-mode/company-stan"
+    :config
+    (setq company-stan-fuzzy nil))
+  (add-hook 'stan-mode-hook 'my/set-company-backend-for-stan)
+  
+  ;; eldoc
+  ;; FIXME 
+  ;; File mode specification error: 
+  ;; (file-missing Cannot open load file No such file or directory c-eldoc)
+  ;; (use-package eldoc-stan
+  ;;   :load-path "~/Dropbox/repos/github/kaz-yos/stan-mode/eldoc-stan"
+  ;;   :hook (stan-mode . eldoc-stan-setup))
+    
+  :config
+  (setq stan-indentation-offset 2)
+  ;; Add snippets dir
+  (add-to-list
+   'yas-snippet-dirs
+   (expand-file-name
+    "~/Dropbox/repos/github/kaz-yos/stan-mode/stan-snippets")))
+#+end_src
+
+** TODO c#
+* tools
+** google-translate
+
+#+begin_src emacs-lisp
+(use-package google-translate
+  :config (setq google-translate-default-target-language "ja"))
+#+end_src
+
+** TODO helpful
+* leader keymaps
+
+#+begin_src emacs-lisp :results silent
+(spacemacs/set-leader-keys
+  ","   'ivy-switch-buffer
+  "."   'ivy-resume
+  ;; applications
+  "a l" 'counsel-linux-app
+  ;; windows
+  "w/" 'split-window-right-and-focus
+  "wv" 'split-window-right-and-focus
+  "wV" 'split-window-right
+  "w-" 'split-window-below-and-focus
+  "ws" 'split-window-below-and-focus
+  "wS" 'split-window-below
+  "ww" 'ace-window
+  "wW" 'other-window)
+#+end_src
+
