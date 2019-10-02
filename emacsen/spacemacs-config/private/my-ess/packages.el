@@ -166,7 +166,7 @@
                ("C-u" . nil)
                ("C-w" . nil))
     (bind-keys :map inferior-ess-r-mode-map
-               ("C-l" . comint-clear-buffer)
+               ("C-l" . spacemacs/comint-clear-buffer)
                ("C-M-l" . evil-window-right))
 
     ;; ess-r-help-mode
@@ -179,7 +179,13 @@
 
     ;; ctbl:table-mode (for ess-R-dv-ctable)
     (evil-define-key 'normal ctbl:table-mode-map
-      "q" 'kill-this-buffer)))
+      "q" 'kill-this-buffer)
+
+    ;; TODO window position management
+    ;; (add-to-list
+    ;;  'display-buffer-alist
+    ;;  '("^\\*help[R]" . ((display-buffer-same-window) (inhibit-same-window . nil))))
+    ))
 
 (defun my-ess/init-ess-R-data-view ()
   (use-package ess-R-data-view
