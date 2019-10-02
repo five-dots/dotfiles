@@ -38,6 +38,7 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+
      (auto-completion
       :variables
       auto-completion-enable-help-tooltip 'manual ; M-h
@@ -49,6 +50,7 @@ This function should only modify configuration layer settings."
 
      ;; better-defaults
      ;; csharp
+
      (c-c++
       :variables
       c-c++-backend 'lsp-ccls
@@ -64,13 +66,18 @@ This function should only modify configuration layer settings."
 
      dap
      emacs-lisp
-     ;; ess
      git
      helm
+     ;; ipython-notebook
      ivy
-     ;; lsp
-     ;; markdown
+
+     (lsp
+      :variables
+      lsp-navigation 'peek)
+
+     markdown
      multiple-cursors
+
      (org
       :variables
       org-enable-hugo-support t
@@ -94,7 +101,12 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      syntax-checking
      treemacs
-     ;; version-control
+
+     (version-control
+      :variables
+      version-control-diff-tool 'git-gutter ; 'diff-hl, 'git-gutter or 'git-gutter+
+      version-control-diff-side 'right ; or 'right
+      )
 
      my-ess
      my-japanese
