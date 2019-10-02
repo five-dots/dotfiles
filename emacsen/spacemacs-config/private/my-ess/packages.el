@@ -92,6 +92,7 @@
 
       ;; predefined keymap
       "e" 'ess-extra-map
+      ;; TODO hydra-map for ess-dev-map (debug map)
       "d" 'ess-dev-map
       "h" 'ess-doc-map
       "p" 'ess-r-package-dev-map
@@ -102,6 +103,8 @@
       ;; view
       "vs" 'ess-spreadsheet)
 
+    ;; inferior-ess-r-mode
+    (evil-set-initial-state 'inferior-ess-r-mode 'normal)
     (spacemacs/set-leader-keys-for-major-mode 'inferior-ess-r-mode
       "," 'ess-smart-comma
       "." 'ess-describe-object-at-point
@@ -172,7 +175,11 @@
       "J" 'ess-skip-to-next-section
       "K" 'ess-skip-to-previous-section
       "q" 'kill-this-buffer
-      "W" 'ess-display-help-in-browser)))
+      "W" 'ess-display-help-in-browser)
+
+    ;; ctbl:table-mode (for ess-R-dv-ctable)
+    (evil-define-key 'normal ctbl:table-mode-map
+      "q" 'kill-this-buffer)))
 
 (defun my-ess/init-ess-R-data-view ()
   (use-package ess-R-data-view
@@ -182,7 +189,7 @@
     (dolist (mode '(ess-r-mode inferior-ess-r-mode))
       (spacemacs/set-leader-keys-for-major-mode mode
         ;; view
-        "vp" 'ess-R-dv-pprint
+        ;; "vp" 'ess-R-dv-pprint
         "vt" 'ess-R-dv-ctable))))
 
 (defun my-ess/init-ess-smart-equals ()
