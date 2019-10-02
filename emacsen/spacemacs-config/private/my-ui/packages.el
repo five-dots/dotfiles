@@ -11,10 +11,66 @@
 
 (defconst my-ui-packages
   '(
-    hide-mode-line
     beacon
+    centaur-tabs
+    hide-mode-line
     ivy-posframe
     ))
+
+(defun my-ui/init-centaur-tabs ()
+  (use-package centaur-tabs
+    :hook
+    ;; disabled modes
+    (treemacs-mode . centaur-tabs-local-mode)
+    ;; (spacemacs-buffer-mode . centaur-tabs-local-mode)
+    ;; (help-mode . centaur-tabs-local-mode)
+    ;; (helpful-mode . centaur-tabs-local-mode)
+    ;; (org-agenda-mode . centaur-tabs-local-mode)
+    (after-init . centaur-tabs-mode)
+
+    :config
+    (setq centaur-tabs-style "bar")
+    (setq centaur-tabs-set-icons t)
+    (setq centaur-tabs-height 22)
+    (setq centaur-tabs-gray-out-icons t)
+    (setq centaur-tabs-set-bar 'left)
+    (setq centaur-tabs-modified-marker t)
+
+    ;; Prevent the access to specified buffers
+    (defun centaur-tabs-hide-tab (x)
+      (let ((name (format "%s" x)))
+        (or
+         ;; * で始まるバッファ
+         (and (string-prefix-p "*" name)
+              ;; (not) で除外するバッファを指定
+              (not (string-prefix-p "*R" name))
+              (not (string-prefix-p "*eshell" name)))
+         ;; magit
+         (string-prefix-p "COMMIT_EDITMSG" name)
+         (and (string-prefix-p "magit" name)
+              (not (file-name-extension name))))))
+
+    ;; buffer group function
+    (defun centaur-tabs-buffer-groups ()
+      (list
+       (cond
+        ((memq major-mode '(inferior-ess-r-mode
+                            eshell-mode))
+         "repl")
+        ((or (derived-mode-p 'prog-mode)
+             (memq major-mode '(org-mode org-src-mode org-agenda-mode)))
+         "editing")
+        ;; ((string-prefix-p "*" (buffer-name))
+        ;;  "emacs")
+        (t "other"))))
+
+    ;; keymaps
+    (spacemacs/set-leader-keys
+      "RET" 'centaur-tabs-counsel-switch-group)
+    (bind-keys :map evil-normal-state-map
+               ("C-M-," . centaur-tabs-backward)
+               ("C-M-." . centaur-tabs-forward))
+    (centaur-tabs-headline-match)))
 
 (defun my-ui/init-hide-mode-line ()
   (use-package hide-mode-line
