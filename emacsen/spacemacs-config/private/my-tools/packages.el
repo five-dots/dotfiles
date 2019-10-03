@@ -12,9 +12,11 @@
 (defconst my-tools-packages
   '(
     crontab-mode
+    dotnet
     evil-vimish-fold
     exec-path-from-shell
     google-this
+    helpful
     lispxmp
     recentf-ext
     ))
