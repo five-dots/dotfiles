@@ -19,6 +19,7 @@
 .First <- function() {
   # Change R_LIBS_USER based on OS and R version
   .switchLibPath()
+
   # Set default options
   options(
     ## repos = "http://cran.rstudio.com/",
@@ -34,6 +35,7 @@
     blogdown.author	= "Shun Asai",
 	  blogdown.ext = ".Rmd"
   )
+
   ## Load libraries
   ## suppressMessages(library(pacman))
   ## p_load(stats) # Must be loaded before dplyr
@@ -56,6 +58,7 @@
 .nodename <- Sys.info()["nodename"]
 .home     <- Sys.getenv()["HOME"]
 .dropbox  <- paste(.home, "Dropbox", sep = "/")
+.github   <- paste(.dropbox, "repos/github/five-dots", sep = "/")
 .mkt_data <- paste(.dropbox, "market_data", sep = "/")
 
 ## Load security info
@@ -113,6 +116,7 @@ settings$sharadar_plus_20181214.sqli <- paste0(
   .home, "/Dropbox/sqlite/sharadar_plus_2018-12-14.sqlite3")
 
 ### IB setings
+settings$ib_tws_ports     <- .ib_tws_ports
 settings$ib_account_pers  <- .ib_account_pers
 settings$ib_account_corp  <- .ib_account_corp
 settings$ib_account_demo  <- .ib_account_demo
@@ -122,4 +126,7 @@ settings$ib_fq_token_corp <- .fq_token_corp
 ### Google setings
 settings$gmail_address <- .gmail_address
 settings$gmail_app_pwd <- .gmail_app_pwd
+
+### Github personal access token
+settings$github_pat <- .github_pat
 

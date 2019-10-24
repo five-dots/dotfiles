@@ -25,17 +25,31 @@
      ("k"  . evil-previous-visual-line)
      ("gj" . evil-next-line)
      ("gk" . evil-previous-line)))
-
   (bind-keys
    :map evil-normal-state-map
    ("C-M-h" . evil-window-left)
    ("C-M-j" . evil-window-down)
    ("C-M-k" . evil-window-up)
-   ("C-M-l" . evil-window-right))
-
+   ("C-M-l" . evil-window-right)
+   ;; fold
+   ("za" . +fold/toggle)
+   ("zo" . +fold/open)
+   ("zO" . +fold/open)
+   ("zr" . +fold/open-all)
+   ("zc" . +fold/close)
+   ("zC" . +fold/close)
+   ("zm" . +fold/close-all)
+   ("zj" . +fold/next)
+   ("zk" . +fold/previous))
   (bind-keys
    :map evil-insert-state-map
    ("M-," . company-manual-begin)))
+#+end_src
+
+** version controll
+
+#+begin_src emacs-lisp :results silent
+(setq vc-follow-symlinks t)
 #+end_src
 
 * completion
@@ -142,6 +156,16 @@
 ;; (add-to-list 'face-font-rescale-alist '(".*Yu Mincho*." . 1.09))
 #+end_src
 
+** all-the-icons
+
+#+begin_src emacs-lisp :results silent
+(use-package all-the-icons
+  :config
+  (add-to-list
+   'all-the-icons-mode-icon-alist
+   '(inferior-ess-r-mode all-the-icons-fileicon "R" :face all-the-icons-lblue)))
+#+end_src
+
 ** page-breake-lines
 
 #+begin_src emacs-lisp
@@ -153,16 +177,6 @@
 #+end_src
 
 ** TODO fringe width
-** TODO all-the-icons
-
-#+begin_src emacs-lisp :results silent
-;; (use-package all-the-icons
-;;   :config
-;;   (add-to-list
-;;    'all-the-icons-mode-icon-alist
-;;    '(ess-r-mode all-the-icons-fileicon "R" :face all-the-icons-lblue)))
-#+end_src
-
 ** TODO highlight-indent-guides
 
 #+begin_src emacs-lisp
@@ -238,6 +252,10 @@
   )
 #+end_src
 
+**** TODO lsp-ui-flycheck-mode-map を evilify する
+
+q で終了できるようにする
+
 *** lsp-python-ms
 
 #+begin_src emacs-lisp :results silent
@@ -255,15 +273,18 @@
   (setq company-lsp-enable-recompletion nil))
 #+end_src
 
-** dap
+** TODO dap
+
+- dap-ui-mode debug 実行時のウィンドウレイアウト
+- hydra map を自動で表示したい
 
 #+begin_src emacs-lisp :results silent
 (use-package dap-mode
+  :hook (dap-mode . my/change-fringe-width)
   :init
   :config
   (setq dap-breakpoints-file
         (expand-file-name ".cache/.dap-breakpoints" user-emacs-directory))
-  ;; (add-to-list 'spacemacs--dap-supported-modes 'c++-mode)
   (use-package dap-python
     :config
     (setq dap-python-executable "python3")))
@@ -280,8 +301,11 @@
 
 #+begin_src emacs-lisp :results silent
 (use-package org
-  :init
-  (add-hook 'org-mode-hook 'my/set-company-backend-for-org)
+  :hook
+  (org-mode . visual-line-mode)
+  ;; :init
+  ;; FIXME
+  ;; (add-hook 'org-mode-hook 'my/set-company-backend-for-org)
   :config
   ;;; Appearance
   ;; Replace "-" with "•"
@@ -291,7 +315,7 @@
       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
   (setq org-hide-emphasis-markers t)
   ;;; org faces
-  (set-face-attribute 'org-level-1 nil :slant 'italic :height 1.1)
+  (set-face-attribute 'org-level-1 nil :slant 'italic :height 1.0)
   ;; (set-face-attribute 'org-block-end-line nil :foreground "#23272e")
   ;;; org-agenda
   ;; Add agenda file recursively
@@ -314,17 +338,12 @@
   ;; (setq org-image-actual-width nil)
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '(
+   '((emacs-lisp . t)
      (shell . t)
      (R . t)
-     (C . t)
      (stan . t)
-     (emacs-lisp . t)
-     (python . t)
-     ;; (ipython . t)
-     ;; (ein . t)
-     ;; (jupyter . t) ; jupyter は最後である必要あり
-     ))
+     (C . t)
+     (python . t)))
   ;; (org-babel-jupyter-override-src-block "python")
   ;;; Latex preview
   (setq org-preview-latex-image-directory "~/Dropbox/memo/img/latex/")
@@ -349,6 +368,14 @@
   :hook (org-mode . org-bullets-mode)
   :config
   (setq org-bullets-bullet-list '("" "" "" "" "" "" "" "" "" "")))
+#+end_src
+
+*** ox-hugo
+
+#+begin_src emacs-lisp
+(use-package ox-hugo
+  :config
+  (setq org-hugo-front-matter-format "yaml"))
 #+end_src
 
 *** TODO org-variable-pitch
@@ -387,6 +414,28 @@
 (add-hook 'emacs-lisp-mode-hook 'my/set-company-backend-for-el)
 #+end_src
 
+** python
+*** python-mode
+
+#+begin_src emacs-lisp :results silent
+(use-package python
+  :config
+  (setq python-shell-interpreter "ipython3") ; "python3"
+  
+  ;; (add-to-list 'python-shell-completion-native-disabled-interpreters "python3")
+  
+  ;; Can’t guess python-indent-offset, using defaults: 4... のメッセージを表示しない
+  (setq python-indent-guess-indent-offset-verbose nil)
+  
+  (bind-keys 
+   :map inferior-python-mode-map
+   ("C-M-l" . evil-window-right)))
+#+end_src
+
+*** TODO ob-ipython
+
+実行するとフリーズしてしまう
+
 ** stan
 
 #+begin_src emacs-lisp :results silent
@@ -416,10 +465,18 @@
   (add-to-list
    'yas-snippet-dirs
    (expand-file-name
-    "~/Dropbox/repos/github/kaz-yos/stan-mode/stan-snippets")))
+    "~/Dropbox/repos/github/kaz-yos/stan-mode/stan-snippets/snippets")))
 #+end_src
 
 ** TODO c#
+
+- dotnet cli との統合
+- dotnet repl
+
+- lsp-mode
+- dap-mode
+  https://github.com/emacs-lsp/lsp-mode/issues/815
+
 * tools
 ** google-translate
 
@@ -428,7 +485,20 @@
   :config (setq google-translate-default-target-language "ja"))
 #+end_src
 
-** TODO helpful
+** hatena-blog-mode
+
+#+begin_src emacs-lisp :results silent
+(add-to-list 'load-path (expand-file-name "~/Dropbox/repos/github/fnwiya/hatena-blog-mode"))
+(use-package hatena-blog-mode
+  :config
+  (setq hatena-id "five-dots")
+  (setq hatena-blog-api-key my/hatena-blog-api-key)
+  (setq hatena-blog-id "five-dots.hatenablog.com")
+  (setq hatena-blog-editing-mode "md")
+  (setq hatena-blog-backup-dir nil))
+#+end_src
+
+** TODO lispy
 * leader keymaps
 
 #+begin_src emacs-lisp :results silent
@@ -447,4 +517,3 @@
   "ww" 'ace-window
   "wW" 'other-window)
 #+end_src
-

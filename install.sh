@@ -35,6 +35,7 @@ ln -snf $REPO/emacsen/doom.d ~/.doom.d
 
 # R
 ln -sf $REPO/Rprofile.R ~/.Rprofile
+ln -sf $REPO/Renviron.sh ~/.Renviron
 ln -sf $REPO/secret.R ~/.secret.R
 
 # systemd
@@ -53,3 +54,6 @@ ln -sf $REPO/fonts.conf ~/.config/fontconfig/fonts.conf
 ln -sf $REPO/gnome-apps/spacemacs.desktop ~/.local/share/applications/spacemacs.desktop
 ln -sf $REPO/gnome-apps/doom-emacs.desktop ~/.local/share/applications/doom-emacs.desktop
 ln -sf $REPO/gnome-apps/spacemacsclient.desktop ~/.local/share/applications/spacemacsclient.desktop
+
+# mozc
+ln -snf ~/Dropbox/mozc/.mozc ~/.mozc

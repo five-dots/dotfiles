@@ -49,7 +49,8 @@ This function should only modify configuration layer settings."
       auto-completion-tab-key-behavior 'complete)
 
      ;; better-defaults
-     ;; csharp
+     csharp
+     csv
 
      (c-c++
       :variables
@@ -83,6 +84,8 @@ This function should only modify configuration layer settings."
       org-enable-hugo-support t
       org-enable-github-support t)
 
+     pandoc
+
      (python
       :variables
       python-backend 'lsp
@@ -108,7 +111,10 @@ This function should only modify configuration layer settings."
       version-control-diff-side 'right ; or 'right
       )
 
+     yaml
+
      my-ess
+     my-fold
      my-japanese
      my-tools
      my-ui)

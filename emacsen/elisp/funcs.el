@@ -55,8 +55,8 @@ If prefix ARG is set, prompt for a directory to search from."
 (defun my/get-display-size (index)
   "Get display size by index."
   (let* ((attrs (display-monitor-attributes-list))
-	 (disp (nth index attrs))
-	 (size (assq 'geometry disp)))
+	       (disp (nth index attrs))
+	       (size (assq 'geometry disp)))
     ;; (x-size . y-size)
     (cons (nth 3 size) (nth 4 size))))
 
@@ -158,7 +158,7 @@ If prefix ARG is set, prompt for a directory to search from."
   (interactive)
   (toggle-input-method))
 
-(defun my-funs/deactivate-ime ()
+(defun my/deactivate-ime ()
   "Deactivate IME"
   (interactive)
   (when current-input-method
@@ -185,7 +185,7 @@ If prefix ARG is set, prompt for a directory to search from."
   (interactive)
   (set (make-local-variable 'company-backends)
        '((company-capf
-          company-dabbrev
+          ;; company-dabbrev
           company-files
           :with company-yasnippet))))
 
@@ -221,3 +221,8 @@ If prefix ARG is set, prompt for a directory to search from."
           company-dabbrev
           company-files
           :with company-yasnippet))))
+
+;; Change fringe width mainly for dap-mode breakpoints
+(defun my/change-fringe-width ()
+  (setq left-fringe-width 15
+        right-fringe-width 0))

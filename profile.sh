@@ -2,7 +2,7 @@
 # export PATH="$PATH:$HOME/bin:/opt/mssql-tools/bin:$HOME/julia/julia-1.0.2/bin:$HOME/.doom-emacs.d/bin"
 export REPOS="$HOME/Dropbox/repos"
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.doom-emacs.d/bin"
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.doom-emacs.d/bin:$HOME/.cask/bin"
 
 source ~/.iqfeed_credentials.sh
 

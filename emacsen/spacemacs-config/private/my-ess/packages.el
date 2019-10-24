@@ -14,6 +14,9 @@
     ess
     ess-R-data-view
     ess-smart-equals
+    (ess-r-spreadsheet
+     :location
+     (recipe :fetcher github :repo "five-dots/ess-r-spreadsheet"))
     ;; TODO snippets for R
     ))
 
@@ -33,6 +36,7 @@
 
     :hook
     (ess-r-mode . company-mode)
+    (inferior-ess-r-mode . company-mode)
     :commands run-ess-r
     :mode
     (("/R/.*\\.q\\'"      . ess-r-mode)
@@ -64,11 +68,9 @@
             (".ess_htsummary(%s, hlength = 14, tlength = 14)")
             ("summary(%s, maxsum = 20)")))
 
-    ;; ess spreadsheet
-    (add-to-list
-     'load-path
-     (expand-file-name "~/Dropbox/repos/private/elisp/ess-spreadsheet"))
-    (require 'ess-spreadsheet)
+    ;; %>% Pipe
+    (bind-keys :map evil-insert-state-map
+               ("C->". my/insert-R-pipe))
 
     ;; xref integration added with #96ef5a6
     (spacemacs|define-jump-handlers ess-r-mode 'xref-find-definitions)
@@ -101,7 +103,8 @@
       "ef" 'ess-eval-function
       "eS" 'ess-switch-process
       ;; view
-      "vs" 'ess-spreadsheet)
+      ;; "vs" 'ess-spreadsheet
+      )
 
     ;; inferior-ess-r-mode
     (evil-set-initial-state 'inferior-ess-r-mode 'normal)
@@ -116,7 +119,8 @@
       "h" 'ess-doc-map
       "p" 'ess-r-package-dev-map
       ;; view
-      "vs" 'ess-spreadsheet)
+      ;; "vs" 'ess-spreadsheet
+      )
 
     ;; Disable overlapped mappings
     (bind-keys :map ess-doc-map
@@ -177,15 +181,59 @@
       "q" 'kill-this-buffer
       "W" 'ess-display-help-in-browser)
 
-    ;; ctbl:table-mode (for ess-R-dv-ctable)
-    (evil-define-key 'normal ctbl:table-mode-map
-      "q" 'kill-this-buffer)
-
     ;; TODO window position management
+    ;; - ess-r-help-mode
+    ;; - ess-watch-mode
     ;; (add-to-list
     ;;  'display-buffer-alist
     ;;  '("^\\*help[R]" . ((display-buffer-same-window) (inhibit-same-window . nil))))
-    ))
+    ;; ctbl:table-mode (for ess-R-dv-ctable)
+
+    ;; TODO ess-watch-mode keymap
+    ;; - evilify keymaps
+    (evil-define-key 'normal ctbl:table-mode-map
+      "q" 'kill-this-buffer)
+
+    ;; TODO Configure by each package
+    ;; (use-package ess-tracebug)
+    ;; (use-package ess-help)
+
+    ;; TODO hydra map for ess-tracebug
+    (defhydra hydra-ess-tracebug (:color pink :hint nil)
+      "
+^Stepping^            ^Breakpoints^        ^Debugging^
+^^--------------------^^-------------------^^------------------------
+_sc_: Continue        _bt_: Toggle         _d`_: Traceback
+_sC_: Continue multi  _ba_: Add            _d~_: Callstack
+_sn_: Next            _bd_: Delete         _de_: Toggle error action
+_sN_: Next multi      _bD_: Delete all     _dd_: Flag for debugging
+_su_: Up frame        _bc_: Set condition  _du_: Unflag for debugging
+_sq_: Quit            _bl_: Set logger     _dw_: Watch window
+"
+      ;; Stepping
+      ("sc" ess-debug-command-continue)
+      ("sC" ess-debug-command-continue-multi)
+      ("sn" ess-debug-command-next)
+      ("sN" ess-debug-command-next-multi)
+      ("su" ess-debug-command-up)
+      ("sq" ess-debug-command-quit)
+      ;; Breakpoints
+      ("bt" ess-bp-toggle-state)
+      ("ba" ess-bp-set)
+      ("bd" ess-bp-kill)
+      ("bD" ess-bp-kill-all)
+      ("bc" ess-bp-set-conditional)
+      ("bl" ess-bp-set-logger)
+      ;; Debugging
+      ("d`" ess-show-traceback)
+      ("d~" ess-show-call-stack)
+      ("de" ess-debug-toggle-error-action)
+      ("dd" ess-debug-flag-for-debugging)
+      ("du" ess-debug-unflag-for-debugging)
+      ("dw" ess-watch)
+      ("q" nil "Close" :color blue))
+    (spacemacs/set-leader-keys-for-major-mode 'ess-r-mode
+      "d." 'hydra-ess-tracebug/body)))
 
 (defun my-ess/init-ess-R-data-view ()
   (use-package ess-R-data-view
@@ -198,12 +246,24 @@
         ;; "vp" 'ess-R-dv-pprint
         "vt" 'ess-R-dv-ctable))))
 
+(defun my-ess/init-ess-r-spreadsheet ()
+  (use-package ess-r-spreadsheet
+    :after (:any ess-r-mode inferior-ess-r-mode ess-r-transcript)
+    :commands (ess-r-spreadsheet)
+    :init
+    (dolist (mode '(ess-r-mode inferior-ess-r-mode))
+      (spacemacs/set-leader-keys-for-major-mode mode
+        ;; view
+        "vs" 'ess-r-spreadsheet))))
+
 (defun my-ess/init-ess-smart-equals ()
   (use-package ess-smart-equals
-    :init
-    (setq ess-smart-equals-extra-ops '(percent))
+    ;; :init
+    ;; (setq ess-smart-equals-extra-ops '(percent))
     :hook
     ((ess-r-mode . ess-smart-equals-mode)
      (inferior-ess-r-mode . ess-smart-equals-mode)
      (ess-r-transcript-mode . ess-smart-equals-mode)
      (ess-roxy-mode . ess-smart-equals-mode))))
+
+

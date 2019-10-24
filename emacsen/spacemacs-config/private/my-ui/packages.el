@@ -20,21 +20,16 @@
 (defun my-ui/init-centaur-tabs ()
   (use-package centaur-tabs
     :hook
+    (after-init . centaur-tabs-mode)
     ;; disabled modes
     (treemacs-mode . centaur-tabs-local-mode)
-    ;; (spacemacs-buffer-mode . centaur-tabs-local-mode)
-    ;; (help-mode . centaur-tabs-local-mode)
-    ;; (helpful-mode . centaur-tabs-local-mode)
-    ;; (org-agenda-mode . centaur-tabs-local-mode)
-    (after-init . centaur-tabs-mode)
 
     :config
     (setq centaur-tabs-style "bar")
     (setq centaur-tabs-set-icons t)
-    (setq centaur-tabs-height 22)
     (setq centaur-tabs-gray-out-icons t)
     (setq centaur-tabs-set-bar 'left)
-    (setq centaur-tabs-modified-marker t)
+    (setq centaur-tabs-cycle-scope 'tabs)
 
     ;; Prevent the access to specified buffers
     (defun centaur-tabs-hide-tab (x)
@@ -44,6 +39,7 @@
          (and (string-prefix-p "*" name)
               ;; (not) で除外するバッファを指定
               (not (string-prefix-p "*R" name))
+              (not (string-prefix-p "*Python" name))
               (not (string-prefix-p "*eshell" name)))
          ;; magit
          (string-prefix-p "COMMIT_EDITMSG" name)
@@ -55,10 +51,16 @@
       (list
        (cond
         ((memq major-mode '(inferior-ess-r-mode
+                            inferior-python-mode
                             eshell-mode))
          "repl")
-        ((or (derived-mode-p 'prog-mode)
-             (memq major-mode '(org-mode org-src-mode org-agenda-mode)))
+        ((derived-mode-p 'prog-mode)
+         "coding")
+        ((memq major-mode '(markdown-mode
+                            text-mode
+                            org-mode
+                            org-src-mode
+                            org-agenda-mode))
          "editing")
         ;; ((string-prefix-p "*" (buffer-name))
         ;;  "emacs")
