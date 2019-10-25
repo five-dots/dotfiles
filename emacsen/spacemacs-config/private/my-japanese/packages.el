@@ -92,11 +92,12 @@
   (use-package mozc
     :init
     (setq default-input-method "japanese-mozc")
+    :hook
+    (evil-insert-state-exit . my/deactivate-ime)
     :config
     (bind-keys
      :map evil-insert-state-map
-     ;; ([henkan] . my/deactivate-ime)
-     ([muhenkan] . my/toggle-ime))
+     ([muhenkan] . toggle-input-method))
     (setq mozc-candidate-style 'echo-area)
     ;; mozc.el で無変換キー/全角半角キーでちゃんと mozc-mode を切る
     ;; http://nos.hateblo.jp/entry/20120317/1331985029
@@ -108,6 +109,4 @@
         (progn
           ;; (message "%s" event) ; debug
           ad-do-it)))
-    (ad-activate 'mozc-handle-event)
-    ;; Disable IME w/o insert mode
-    (add-hook 'evil-insert-state-exit-hook 'my/deactivate-ime)))
+    (ad-activate 'mozc-handle-event)))

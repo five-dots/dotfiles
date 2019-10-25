@@ -1,3 +1,4 @@
+
 (require 'dash)
 (require 's)
 (require 'f)
@@ -129,37 +130,20 @@ If prefix ARG is set, prompt for a directory to search from."
 
 ;;; ess
 
-;; R assignment
-(defun my/insert-R-assign ()
-  "Insert <-"
-  (interactive)
-  (just-one-space 1)
-  (insert "<-")
-  (just-one-space 1))
-
 ;; R pipe
 (defun my/insert-R-pipe ()
-  "Insert %>%"
+  "Insert %>%."
   (interactive)
   (just-one-space 1)
   (insert "%>%")
-  (reindent-then-newline-and-indent))
+  ;; (reindent-then-newline-and-indent)
+  (just-one-space 1))
 
 
 ;;; ime
 
-(defun my/activate-ime ()
-  "Activate IME"
-  (interactive)
-  (unless current-input-method (toggle-input-method)))
-
-(defun my/toggle-ime ()
-  "Toggle IME"
-  (interactive)
-  (toggle-input-method))
-
 (defun my/deactivate-ime ()
-  "Deactivate IME"
+  "Deactivate IME."
   (interactive)
   (when current-input-method
     (evil-deactivate-input-method)
@@ -175,8 +159,12 @@ If prefix ARG is set, prompt for a directory to search from."
      (prefix "fig-")
      (suffix ".png"))
   (concat dir (make-temp-name prefix) suffix))
-
 (defalias 'get-babel-file 'my/get-babel-file)
+
+;; Update inline images
+(defun my/org-redisplay-inline-images ()
+  (when org-inline-image-overlays
+    (org-redisplay-inline-images)))
 
 
 ;;; company

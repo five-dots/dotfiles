@@ -8,8 +8,7 @@
 
 ;;; completion
 
-;; TODO keyword :with, :separate etc.
-;; TODO show-doc
+;; FIXME show-doc
 (after! company
   (setq completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
@@ -17,33 +16,19 @@
   (setq company-idle-delay 0.1)
   ;; company backend (non-lsp)
   (set-company-backend! 'emacs-lisp-mode
-    '(company-capf company-files company-yasnippet))
+    '(company-capf company-files :with company-yasnippet))
   (set-company-backend! 'org-mode
     '(company-dabbrev company-files company-yasnippet))
   (when (featurep! :lang ess)
     (set-company-backend! 'ess-r-mode
-      '(company-capf company-dabbrev company-files company-yasnippet)))
+      '(company-capf company-files company-yasnippet)))
   (set-company-backend! 'stan-mode
-    '(company-stan-backend company-dabbrev company-files company-yasnippet))
-  (map!
-   (:when (featurep! :completion company)
-     "M-," #'+company/complete
-     (:after company
-       (:map company-active-map
-         "C-SPC" #'company-complete-common
-         "TAB"   #'company-complete-selection
-         [tab]   #'company-complete-selection
-         "M-."   #'company-filter-candidates
-         "M-/"   #'company-search-candidates
-         "M-d"   #'company-next-page
-         "M-i"   #'company-show-doc-buffer
-         "M-u"   #'company-previous-page
-         "M-w"   #'company-show-location)))))
+    '(company-stan-backend company-files company-yasnippet)))
 
 (use-package! company-lsp
   :init
   (setq +lsp-company-backend
-        '(company-lsp company-dabbrev company-files company-yasnippet)))
+        '(company-lsp company-files :with company-yasnippet)))
 
 (after! ivy
   (setq ivy-use-virtual-buffers t)
@@ -80,19 +65,15 @@
 (after! treemacs
   (setq treemacs-show-cursor t)
   (setq treemacs-position 'right)
-  (treemacs-resize-icons 18)
-  (map!
-   (:when (featurep! :ui treemacs)
-     (:map treemacs-mode-map
-       "C-M-h" #'evil-window-left))))
+  (treemacs-resize-icons 18))
 
 (use-package! hide-mode-line
   :hook (treemacs-mode . hide-mode-line-mode))
 
 (use-package! page-break-lines
   :config
-  (add-to-list 'page-break-lines-modes 'ess-r-mode)
-  (add-to-list 'page-break-lines-modes 'python-mode)
+  (dolist (mode '(ess-r-mode python-mode))
+    (add-to-list 'page-break-lines-modes mode))
   (global-page-break-lines-mode))
 
 ;; font
@@ -103,9 +84,6 @@
     (setq font-size 19))
   (setq doom-font (font-spec :family "Consolas NF" :size font-size))
   (setq doom-unicode-font (font-spec :family "MeiryoKe_Console" :size font-size))
-  ;; skk の ▽ フォントを確実に変更する
-  (add-hook 'skk-load-hook
-            (λ! (set-fontset-font nil '#x25bd (font-spec :family "MeiryoKe_Console"))))
   ;; |abcdef ghijkl|
   ;; |ABCDEF GHIJKL|
   ;; |'";:-+ =/\~`?|
@@ -118,7 +96,7 @@
   (add-to-list 'face-font-rescale-alist '(".*Meiryo*." . 1.09)))
 
 (when window-system
-  (set-frame-size (selected-frame) 120 50))
+  (set-frame-size (selected-frame) 100 40))
 
 
 ;;; tools
@@ -126,42 +104,31 @@
 (when (featurep! :ui popup)
   (set-popup-rules!
     '(
+      ;; TODO inferior-ess-r-mode, ess-r-help-mode
       ("^\\*help[R](" :ignore t :side right :select t)
       ("^\\*R" :ignore t)
       ("^\\*ess-describe\\*$" :ignore t) ; ess-describe-object-at-point
       ("^\\*General Keybindings\\*$" :ignore t)
       ("^\\*lsp session\\*$" :ignore t)
+      ;; TODO company-diag
       ;; TODO google-translate
       ;; TODO company-doc
       )))
 
 (use-package! google-this
-  :defer t
-  :init
-  (map!
-   :leader
-   (:prefix-map ("/ g " . "google")
-     "g" #'google-this)))
+  :defer t)
 
 (use-package! google-translate
   :init
   (setq google-translate-pop-up-buffer-set-focus t)
   (setq google-translate-default-source-language "en")
-  (setq google-translate-default-target-language "ja")
-  (map!
-   :leader
-   (:prefix-map ("/ g " . "google")
-     "t" #'google-translate-at-point
-     "T" #'google-translate-at-point-reverse
-     "q" #'google-translate-query-translate
-     "Q" #'google-translate-query-translate-reverse)))
+  (setq google-translate-default-target-language "ja"))
 
 (use-package! dap-mode
   :defer t
   :hook (lsp-mode . dap-mode)
   :init
-  (setq dap-utils-extension-path
-        (expand-file-name "extension" doom-local-dir))
+  (setq dap-utils-extension-path doom-etc-dir)
   (setq dap-gdb-lldb-path
         (expand-file-name "vscode/webfreak.debug" dap-utils-extension-path))
   (use-package! dap-ui
@@ -174,17 +141,32 @@
   (setq dap-breakpoints-file
         (expand-file-name "dap-breakpoints" doom-cache-dir)))
 
+(use-package! flycheck
+  :hook
+  (ess-r-mode . flycheck-mode)
+  :config
+  ;; Disable specific linters from the default
+  (setq flycheck-lintr-linters
+        "default_linters[-which(names(default_linters) == 'commented_code_linter')]"))
+
 (use-package! skk
+  :disabled t
   :load-path ".local/straight/build/ddskk"
   :defer t
   :commands skk-mode
+
   :hook
   ;; Always start using latin mode
   (evil-insert-state-entry . skk-mode)
+  ;; Disable skk mode when entering normal state
+  (evil-normal-state-entry . (lambda () (skk-mode -1)))
   (skk-mode . skk-latin-mode-on)
+
   :init
   (setq default-input-method "japanese-skk")
   :config
+  ;; No new line by kakutei
+  (setq skk-egg-like-newline t)
   ;; Henkan candidates
   (setq skk-show-inline t)
   ;; Cursor color
@@ -192,36 +174,39 @@
   (setq skk-cursor-katakana-color "blue violet")
   ;; Record file
   (setq skk-record-file "~/Dropbox/skk/record")
+
+  ;;; Jisyo
+  (setq skk-save-jisyo-instantly t)
   ;; Personal jisyo
   (setq skk-jisyo "~/Dropbox/skk/jisyo/skk-jisyo")
   (setq skk-backup-jisyo "~/Dropbox/skk/jisyo/skk-jisyo.bak")
   ;; large jisyo
   (setq skk-large-jisyo "~/Dropbox/skk/jisyo/SKK-JISYO.L")
   ;; Extra jisyo
-  (setq skk-extra-jisyo-file-list
-        (list "~/Dropbox/skk/jisyo/SKK-JISYO.JIS2"
-        '("~/Dropbox/skk/jisyo/SKK-JISYO.JIS3_4" . euc-jisx0213)
-        "~/Dropbox/skk/jisyo/SKK-JISYO.assoc"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.notes"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.geo"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.hukugougo"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.jinmei"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.law"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.lisp"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.okinawa"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.propernoun"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.pubdic+"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.station"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.zipcode"
-        "~/Dropbox/skk/jisyo/SKK-JISYO.office.zipcode"))
-  ;; Disable skk mode when entering normal state
-  (add-hook 'evil-normal-state-entry-hook
-            '(lambda () (when skk-mode (skk-mode -1))))
+  ;; (setq skk-extra-jisyo-file-list
+  ;;       (list "~/Dropbox/skk/jisyo/SKK-JISYO.JIS2"
+  ;;       '("~/Dropbox/skk/jisyo/SKK-JISYO.JIS3_4" . euc-jisx0213)
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.assoc"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.notes"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.geo"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.hukugougo"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.jinmei"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.law"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.lisp"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.okinawa"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.propernoun"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.pubdic+"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.station"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.zipcode"
+  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.office.zipcode"))
   ;; saving skk jisyo ... done というメッセージが表示されるのを省略
   ;; http://slackwareirregulars.blogspot.com/2018/03/skk.html
   (defun skk-save-jisyo (&optional quiet)
     (interactive "P")
-    (funcall skk-save-jisyo-function 'quiet)))
+    (funcall skk-save-jisyo-function 'quiet))
+  ;; skk の ▽ フォントを確実に変更する
+  (add-hook 'skk-load-hook
+            (λ! (set-fontset-font nil '#x25bd (font-spec :family "MeiryoKe_Console")))))
 
 (use-package! pangu-spacing
   :init
@@ -234,18 +219,16 @@
   (setq pangu-spacing-real-insert-separtor t)
   (global-pangu-spacing-mode 1))
 
+;; TODO enable in minibuffer
 (use-package! mozc
-  :disabled t
-  :config
-  (defun my/deactivate-ime ()
-    "Deactivate IME"
-    (interactive)
-    (when current-input-method
-      (evil-deactivate-input-method)
-      (deactivate-input-method)))
+  ;; :disabled t
+  :init
   (setq default-input-method "japanese-mozc")
+  :hook
+  (evil-insert-state-exit . my/deactivate-ime)
+  :config
   (setq mozc-candidate-style 'echo-area)
-  ;; mozc.el で無変換キー/全角半角キーでちゃんと mozc-mode を切る
+  ;; Disable mozc-mode properly by [muhenkan]/[zenkaku-hankaku]
   ;; http://nos.hateblo.jp/entry/20120317/1331985029
   (defadvice mozc-handle-event (around intercept-keys (event))
     (if (member event (list 'zenkaku-hankaku 'henkan))
@@ -255,26 +238,23 @@
       (progn
         ; (message "%s" event) ; debug
         ad-do-it)))
-  (ad-activate 'mozc-handle-event)
-  ;; Disable IME w/o insert mode
-  (add-hook 'evil-insert-state-exit-hook 'my/deactivate-ime)
-  (map!
-   :i [muhenkan] #'toggle-input-method
-   :i [henkan] #'my/deactivate-ime))
+  (ad-activate 'mozc-handle-event))
 
 
 ;;; lang
-(after! org
-  ;;; Appearance
+(use-package! org
+  :hook
+  (org-mode . visual-line-mode)
+  ;; (org-babel-after-execute . my/org-redisplay-inline-images)
+  :config
   ;; Replace "-" with "•"
   (font-lock-add-keywords
    'org-mode
    '(("^ *\\([-]\\) "
       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
   (setq org-hide-emphasis-markers t)
-
-  ;;; faces
-  (set-face-attribute 'org-level-1 nil :slant 'italic :height 1.1)
+  ;; faces
+  (set-face-attribute 'org-level-1 nil :slant 'italic :height 1.0)
   ;; (set-face-attribute 'org-block-end-line nil :foreground "#23272e")
 
   ;;; org-agenda
@@ -291,197 +271,80 @@
   ;;         (todo   . " %i %-12:c")
   ;;         (tags   . " %i %-12:c")
   ;;         (search . " %i %-12:c"))))
+  ;; (set-face-attribute 'org-block-end-line nil :foreground "#23272e")
 
-  ;;; Latex preview
-  (setq org-preview-latex-image-directory "~/Dropbox/memo/img/latex/")
+  ;; Latex preview
   ;; (setq org-preview-latex-default-process 'dvisvgm)
-
-  ;; Custom function to get ramdom file name
-  (cl-defun my/get-babel-file
-    (&key
-     (dir (expand-file-name "~/Dropbox/memo/img/babel/"))
-     (prefix "fig-")
-     (suffix ".png"))
-    (concat dir (make-temp-name prefix) suffix))
-  (defalias 'get-babel-file 'my/get-babel-file)
-
-  ;; Update inline images
-  (defun my/org-redisplay-inline-images ()
-    (when org-inline-image-overlays
-      (org-redisplay-inline-images)))
-  (add-hook 'org-babel-after-execute-hook 'my/org-redisplay-inline-images))
+  (setq org-preview-latex-image-directory "~/Dropbox/memo/img/latex/"))
 
 (after! org-bullets
   (setq org-bullets-bullet-list '("" "" "" "" "" "" "" "" "" "")))
 
+;; TODO Complete hydra map for ess-tracebug
 (after! ess
+  (setq ess-offset-continued '(straight . 2)) ; or '(cascade . 2)
   (setq ess-eldoc-show-on-symbol t)
   (setq ess-history-file nil)
   (setq ess-use-R-completion nil)
   (setq ess-use-auto-complete nil)
   (setq ess-use-ido nil)
+
   ;; object popup by tooltip
   (setq ess-describe-at-point-method nil)
   (setq x-gtk-use-system-tooltips nil)
   (setq tooltip-hide-delay 10)
   (setq ess-R-describe-object-at-point-commands
         '(("str(%s)")
-          (".ess_htsummary(%s, hlength = 14, tlength = 14)")
+          (".ess_htsummary(%s, hlength = 5, tlength = 5)")
           ("summary(%s, maxsum = 20)")))
-  ;; ess spreadsheet
-  (add-to-list 'load-path (expand-file-name "~/Dropbox/repos/private/elisp/ess-spreadsheet"))
-  (require 'ess-spreadsheet)
 
-  (map!
-   :localleader
-   :map ess-r-mode-map
-   "." #'ess-describe-object-at-point
-   ;; predefined map
-   "d" #'ess-dev-map
-   "h" #'ess-doc-map
-   "p" #'ess-r-package-dev-map
-   "x" #'ess-extra-map
-   "v" nil
+  (evil-set-initial-state 'inferior-ess-r-mode 'normal)
+  ;; (evil-define-key 'normal ctbl:table-mode-map
+  ;;   "q" 'kill-this-buffer)
 
-   ;; disable unsed mappings
-   [tab] nil
-   [backtab] nil
-   "b" nil
-   "B" nil
-   "D" nil
-   "f" nil
-   "F" nil
-   "l" nil
-   "L" nil
-   "r" nil
-   "R" nil
-
-   (:prefix ("c" . "chunk"))
-
-   (:prefix ("e" . "eval")
-     "b" #'ess-eval-buffer
-     "f" #'ess-eval-function
-     "s" #'ess-switch-to-inferior-or-script-buffer
-     "S" #'ess-switch-process)
-
-   (:prefix ("v" . "view")
-     "p" #'ess-R-dv-pprint
-     "t" #'ess-R-dv-ctable
-     "s" #'ess-spreadsheet
-     "~" nil
-     "`" nil
-     "?" nil
-     "0" nil
-     "1" nil
-     "2" nil
-     "3" nil
-     "4" nil
-     "5" nil
-     "6" nil
-     "7" nil
-     "8" nil
-     "9" nil
-     "b" nil
-     "d" nil
-     "e" nil
-     "i" nil
-     "k" nil
-     "l" nil
-     "n" nil
-     "o" nil
-     "u" nil
-     "w" nil
-     "B" nil
-     "K" nil
-     "L" nil
-     "I" nil
-     "T" nil
-     "C-b" nil
-     "C-d" nil
-     "C-e" nil
-     "C-k" nil
-     "C-l" nil
-     "C-n" nil
-     "C-o" nil
-     "C-p" nil
-     "C-s" nil
-     "C-u" nil
-     "C-w" nil)
-
-   (:prefix ("d" . "dev")
-     "C-b" nil
-     "C-d" nil
-     "C-e" nil
-     "C-k" nil
-     "C-l" nil
-     "C-n" nil
-     "C-o" nil
-     "C-p" nil
-     "C-s" nil
-     "C-u" nil
-     "C-w" nil)
-
-   (:prefix ("h" . "help")
-     "RET" nil
-     "TAB" nil
-     "<C-return>" nil
-     "<down>" nil
-     "<up>" nil
-     "C-a" nil
-     "C-d" nil
-     "C-e" nil
-     "C-o" nil
-     "C-v" nil
-     "C-w" nil
-     "m" nil
-     "p" nil
-     "t" nil)
-
-   (:prefix ("p" . "package-dev")
-     "C-a" nil
-     "C-b" nil
-     "C-c" nil
-     "c C-c" nil
-     "c C-w" nil
-     "C-d" nil
-     "C-e" nil
-     "C-l" nil
-     "C-s" nil
-     "C-t" nil
-     "C-u" nil
-     (:prefix ("c" . "check")))
-
-   (:prefix ("x" . "extra")
-     "TAB" nil
-     "C-d" nil
-     "C-e" nil
-     "C-l" nil
-     "C-r" nil
-     "C-s" nil
-     "C-t" nil
-     "C-w" nil))
-
-  (map!
-   :map inferior-ess-r-mode-map
-   :n "C-M-h" #'evil-window-left
-   :n "C-M-j" #'evil-window-down
-   :n "C-M-k" #'evil-window-up
-   :n "C-M-l" #'evil-window-right
-   :i "C-l" #'comint-clear-buffer)
-
-  ;; ess-help-mode-map
-  ;; (map!
-  ;;  :localleader
-  ;;  :map ess-help-mode-map)
-  )
+  (defhydra hydra-ess-tracebug (:color pink :hint nil)
+      "
+^Stepping^            ^Breakpoints^        ^Debugging^
+^^--------------------^^-------------------^^------------------------
+_sc_: Continue        _bt_: Toggle         _d`_: Traceback
+_sC_: Continue multi  _ba_: Add            _d~_: Callstack
+_sn_: Next            _bd_: Delete         _de_: Toggle error action
+_sN_: Next multi      _bD_: Delete all     _dd_: Flag for debugging
+_su_: Up frame        _bc_: Set condition  _du_: Unflag for debugging
+_sq_: Quit            _bl_: Set logger     _dw_: Watch window
+"
+      ;; Stepping
+      ("sc" ess-debug-command-continue)
+      ("sC" ess-debug-command-continue-multi)
+      ("sn" ess-debug-command-next)
+      ("sN" ess-debug-command-next-multi)
+      ("su" ess-debug-command-up)
+      ("sq" ess-debug-command-quit)
+      ;; Breakpoints
+      ("bt" ess-bp-toggle-state)
+      ("ba" ess-bp-set)
+      ("bd" ess-bp-kill)
+      ("bD" ess-bp-kill-all)
+      ("bc" ess-bp-set-conditional)
+      ("bl" ess-bp-set-logger)
+      ;; Debugging
+      ("d`" ess-show-traceback)
+      ("d~" ess-show-call-stack)
+      ("de" ess-debug-toggle-error-action)
+      ("dd" ess-debug-flag-for-debugging)
+      ("du" ess-debug-unflag-for-debugging)
+      ("dw" ess-watch)
+      ("q" nil "Close" :color blue)))
 
 (use-package! ess-smart-equals
-  :init
-  (setq ess-smart-equals-extra-ops '(percent))
   :hook
   ((ess-r-mode . ess-smart-equals-mode)
    (inferior-ess-r-mode . ess-smart-equals-mode)
    (ess-r-transcript-mode . ess-smart-equals-mode)))
+
+(use-package! ess-r-spreadsheet
+  :after (:any ess-r-mode inferior-ess-r-mode ess-r-transcript)
+  :commands (ess-r-spreadsheet))
 
 (use-package! stan-mode
   :mode ("\\.stan\\'" . stan-mode)
@@ -503,7 +366,13 @@
     doom-local-dir)))
 
 (when (featurep! :lang python)
-  (setq org-babel-python-command "python3"))
+  ;; (add-to-list 'python-shell-completion-native-disabled-interpreters "python3")
+  ;; (setq python-shell-interpreter-args "-i")
+  (setq org-babel-python-command "python3")
+
+  ;; https://github.com/jorgenschaefer/elpy/issues/733
+  (setq python-shell-prompt-detect-enabled nil)
+  (setq python-shell-prompt-detect-failure-warning nil))
 
 (use-package! crontab-mode
   :mode (("\\.cron\\(tab\\)?\\'" . crontab-mode)
@@ -511,11 +380,10 @@
 
 
 ;;; keymap
+;; TODO prefix: g, z, [, ], @(macro)
 
 ;; global
 (map!
- :nv "<C-return>" nil
- :i "C-j" nil ; for skk
  :nv "H"  #'evil-first-non-blank-of-visual-line
  :nv "J"  #'evil-forward-paragraph
  :nv "K"  #'evil-backward-paragraph
@@ -532,18 +400,17 @@
 ;; leader
 (map!
  :leader
- :desc "M-x" "SPC" #'execute-extended-command
- :desc "Project sidebar" "0" #'treemacs-select-window
- :desc "Resume last search" "."
+ :desc "M-x"                   "SPC" #'execute-extended-command
+ :desc "Project sidebar"       "0"   #'treemacs-select-window
+ :desc "Switch buffer"         ","   #'switch-to-buffer
+ :desc "Switch to last buffer" "TAB" #'evil-switch-to-windows-last-buffer
+ :desc "Resume last search"    "."
  (cond ((featurep! :completion ivy) #'ivy-resume)
        ((featurep! :completion helm) #'helm-resume))
- :desc "Switch buffer" "," #'switch-to-buffer
- (:when (featurep! :ui workspaces)
-   :desc "Switch workspace buffer" "<" #'persp-switch-to-buffer
-   :desc "Switch buffer" "," #'switch-to-buffer)
- :desc "Switch to last buffer" "TAB" #'evil-switch-to-windows-last-buffer
  ;; workspace
  (:when (featurep! :ui workspaces)
+   :desc "Switch workspace buffer" "<" #'persp-switch-to-buffer
+   :desc "Switch buffer" "," #'switch-to-buffer
    (:prefix-map ("W" . "workspace")
      :desc "Display tab bar"           "TAB" #'+workspace/display
      :desc "Switch workspace"          "."   #'+workspace/switch-to
@@ -569,7 +436,43 @@
      :desc "Switch to final workspace" "0"   #'+workspace/switch-to-final))
  ":" nil
  "'" nil
- "`" nil)
+ "`" nil
+ ;; google search
+ (:prefix-map ("/ g " . "google")
+   "g" #'google-this
+   "t" #'google-translate-at-point
+   "T" #'google-translate-at-point-reverse
+   "q" #'google-translate-query-translate
+   "Q" #'google-translate-query-translate-reverse))
+
+;; company
+(map!
+ (:after company
+   :i "M-," #'+company/complete
+   (:map company-active-map
+     "C-SPC" #'company-complete-common
+     "TAB"   #'company-complete-selection
+     [tab]   #'company-complete-selection
+     "M-."   #'company-filter-candidates
+     "M-/"   #'company-search-candidates
+     "M-d"   #'company-next-page
+     "M-i"   #'company-show-doc-buffer
+     ;; "M-p"   #'company-quickhelp-manual-begin
+     "M-u"   #'company-previous-page
+     "M-w"   #'company-show-location
+     "M-n"   nil
+     "M-p"   nil
+     "M-v"   nil)))
+
+;; treemacs
+(map!
+ (:when (featurep! :ui treemacs)
+   (:map treemacs-mode-map
+     "C-M-h" #'evil-window-left
+     "C-M-h" #'evil-window-left
+     "C-M-j" #'evil-window-down
+     "C-M-k" #'evil-window-up
+     "C-M-l" #'evil-window-right)))
 
 ;; evil-window-map
 (map!
@@ -600,27 +503,170 @@
    "C-S-s" nil
    "C-S-w" nil))
 
-;; TODO prefix key
 ;; emacs-lisp-mode-map
 (map!
  :localleader
- :map emacs-lisp-mode-map
- :nv "e" nil
- :nv "h" #'helpful-at-point
- (:prefix-map ("e" . "eval")
-   :nv "b" #'eval-buffer
-   :nv "e" #'eval-last-sexp
-   :nv "f" #'eval-defun
-   :nv "r" #'eval-region
-   :nv "x" #'lispxmp))
-
-;; evil-org-mode-map
-(map!
- :map evil-org-mode-map
- :nvi "C-j" nil)
+ (:map emacs-lisp-mode-map
+   :nv "h" #'helpful-at-point
+   (:prefix-map ("e" . "eval")
+     :nv "b" #'eval-buffer
+     :nv "e" #'eval-last-sexp
+     :nv "f" #'eval-defun
+     :nv "r" #'eval-region
+     :nv "x" #'lispxmp)))
 
 ;; org-mode-map
+;; TODO complete keymap
 (map!
- :map org-mode-map
- "C-j" nil)
+ (:after org
+   :localleader
+   (:map org-mode-map
+     "," #'org-ctrl-c-ctrl-c)))
 
+;; ddskk
+(map!
+ (:after skk
+   :i "C-j" nil ; disable +default/newline
+   (:map skk-latin-mode-map
+     [muhenkan] #'skk-kakutei)))
+
+;; mozc
+(map!
+ (:after mozc
+   :i [muhenkan] #'toggle-input-method
+   :i [henkan] #'my/deactivate-ime))
+
+;; ess
+;; TODO ess-watch-mode-map and others
+(map!
+ (:after ess
+   (:map ess-dev-map
+     "."   #'hydra-ess-tracebug/body
+     "C-b" nil
+     "C-d" nil
+     "C-e" nil
+     "C-k" nil
+     "C-l" nil
+     "C-n" nil
+     "C-o" nil
+     "C-p" nil
+     "C-s" nil
+     "C-u" nil
+     "C-w" nil)
+
+   (:map ess-extra-map
+     "b"   #'ess-eval-buffer
+     "f"   #'ess-eval-function
+     "s"   #'ess-switch-process
+     "S"   #'ess-set-style
+     "TAB" nil
+     "C-d" nil
+     "C-e" nil
+     "C-l" nil
+     "C-r" nil
+     "C-s" nil
+     "C-t" nil
+     "C-w" nil)
+
+   (:map ess-doc-map
+     "RET" nil
+     "TAB" nil
+     [C-return] nil
+     [down] nil
+     [up] nil
+     "C-a" nil
+     "C-d" nil
+     "C-e" nil
+     "C-o" nil
+     "C-v" nil
+     "C-w" nil
+     "d" nil
+     "m" nil
+     "p" nil
+     "t" nil)
+
+   (:map ess-r-package-dev-map
+       "C-a" nil
+       "C-b" nil
+       "C-c" nil
+       "c C-c" nil
+       "c C-w" nil
+       "C-d" nil
+       "C-e" nil
+       "C-l" nil
+       "C-s" nil
+       "C-t" nil
+       "C-u" nil)
+
+   (:map inferior-ess-r-mode-map
+     :i "," #'ess-smart-comma)
+
+   :nv "<C-return>" nil ; disable +default/newline-below
+   :i "C->" #'my/insert-R-pipe
+   :localleader
+   (:map ess-r-mode-map
+     ","   #'ess-eval-region-or-function-or-paragraph
+     "."   #'ess-describe-object-at-point
+     "TAB" #'ess-switch-to-inferior-or-script-buffer
+
+     ;; predefined map
+     "d" #'ess-dev-map           ; d=debug
+     "e" #'ess-extra-map         ; e=eval
+     "h" #'ess-doc-map           ; h=help
+     "p" #'ess-r-package-dev-map ; p=package-dev
+     "v" nil                     ; v=view
+     "x" nil
+
+     [tab] nil
+     [backtab] nil
+     "b" nil
+     "B" nil
+     "D" nil
+     "f" nil
+     "F" nil
+     "l" nil
+     "L" nil
+     "r" nil
+     "R" nil
+
+     (:prefix ("c" . "chunk"))
+     (:prefix ("d" . "debug"))
+     (:prefix ("e" . "eval"))
+     (:prefix ("h" . "help"))
+     (:prefix ("p" . "package-dev"))
+     (:prefix ("pc" . "check"))
+     (:prefix ("s" . "show")
+       "p" #'ess-R-dv-pprint
+       "t" #'ess-R-dv-ctable
+       "s" #'ess-r-spreadsheet
+       ))
+
+   :localleader
+   (:map inferior-ess-r-mode-map
+     ","   #'ess-smart-comma
+     "."   #'ess-describe-object-at-point
+     "TAB" #'ess-switch-to-inferior-or-script-buffer))
+
+ (:after ess-help
+   :map ess-r-help-mode-map
+   :n "J" #'ess-skip-to-next-section
+   :n "K" #'ess-skip-to-previous-section
+   :n "W" #'ess-display-help-in-browser))
+
+;; comint-mode
+(map!
+ (:map comint-mode-map
+   :n "C-M-h" #'evil-window-left
+   :n "C-M-j" #'evil-window-down
+   :n "C-M-k" #'evil-window-up
+   :n "C-M-l" #'evil-window-right
+   :ni "C-l"  #'comint-clear-buffer))
+
+;; omnisharp
+(map!
+ (:after omnisharp
+   :localleader
+   (:map omnisharp-mode-map
+     (:prefix ("g" . "goto"))
+     (:prefix ("r" . "refactor"))
+     (:prefix ("t" . "test")))))
