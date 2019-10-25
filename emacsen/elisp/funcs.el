@@ -130,14 +130,14 @@ If prefix ARG is set, prompt for a directory to search from."
 
 ;;; ess
 
-;; R pipe
 (defun my/insert-R-pipe ()
   "Insert %>%."
   (interactive)
   (just-one-space 1)
   (insert "%>%")
   ;; (reindent-then-newline-and-indent)
-  (just-one-space 1))
+  ;; (just-one-space 1)
+  )
 
 
 ;;; ime

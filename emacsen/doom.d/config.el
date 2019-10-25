@@ -13,7 +13,7 @@
   (setq completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
   (setq read-buffer-completion-ignore-case t)
-  (setq company-idle-delay 0.1)
+  (setq company-idle-delay 0.5)
   ;; company backend (non-lsp)
   (set-company-backend! 'emacs-lisp-mode
     '(company-capf company-files :with company-yasnippet))
@@ -40,8 +40,8 @@
   :config
   (setq ivy-posframe-border-width 1)
   (setq ivy-posframe-min-width 90)
-  (setq ivy-posframe-min-height 11)
-  (setq ivy-posframe-height 11)
+  (setq ivy-posframe-min-height 15)
+  (setq ivy-posframe-height 15)
   (setq ivy-posframe-parameters
         '((left-fringe . 5)
           (right-fringe . 5)))
@@ -98,6 +98,11 @@
 (when window-system
   (set-frame-size (selected-frame) 100 40))
 
+(use-package! beacon
+  :hook (after-init . beacon-mode)
+  :config
+  (setq beacon-blink-when-window-scrolls nil))
+
 
 ;;; tools
 
@@ -124,30 +129,18 @@
   (setq google-translate-default-source-language "en")
   (setq google-translate-default-target-language "ja"))
 
-(use-package! dap-mode
-  :defer t
-  :hook (lsp-mode . dap-mode)
-  :init
-  (setq dap-utils-extension-path doom-etc-dir)
-  (setq dap-gdb-lldb-path
-        (expand-file-name "vscode/webfreak.debug" dap-utils-extension-path))
-  (use-package! dap-ui
-    :hook (dap-mode . dap-ui-mode))
-  (use-package! dap-python
-    :config
-    (setq dap-python-executable "python3"))
-  (use-package! dap-gdb-lldb)
-  :config
-  (setq dap-breakpoints-file
-        (expand-file-name "dap-breakpoints" doom-cache-dir)))
-
-(use-package! flycheck
+(use-package! rainbow-delimiters
   :hook
-  (ess-r-mode . flycheck-mode)
+  (ess-r-mode . rainbow-delimiters-mode))
+
+(use-package! exec-path-from-shell
   :config
-  ;; Disable specific linters from the default
-  (setq flycheck-lintr-linters
-        "default_linters[-which(names(default_linters) == 'commented_code_linter')]"))
+  (exec-path-from-shell-initialize))
+
+(use-package! recentf-ext)
+
+(after! recentf
+  (setq recentf-max-saved-items 1000))
 
 (use-package! skk
   :disabled t
@@ -242,6 +235,32 @@
 
 
 ;;; lang
+
+(use-package! dap-mode
+  :defer t
+  :hook (lsp-mode . dap-mode)
+  :init
+  (setq dap-utils-extension-path doom-etc-dir)
+  (setq dap-gdb-lldb-path
+        (expand-file-name "vscode/webfreak.debug" dap-utils-extension-path))
+  (use-package! dap-ui
+    :hook (dap-mode . dap-ui-mode))
+  (use-package! dap-python
+    :config
+    (setq dap-python-executable "python3"))
+  (use-package! dap-gdb-lldb)
+  :config
+  (setq dap-breakpoints-file
+        (expand-file-name "dap-breakpoints" doom-cache-dir)))
+
+(use-package! flycheck
+  :hook
+  (ess-r-mode . flycheck-mode)
+  :config
+  ;; Disable specific linters from the default
+  (setq flycheck-lintr-linters
+        "default_linters[-which(names(default_linters) == 'commented_code_linter')]"))
+
 (use-package! org
   :hook
   (org-mode . visual-line-mode)
@@ -373,6 +392,10 @@ _sq_: Quit            _bl_: Set logger     _dw_: Watch window
   ;; https://github.com/jorgenschaefer/elpy/issues/733
   (setq python-shell-prompt-detect-enabled nil)
   (setq python-shell-prompt-detect-failure-warning nil))
+
+(use-package! dotnet
+  :hook
+  (csharp-mode . dotnet-mode))
 
 (use-package! crontab-mode
   :mode (("\\.cron\\(tab\\)?\\'" . crontab-mode)
@@ -663,6 +686,7 @@ _sq_: Quit            _bl_: Set logger     _dw_: Watch window
    :ni "C-l"  #'comint-clear-buffer))
 
 ;; omnisharp
+;; TODO omnisharp ではなく LSP が優先されているためうまく動かない
 (map!
  (:after omnisharp
    :localleader
@@ -670,3 +694,26 @@ _sq_: Quit            _bl_: Set logger     _dw_: Watch window
      (:prefix ("g" . "goto"))
      (:prefix ("r" . "refactor"))
      (:prefix ("t" . "test")))))
+
+;; dotnet
+(map!
+ (:after dotnet
+   :localleader
+   (:map csharp-mode-map
+     (:prefix ("c" . "dotnet-cli")
+       :n "." #'dotnet-run
+       :n "b" #'dotnet-build
+       :n "c" #'dotnet-clean
+       :n "n" #'dotnet-new
+       :n "p" #'dotnet-add-package
+       :n "r" #'dotnet-add-reference
+       :n "t" #'dotnet-test)
+     ;; goto
+     (:prefix ("cg" . "goto")
+       :n "p" #'dotnet-goto-csproj
+       :n "s" #'dotnet-goto-sln)
+     ;; sln
+     (:prefix ("cs" . "sln")
+       :n "l" #'dotnet-sln-list
+       :n "n" #'dotnet-sln-new
+       :n "r" #'dotnet-sln-remove))))
