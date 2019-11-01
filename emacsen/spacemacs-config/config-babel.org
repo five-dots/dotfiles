@@ -32,18 +32,19 @@
    ("C-M-k" . evil-window-up)
    ("C-M-l" . evil-window-right)
    ;; fold
-   ("za" . +fold/toggle)
-   ("zo" . +fold/open)
-   ("zO" . +fold/open)
-   ("zr" . +fold/open-all)
-   ("zc" . +fold/close)
-   ("zC" . +fold/close)
-   ("zm" . +fold/close-all)
-   ("zj" . +fold/next)
-   ("zk" . +fold/previous))
-  (bind-keys
-   :map evil-insert-state-map
-   ("M-," . company-manual-begin)))
+   ;; ("za" . +fold/toggle)
+   ;; ("zo" . +fold/open)
+   ;; ("zO" . +fold/open)
+   ;; ("zr" . +fold/open-all)
+   ;; ("zc" . +fold/close)
+   ;; ("zC" . +fold/close)
+   ;; ("zm" . +fold/close-all)
+   ;; ("zj" . +fold/next)
+   ;; ("zk" . +fold/previous))
+  ;; (bind-keys
+  ;;  :map evil-insert-state-map
+  ;;  ("M-," . company-manual-begin))
+  )
 #+end_src
 
 ** version controll
@@ -63,6 +64,9 @@
   (setq read-buffer-completion-ignore-case t)
   (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 2)
+  (bind-keys
+   :map evil-insert-state-map
+   ("M-," . company-manual-begin))
   (bind-keys
    :map company-active-map
    ("M-." . company-filter-candidates)
@@ -196,8 +200,8 @@
 
 #+begin_src emacs-lisp :results silent
 (use-package lsp-mode
-  :init
-  (add-hook 'lsp-mode-hook 'my/set-company-backend-for-lsp)
+  ;; :init
+  ;; (add-hook 'lsp-mode-hook 'my/set-company-backend-for-lsp)
   :config
   (setq lsp-document-sync-method 'incremental)
   (setq lsp-enable-completion-at-point nil)
@@ -209,14 +213,14 @@
 
 #+begin_src emacs-lisp
 (use-package lsp-ui
-  :config
-  (defun my/toggle-lsp-ui-doc ()
-    (interactive)
-    (if lsp-ui-doc-mode
-        (progn
-          (lsp-ui-doc-mode -1)
-          (lsp-ui-doc--hide-frame))
-	    (lsp-ui-doc-mode 1)))
+  ;; :config
+  ;; (defun my/toggle-lsp-ui-doc ()
+  ;;   (interactive)
+  ;;   (if lsp-ui-doc-mode
+  ;;       (progn
+  ;;         (lsp-ui-doc-mode -1)
+  ;;         (lsp-ui-doc--hide-frame))
+	;;     (lsp-ui-doc-mode 1)))
   ;; lsp-ui-doc
   (setq lsp-ui-doc-enable nil)
   ;; (setq lsp-ui-doc-header nil)

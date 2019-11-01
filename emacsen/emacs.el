@@ -5,9 +5,7 @@
 ;; http://emacs.stackexchange.com/questions/19936/running-spacemacs-alongside-regular-emacs-how-to-keep-a-separate-emacs-d
 
 ;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
+;; installed packages.  Don't delete this line.
 ;; (package-initialize)
 
 ;;; Check the current executable file and assign the appropriate user directory.

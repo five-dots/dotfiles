@@ -2,6 +2,7 @@ secret.R
 Renviron.sh
 
 emacsen/spacemacs.d/
+emacsen/spacemacs.d2/
 emacsen/vanilla-emacs.d/
 emacsen/doom-emacs.d/
 emacsen/spacemacs-config/config-babel.el

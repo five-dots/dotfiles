@@ -54,7 +54,11 @@ This function should only modify configuration layer settings."
 
      (c-c++
       :variables
-      c-c++-backend 'lsp-ccls
+      ;; c++ lsp config change
+      ;; https://github.com/syl20bnr/spacemacs/pull/12712
+      ;; c-c++-backend 'lsp-ccls
+      c-c++-backend 'lsp
+      c-c++-lsp-server 'ccls
       c-c++-lsp-executable "/usr/local/bin/ccls"
       c-c++-lsp-cache-dir (expand-file-name "~/.spacemacs.d/.cache/lsp-ccls")
       c-c++-lsp-sem-highlight-method 'font-lock
@@ -84,7 +88,7 @@ This function should only modify configuration layer settings."
       org-enable-hugo-support t
       org-enable-github-support t)
 
-     pandoc
+     ;; pandoc
 
      (python
       :variables
@@ -113,11 +117,13 @@ This function should only modify configuration layer settings."
 
      yaml
 
-     my-ess
-     my-fold
-     my-japanese
-     my-tools
-     my-ui)
+     ;; my-ess
+     ;; my-fold
+     ;; my-japanese
+     ;; my-tools
+     ;; my-ui
+     oreore
+     )
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -435,7 +441,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
-   dotspacemacs-folding-method 'origami
+   dotspacemacs-folding-method 'evil
 
    ;; If non-nil `smartparens-strict-mode' will be enabled in programming modes.
    ;; (default nil)
@@ -544,9 +550,11 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
   ;; Load org config file
-  (org-babel-load-file
-   (expand-file-name
-    "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/spacemacs-config/config-babel.org")))
+  ;; (org-babel-load-file
+  ;;  (expand-file-name
+  ;;   "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/spacemacs-config/config-babel.org"))
+  (load (expand-file-name
+         "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/spacemacs-config/config.el")))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

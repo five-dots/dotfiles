@@ -25,9 +25,10 @@ ln -sf $REPO/emacsen/emacs.el ~/.emacs
 ln -sf $REPO/emacsen/spacemacs-config/spacemacs.el ~/.spacemacs
 
 ln -snf $REPO/emacsen/spacemacs.d ~/.spacemacs.d
+ln -snf $REPO/emacsen/spacemacs.d ~/.emacs.d
 ln -snf $REPO/emacsen/vanilla-emacs.d ~/.vanilla-emacs.d
 ln -snf $REPO/emacsen/doom.d ~/.doom.d
-ln -snf ~/.doom-emacs.d ~/.emacs.d
+# ln -snf ~/.doom-emacs.d ~/.emacs.d
 
 # vim
 # ln -sf $REPO/vimrc.vim ~/.vimrc

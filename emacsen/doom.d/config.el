@@ -13,7 +13,7 @@
   (setq completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
   (setq read-buffer-completion-ignore-case t)
-  (setq company-idle-delay 0.5)
+  (setq company-idle-delay 0.4)
   ;; company backend (non-lsp)
   (set-company-backend! 'emacs-lisp-mode
     '(company-capf company-files :with company-yasnippet))
@@ -61,7 +61,6 @@
 
 
 ;;; ui
-
 (after! treemacs
   (setq treemacs-show-cursor t)
   (setq treemacs-position 'right)
@@ -96,7 +95,7 @@
   (add-to-list 'face-font-rescale-alist '(".*Meiryo*." . 1.09)))
 
 (when window-system
-  (set-frame-size (selected-frame) 100 40))
+  (set-frame-size (selected-frame) 110 50))
 
 (use-package! beacon
   :hook (after-init . beacon-mode)
@@ -105,14 +104,30 @@
 
 
 ;;; tools
-
 (when (featurep! :ui popup)
   (set-popup-rules!
     '(
-      ;; TODO inferior-ess-r-mode, ess-r-help-mode
-      ("^\\*help[R](" :ignore t :side right :select t)
+      ;;; Available options
+      ;; :ignore BOOL
+      ;; :actions ACTIONS
+      ;; :side 'bottom|'top|'left|'right
+      ;; :size/:width/:height FLOAT|INT|FN
+      ;; :slot/:vslot INT (use with :side and blank :action)
+      ;; :ttl INT|BOOL|FN
+      ;; :quit FN|BOOL|'other|'current
+      ;; :select BOOL|FN
+      ;; :modeline BOOL|FN|LIST
+      ;; :autosave BOOL|FN
+      ;; :parameters ALIST
+      ("^\\*[Hh]elp" :side right :size 81 :select t :quite current)
+
+      ;;; ESS
+      ("^\\*R dired" :ignore t)
       ("^\\*R" :ignore t)
       ("^\\*ess-describe\\*$" :ignore t) ; ess-describe-object-at-point
+      ("^\\*help\\[R\\](" :side right :size 81 :select t :quit current)
+      ("^\\*R view\\*$" :side bottom :size 0.5 :quit t) ; view var from r-dired
+
       ("^\\*General Keybindings\\*$" :ignore t)
       ("^\\*lsp session\\*$" :ignore t)
       ;; TODO company-diag
@@ -143,7 +158,7 @@
   (setq recentf-max-saved-items 1000))
 
 (use-package! skk
-  :disabled t
+  ;; :disabled t
   :load-path ".local/straight/build/ddskk"
   :defer t
   :commands skk-mode
@@ -214,7 +229,7 @@
 
 ;; TODO enable in minibuffer
 (use-package! mozc
-  ;; :disabled t
+  :disabled t
   :init
   (setq default-input-method "japanese-mozc")
   :hook
@@ -254,8 +269,8 @@
         (expand-file-name "dap-breakpoints" doom-cache-dir)))
 
 (use-package! flycheck
-  :hook
-  (ess-r-mode . flycheck-mode)
+  ;; :hook
+  ;; (ess-r-mode . flycheck-mode)
   :config
   ;; Disable specific linters from the default
   (setq flycheck-lintr-linters
@@ -312,14 +327,41 @@
   (setq ess-describe-at-point-method nil)
   (setq x-gtk-use-system-tooltips nil)
   (setq tooltip-hide-delay 10)
+  ;; TODO colored str by {crayon}
   (setq ess-R-describe-object-at-point-commands
         '(("str(%s)")
-          (".ess_htsummary(%s, hlength = 5, tlength = 5)")
+          (".ess_htsummary(%s, hlength = 20, tlength = 20)")
           ("summary(%s, maxsum = 20)")))
 
-  (evil-set-initial-state 'inferior-ess-r-mode 'normal)
+  (set-evil-initial-state! 'inferior-ess-r-mode 'normal)
   ;; (evil-define-key 'normal ctbl:table-mode-map
   ;;   "q" 'kill-this-buffer)
+
+  ;;; ESS related buffers
+  ;; inferior-ess-r-mode *R*
+  ;; ess-dired-mode *R dired*
+  ;; TODO ess-watch-mode  *R watch*
+  ;; fundamental-mode *ess-describe* (popup)
+  ;; fundamental-mode *R view* (by popup)
+  (defun my/set-ess-display-buffer-alist ()
+    (interactive)
+    (dolist (l '(
+                 ("^\\*R"
+                  (display-buffer-reuse-window display-buffer-in-side-window)
+                  (side . left)
+                  (reusable-frames . nil))
+                 ("^\\*R dired"
+                  (display-buffer-reuse-window display-buffer-in-side-window)
+                  (side . right)
+                  (slot . -1)
+                  (window-width . 0.2)
+                  (reusable-frames . nil))
+                 ("^\\*ess-describe"
+                  (display-buffer-reuse-window display-buffer-same-window)
+                  (reusable-frames . nil))
+                 ))
+      (add-to-list 'display-buffer-alist l)))
+    (add-hook 'ess-r-mode-hook #'my/set-ess-display-buffer-alist)
 
   (defhydra hydra-ess-tracebug (:color pink :hint nil)
       "
@@ -492,7 +534,6 @@ _sq_: Quit            _bl_: Set logger     _dw_: Watch window
  (:when (featurep! :ui treemacs)
    (:map treemacs-mode-map
      "C-M-h" #'evil-window-left
-     "C-M-h" #'evil-window-left
      "C-M-j" #'evil-window-down
      "C-M-k" #'evil-window-up
      "C-M-l" #'evil-window-right)))
@@ -560,7 +601,7 @@ _sq_: Quit            _bl_: Set logger     _dw_: Watch window
    :i [henkan] #'my/deactivate-ime))
 
 ;; ess
-;; TODO ess-watch-mode-map and others
+;; TODO ess-watch-mode-map, ess-describe-mode and others
 (map!
  (:after ess
    (:map ess-dev-map
