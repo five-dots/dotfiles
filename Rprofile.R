@@ -33,7 +33,9 @@
     ## devtools.install.args = c("--no-lock"),
     usethis.full_name = "Shun Asai",
     blogdown.author	= "Shun Asai",
-	  blogdown.ext = ".Rmd"
+	  blogdown.ext = ".Rmd",
+    ## help use browser
+    help_type = "html"
   )
 
   ## Load libraries
