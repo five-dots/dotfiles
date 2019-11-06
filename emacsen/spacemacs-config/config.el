@@ -1,10 +1,6 @@
-
-;;; libraries
-(load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/elisp/vars.el"))
-(load (expand-file-name "vars-secret.el" my/elisp-dir))
+;;; Load private libraries
 (load (expand-file-name "funcs" my/elisp-dir))
 
-
 ;;; evil
 (use-package evil
   :config
@@ -50,6 +46,7 @@
   (setq read-buffer-completion-ignore-case t)
   ;; Delay
   (setq company-idle-delay 0.1)
+  ;; (setq company-idle-delay 1)
   (setq company-minimum-prefix-length 2)
   (evil-define-key 'insert 'global
     (kbd "M-,") 'company-manual-begin))
@@ -122,20 +119,11 @@
   ;; (add-to-list 'face-font-rescale-alist '(".*Yu Mincho*." . 1.09))
   (add-to-list 'face-font-rescale-alist '(".*Meiryo*." . 1.09)))
 
-;; (use-package all-the-icons
-;;   :config
-;;   (add-to-list
-;;    'all-the-icons-mode-icon-alist
-;;    '(inferior-ess-r-mode all-the-icons-fileicon "R" :face all-the-icons-lblue)))
-
-;; (use-package highlight-indent-guides
-;;   ;; :hook
-;;   ;; (emacs-lisp-mode . highlight-indent-guides-mode)
-;;   ;; (ess-r-mode      . highlight-indent-guides-mode)
-;;   ;; (csharp-mode     . highlight-indent-guides-mode)
-;;   :config
-;;   ;; (setq highlight-indent-guides-responsive t)
-;;   (setq highlight-indent-guides-method 'character))
+(use-package all-the-icons
+  :config
+  (add-to-list
+   'all-the-icons-mode-icon-alist
+   '(inferior-ess-r-mode all-the-icons-fileicon "R" :face all-the-icons-lblue)))
 
 (use-package page-break-lines
   :config
@@ -152,18 +140,20 @@
   ;; :init
   ;; FIXME
   ;; (add-hook 'org-mode-hook 'my/set-company-backend-for-org)
+
   :config
-  ;;; Appearance
+  ;; Appearance
   ;; Replace "-" with "•"
   (font-lock-add-keywords
     'org-mode
     '(("^ *\\([-]\\) "
       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
   (setq org-hide-emphasis-markers t)
-  ;;; org faces
+  ;; org faces
   (set-face-attribute 'org-level-1 nil :slant 'italic :height 1.0)
   ;; (set-face-attribute 'org-block-end-line nil :foreground "#23272e")
-  ;;; org-agenda
+
+  ;; org-agenda
   ;; Add agenda file recursively
   ;; https://www.reddit.com/r/orgmode/comments/6q6cdk/adding_files_to_the_agenda_list_recursively/
   ;; (setq org-agenda-files
@@ -180,7 +170,8 @@
   ;;         (todo   . " %i %-12:c")
   ;;         (tags   . " %i %-12:c")
   ;;         (search . " %i %-12:c"))))
-  ;;; org-babel
+
+  ;; org-babel
   (setq org-confirm-babel-evaluate nil)
   (setq org-src-preserve-indentation t)
   ;; (setq org-src-tab-acts-natively t)
@@ -194,10 +185,14 @@
      (C . t)
      (python . t)))
   ;; (org-babel-jupyter-override-src-block "python")
-  ;;; Latex preview
+
+  ;; Latex preview
   (setq org-preview-latex-image-directory "~/Dropbox/memo/img/latex/")
   ;; (setq org-preview-latex-default-process 'dvisvgm)
-  (plist-put org-format-latex-options :scale 1.5))
+  (plist-put org-format-latex-options :scale 1.5)
+
+  ;; exporter
+  (add-to-list 'org-export-filter-latex-fragment-functions 'my/org-replace-latex-wrap))
 
 (use-package org-download
   :config
@@ -223,7 +218,19 @@
 
 (use-package ox-hugo
   :config
-  (setq org-hugo-front-matter-format "yaml"))
+  (setq org-hugo-section "post")
+  (setq org-hugo-front-matter-format "toml") ; toml or yaml
+  (setq org-hugo-use-code-for-kbd t))
+
+(use-package org-qiita
+  ;; emacs の org-mode で書いた記事を qiita に投稿する org-qiita.el
+  ;; https://qiita.com/dwarfJP/items/594a8d4b0ac6d248d1e4
+  ;; Private Layer 側で github からインストールすると以下のエラーが発生
+  ;; Error getting PACKAGE-DESC: (error Package lacks a file header)
+  :load-path "~/Dropbox/repos/github/ifritJP/org-qiita-el"
+  :config
+  (setq org-qiita-token my/qiita-token)
+  (setq org-qiita-export-and-post nil))
 
 
 ;;; lang
@@ -232,7 +239,8 @@
 
 (use-package python
   :config
-  (setq python-shell-interpreter "ipython3") ; "python3"
+  (setq python-shell-interpreter "ipython3") ; "python3" or "ipython3"
+  (setq org-babel-python-command "python3")
   ;; (add-to-list 'python-shell-completion-native-disabled-interpreters "python3")
 
   ;; https://github.com/jorgenschaefer/elpy/issues/733
@@ -373,15 +381,6 @@
   (setq google-translate-pop-up-buffer-set-focus t)
   (setq google-translate-default-source-language "en")
   (setq google-translate-default-target-language "ja"))
-
-(use-package hatena-blog-mode
-  :load-path "~/Dropbox/repos/github/fnwiya/hatena-blog-mode"
-  :config
-  (setq hatena-id "five-dots")
-  (setq hatena-blog-api-key my/hatena-blog-api-key)
-  (setq hatena-blog-id "five-dots.hatenablog.com")
-  (setq hatena-blog-editing-mode "md")
-  (setq hatena-blog-backup-dir nil))
 
 
 ;;; leader map

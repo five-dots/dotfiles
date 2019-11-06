@@ -166,14 +166,33 @@ If prefix ARG is set, prompt for a directory to search from."
   (when org-inline-image-overlays
     (org-redisplay-inline-images)))
 
+;; Replace "\( \)" => "$ $" or "\[ \]" => "$$ $$" when exporting to markdown
+(defun my/org-replace-latex-wrap (text backend _info)
+  (when (org-export-derived-backend-p backend 'gfm)
+    (cond
+     ((s-starts-with? "\\(" text)
+      (message (format "start with (, content = %s" text))
+      (--> text
+           (s-chop-prefix "\\(" it)
+           (s-chop-suffix "\\)" it)
+           (s-wrap it "$")))
+     ((s-starts-with? "\\[" text)
+      (message (format "start with [, content = %s" text))
+      (--> text
+           (s-chop-prefix "\\[" it)
+           (s-chop-suffix "\\]" it)
+           (s-wrap it "$$"))))))
+
 
 ;;; company
 
 (defun my/set-company-backend-for-r ()
   (interactive)
   (set (make-local-variable 'company-backends)
-       '((company-capf
-          ;; company-dabbrev
+       '((company-R-library
+          company-R-args
+          company-R-objects
+          ;; company-capf ; too heavy load
           company-files
           :with company-yasnippet))))
 

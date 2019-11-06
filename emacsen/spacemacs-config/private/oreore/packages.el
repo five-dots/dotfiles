@@ -21,13 +21,27 @@
     magit-todos
     quickrun
     recentf-ext
+    (hatena-blog-mode
+     :location
+     (recipe :fetcher github :repo "fnwiya/hatena-blog-mode"))
+    visual-regexp
+    visual-regexp-steroids
     ;; undohist
     ;; TODO flx for fuzzy matching
 
+    ;; org-mode
+    (ox-hatena
+     :location
+     (recipe :fetcher github :repo "yynozk/ox-hatena"))
+    (ox-qmd
+     :location
+     (recipe :fetcher github :repo "0x60df/ox-qmd"))
+
     ;; ui
     beacon
-    ;; centaur-tabs
+    centaur-tabs
     hide-mode-line
+    highlight-indent-guides
     ivy-posframe
 
     ;; ess
@@ -110,7 +124,7 @@
     (spacemacs/set-leader-keys-for-major-mode 'emacs-lisp-mode
       "e x" 'lispxmp)
     (spacemacs/set-leader-keys-for-major-mode 'lisp-interaction-mode
-      "e x" 'lispxmp)))
+      "e x" 'lispxmp))
 
 (defun oreore/init-recentf-ext ()
   (use-package recentf-ext))
@@ -121,6 +135,32 @@
 (defun oreore/init-quickrun ()
   (use-package quickrun))
 
+(defun oreore/init-hatena-blog-mode ()
+  (use-package hatena-blog-mode
+    :config
+    (setq hatena-id "five-dots")
+    (setq hatena-blog-api-key my/hatena-blog-api-key)
+    (setq hatena-blog-id "five-dots.hatenablog.com")
+    (setq hatena-blog-editing-mode "md")
+    (setq hatena-blog-backup-dir nil)))
+
+(defun oreore/init-visual-regexp ()
+  (use-package visual-regexp))
+
+(defun oreore/init-visual-regexp-steroids ()
+  (use-package visual-regexp-steroids))
+
+
+;;; org-mode
+(defun oreore/init-ox-hatena ()
+  (use-package ox-hatena))
+
+(defun oreore/init-ox-qmd ()
+  (use-package ox-qmd
+    :config
+    (add-to-list 'ox-qmd-language-keyword-alist
+                 '("R" . "r"))))
+
 
 ;;; ui
 (defun oreore/init-beacon ()
@@ -130,67 +170,83 @@
     :config
     (setq beacon-blink-when-window-scrolls nil)))
 
-;; (defun oreore/init-centaur-tabs ()
-;;   (use-package centaur-tabs
-;;     :hook
-;;     (after-init . centaur-tabs-mode)
-;;     ;; disabled modes
-;;     (treemacs-mode . centaur-tabs-local-mode)
+(defun oreore/init-centaur-tabs ()
+  (use-package centaur-tabs
+    :hook
+    (after-init . centaur-tabs-mode)
+    ;; disabled modes
+    (treemacs-mode . centaur-tabs-local-mode)
 
-;;     :config
-;;     (setq centaur-tabs-style "bar")
-;;     (setq centaur-tabs-set-icons t)
-;;     (setq centaur-tabs-gray-out-icons t)
-;;     (setq centaur-tabs-set-bar 'left)
-;;     (setq centaur-tabs-cycle-scope 'tabs)
+    :config
+    (setq centaur-tabs-style "bar")
+    (setq centaur-tabs-set-icons t)
+    (setq centaur-tabs-gray-out-icons 'buffer)
+    (setq centaur-tabs-set-bar 'left)
+    (setq centaur-tabs-cycle-scope 'tabs)
 
-;;     ;; Prevent the access to specified buffers
-;;     (defun centaur-tabs-hide-tab (x)
-;;       (let ((name (format "%s" x)))
-;;         (or
-;;          ;; * で始まるバッファ
-;;          (and (string-prefix-p "*" name)
-;;               ;; (not) で除外するバッファを指定
-;;               (not (string-prefix-p "*R" name))
-;;               (not (string-prefix-p "*Python" name))
-;;               (not (string-prefix-p "*eshell" name)))
-;;          ;; magit
-;;          (string-prefix-p "COMMIT_EDITMSG" name)
-;;          (and (string-prefix-p "magit" name)
-;;               (not (file-name-extension name))))))
+    ;; Prevent the access to specified buffers
+    (defun centaur-tabs-hide-tab (x)
+      (let ((name (format "%s" x)))
+        (or
+         ;; * で始まるバッファ
+         (and (string-prefix-p "*" name)
+              ;; (not) で除外するバッファを指定
+              (not (string-prefix-p "*R" name))
+              (not (string-prefix-p "*Python" name))
+              ;; (not (string-prefix-p "*ansi-term-1" name)) ;
+              (not (string-prefix-p "*eshell" name)))
+         ;; magit
+         (string-prefix-p "COMMIT_EDITMSG" name)
+         (and (string-prefix-p "magit" name)
+              (not (file-name-extension name))))))
 
-;;     ;; buffer group function
-;;     (defun centaur-tabs-buffer-groups ()
-;;       (list
-;;        (cond
-;;         ((memq major-mode '(inferior-ess-r-mode
-;;                             inferior-python-mode
-;;                             eshell-mode))
-;;          "repl")
-;;         ((derived-mode-p 'prog-mode)
-;;          "coding")
-;;         ((memq major-mode '(markdown-mode
-;;                             text-mode
-;;                             org-mode
-;;                             org-src-mode
-;;                             org-agenda-mode))
-;;          "editing")
-;;         ;; ((string-prefix-p "*" (buffer-name))
-;;         ;;  "emacs")
-;;         (t "other"))))
+    ;; buffer group function
+    (defun centaur-tabs-buffer-groups ()
+      (list
+       (cond
+        ((memq major-mode '(inferior-ess-r-mode
+                            inferior-python-mode
+                            eshell-mode
+                            term-mode
+                            ))
+         "repl")
+        ((derived-mode-p 'prog-mode)
+         "coding")
+        ((memq major-mode '(markdown-mode
+                            text-mode
+                            org-mode
+                            org-src-mode
+                            org-agenda-mode))
+         "editing")
+        ;; ((string-prefix-p "*" (buffer-name))
+        ;;  "emacs")
+        (t "other"))))
 
-;;     ;; keymaps
-;;     (spacemacs/set-leader-keys
-;;       "RET" 'centaur-tabs-counsel-switch-group)
-;;     (bind-keys :map evil-normal-state-map
-;;                ("C-M-," . centaur-tabs-backward)
-;;                ("C-M-." . centaur-tabs-forward))
-;;     (centaur-tabs-headline-match)))
+    ;; keymaps
+    (spacemacs/set-leader-keys
+      "RET" 'centaur-tabs-counsel-switch-group)
+    (evil-define-key '(normal) 'global
+      (kbd "C-M-,") 'centaur-tabs-backward
+      (kbd "C-M-.") 'centaur-tabs-forward)
+    (centaur-tabs-headline-match)))
 
 (defun oreore/init-hide-mode-line ()
   (use-package hide-mode-line
     :defer t
-    :hook (treemacs-mode . hide-mode-line-mode)))
+    :hook
+    (treemacs-mode . hide-mode-line-mode)
+    (ess-r-help-mode . hide-mode-line-mode)
+    ))
+
+(defun oreore/init-highlight-indent-guides ()
+  (use-package highlight-indent-guides
+    :hook
+    ;; (emacs-lisp-mode . highlight-indent-guides-mode)
+    ;; (ess-r-mode . highlight-indent-guides-mode)
+    (csharp-mode . highlight-indent-guides-mode)
+    :config
+    ;; (setq highlight-indent-guides-responsive t)
+    (setq highlight-indent-guides-method 'character)))
 
 (defun oreore/init-ivy-posframe ()
   (use-package ivy-posframe
@@ -227,13 +283,18 @@
       (setq-local comint-use-prompt-regexp nil)
       (setq-local inhibit-field-text-motion nil))
 
-    ;; company backends
-    (when (configuration-layer/package-used-p 'company)
-      (add-hook 'ess-r-mode-hook 'my/set-company-backend-for-r))
-
     ;; Control window display
     (dolist
         (l '(
+             ("^\\*ess-describe"
+              (display-buffer-reuse-window display-buffer-same-window)
+              (reusable-frames . nil))
+             ("^\\*help\\[R\\]("
+              (display-buffer-reuse-window display-buffer-in-side-window)
+              (side . right)
+              (slot . -1)
+              (window-width . 0.5)
+              (reusable-frames . nil))
              ("^\\*R"
               (display-buffer-reuse-window display-buffer-in-side-window)
               (side . left)
@@ -244,33 +305,21 @@
               (slot . -1)
               (window-width . 0.2)
               (reusable-frames . nil))
-             ("^\\*ess-describe"
-              (display-buffer-reuse-window display-buffer-same-window)
-              (reusable-frames . nil))
              ))
       (add-to-list 'display-buffer-alist l))
 
-    ;; (defun my/set-ess-display-buffer-alist ()
-    ;;   (interactive)
-    ;;   (dolist (l '(
-    ;;                ("^\\*R"
-    ;;                 (display-buffer-reuse-window display-buffer-in-side-window)
-    ;;                 (side . left)
-    ;;                 (reusable-frames . nil))
-    ;;                ("^\\*R dired"
-    ;;                 (display-buffer-reuse-window display-buffer-in-side-window)
-    ;;                 (side . right)
-    ;;                 (slot . -1)
-    ;;                 (window-width . 0.2)
-    ;;                 (reusable-frames . nil))
-    ;;                ("^\\*ess-describe"
-    ;;                 (display-buffer-reuse-window display-buffer-same-window)
-    ;;                 (reusable-frames . nil))
-    ;;                ))
-    ;;     (add-to-list 'display-buffer-alist l)))
-    ;; (add-hook 'ess-r-mode-hook #'my/set-ess-display-buffer-alist)
+    ;;; Use dedicated frame for help
+    ;; (setq ess-help-frame-alist
+    ;;       '(
+    ;;         (width . 80)
+    ;;         (height . 50)
+    ;;         (minibuffer . nil)
+    ;;         (unsplittable . t)
+    ;;         ))
+    ;; (setq ess-help-own-frame 'one)
 
     :hook
+    (ess-r-mode . my/set-company-backend-for-r)
     (ess-r-mode . company-mode)
     (inferior-ess-r-mode . company-mode)
     (inferior-ess-r-mode . my/ess-fix-read-only-inferior-ess-mode)
