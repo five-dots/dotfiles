@@ -562,25 +562,3 @@ before packages are loaded."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (merlin flycheck-mix flycheck-credo emojify emoji-cheat-sheet-plus helm helm-core dune company-tern tern company-emoji chruby bundler inf-ruby auto-complete-rst alchemist elixir-mode yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key wgrep vterm volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-magit treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons smex smeargle shell-pop restart-emacs request recentf-ext rainbow-delimiters quickrun pytest pyenv-mode py-isort popwin pippel pipenv pip-requirements persp-mode password-generator paradox pangu-spacing pandoc-mode ox-qmd ox-pandoc ox-hugo ox-hatena ox-gfm overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file omnisharp nameless multi-term mozc move-text mmm-mode markdown-toc magit-todos magit-svn magit-gitflow macrostep lsp-ui lsp-treemacs lsp-python-ms lorem-ipsum live-py-mode lispy lispxmp link-hint ivy-yasnippet ivy-xref ivy-rtags ivy-purpose ivy-posframe ivy-hydra indent-guide importmagic hybrid-mode hungry-delete htmlize highlight-parentheses highlight-numbers highlight-indentation highlight-indent-guides hide-mode-line helpful helm-make hatena-blog-mode google-translate google-this google-c-style golden-ratio gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flycheck-rtags flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-r-spreadsheet ess-R-data-view eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump dotnet dotenv-mode doom-themes doom-modeline disaster diminish diff-hl devdocs define-word ddskk dap-mode cython-mode csv-mode crontab-mode cquery cpp-auto-include counsel-projectile company-statistics company-rtags company-quickhelp company-lsp company-c-headers company-anaconda column-enforce-mode clean-aindent-mode clang-format centered-cursor-mode centaur-tabs ccls browse-at-remote blacken beacon auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ac-ispell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ivy-posframe ((t (:background "#282a36"))))
- '(ivy-posframe-border ((t (:background "#6272a4"))))
- '(ivy-posframe-cursor ((t (:background "#61bfff")))))
-)

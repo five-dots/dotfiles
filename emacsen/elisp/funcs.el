@@ -139,6 +139,10 @@ If prefix ARG is set, prompt for a directory to search from."
   ;; (just-one-space 1)
   )
 
+(defun my/ess-load-projecttemplate-project ()
+  (interactive)
+  (ess-execute "ProjectTemplate::load.project()" 'buffer))
+
 
 ;;; ime
 
@@ -171,13 +175,11 @@ If prefix ARG is set, prompt for a directory to search from."
   (when (org-export-derived-backend-p backend 'gfm)
     (cond
      ((s-starts-with? "\\(" text)
-      (message (format "start with (, content = %s" text))
       (--> text
            (s-chop-prefix "\\(" it)
            (s-chop-suffix "\\)" it)
            (s-wrap it "$")))
      ((s-starts-with? "\\[" text)
-      (message (format "start with [, content = %s" text))
       (--> text
            (s-chop-prefix "\\[" it)
            (s-chop-suffix "\\]" it)
