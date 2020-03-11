@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: org-hugo-blog-per-file
+# name: hugo-blog-per-file
 # key: hugo-blog-file
 # --
 #+STARTUP: folded indent inlineimages latexpreview

@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: org-babel-sh
+# name: babel-sh
 # key: bbl-sh
 # --
 #+begin_src shell

@@ -124,7 +124,7 @@
     (spacemacs/set-leader-keys-for-major-mode 'emacs-lisp-mode
       "e x" 'lispxmp)
     (spacemacs/set-leader-keys-for-major-mode 'lisp-interaction-mode
-      "e x" 'lispxmp))
+      "e x" 'lispxmp)))
 
 (defun oreore/init-recentf-ext ()
   (use-package recentf-ext))
@@ -341,6 +341,7 @@
     (setq ess-style 'DEFAULT)
     (setq ess-eldoc-show-on-symbol t)
     (setq ess-history-file nil)
+    (setq ess-indent-with-fancy-comments nil)
 
     ;; Disable unnecessary completion
     (setq ess-use-R-completion nil)
@@ -350,7 +351,7 @@
     ;; Object popup by tooltip
     (setq ess-describe-at-point-method 'tooltip)
     (setq x-gtk-use-system-tooltips nil)
-    ;; (setq tooltip-hide-delay 60)
+    (setq tooltip-hide-delay 60)
     (setq ess-R-describe-object-at-point-commands
           '(("str(%s)")
             (".ess_htsummary(%s, hlength = 10, tlength = 10)")
@@ -374,6 +375,8 @@
       (spacemacs/declare-prefix-for-mode mode "ms" "show"))
 
     ;; keymap
+    (evil-define-key '(normal visual) ess-r-mode-map
+      ";" 'ess-eval-region-or-line-visibly-and-step)
     (spacemacs/set-leader-keys-for-major-mode 'ess-r-mode
       ","   'ess-eval-region-or-function-or-paragraph
       "'"   'R
@@ -390,7 +393,8 @@
       "eb" 'ess-eval-buffer
       "ef" 'ess-eval-function
       "es" 'ess-switch-process
-      "eS" 'ess-set-style)
+      "eS" 'ess-set-style
+      "ep" 'my/ess-load-projecttemplate-project)
 
     ;; inferior-ess-r-mode
     (evil-set-initial-state 'inferior-ess-r-mode 'normal)
@@ -467,6 +471,21 @@
     (evil-define-key 'normal ctbl:table-mode-map
       "q" 'kill-this-buffer)
 
+    ;;; custom functions for ess-tracebug
+    (defun my/ess-debug-command-step-into ()
+      "Step into the next code. Equivalent of `s' at the R prompt."
+      (interactive)
+      (ess-force-buffer-current)
+      (cond ((ess--dbg-is-recover-p)
+             (ess-send-string (ess-get-process) "0"))
+            ((ess--dbg-is-active-p)
+             (ess-send-string (ess-get-process) "s"))
+            (t
+             (error "Debugger is not active"))))
+
+    (bind-keys :map ess-debug-minor-mode-map
+               ("M-S" . my/ess-debug-command-step-into))
+
     ;; TODO hydra map for ess-tracebug
     (defhydra hydra-ess-tracebug (:color pink :hint nil)
       "
@@ -476,14 +495,16 @@ _sc_: Continue        _bt_: Toggle         _d`_: Traceback
 _sC_: Continue multi  _ba_: Add            _d~_: Callstack
 _sn_: Next            _bd_: Delete         _de_: Toggle error action
 _sN_: Next multi      _bD_: Delete all     _dd_: Flag for debugging
-_su_: Up frame        _bc_: Set condition  _du_: Unflag for debugging
-_sq_: Quit            _bl_: Set logger     _dw_: Watch window
+_ss_: Step into       _bc_: Set condition  _du_: Unflag for debugging
+_su_: Up frame        _bl_: Set logger     _dw_: Watch window
+_sq_: Quit
 "
       ;; Stepping
       ("sc" ess-debug-command-continue)
       ("sC" ess-debug-command-continue-multi)
       ("sn" ess-debug-command-next)
       ("sN" ess-debug-command-next-multi)
+      ("ss" my/ess-debug-command-step-into)
       ("su" ess-debug-command-up)
       ("sq" ess-debug-command-quit)
       ;; Breakpoints

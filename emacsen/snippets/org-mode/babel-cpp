@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: org-babel-cpp
+# name: babel-cpp
 # key: bbl-cpp
 # --
 #+begin_src C++ :async

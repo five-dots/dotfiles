@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: org-babel-r-exports
+# name: babel-r-exports
 # key: bbl-r-ext
 # --
 #+begin_src R :exports both

@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: org-babel-emacs-lisp
+# name: babel-emacs-lisp
 # key: bbl-el
 # --
 #+begin_src emacs-lisp

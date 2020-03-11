@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: org-hugo-blog-per-tree
+# name: hugo-blog-per-tree
 # key: hugo-blog-tree
 # --
 #+STARTUP: content indent inlineimages latexpreview

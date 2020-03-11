@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: hugo-blog-autosave
+# key: hugo-blog-as
+# --
+$0
+
+* Footnotes
+* COMMENT Local Variables                          :ARCHIVE:
+# Local Variables:
+# eval: (org-hugo-auto-export-mode)
+# End:
