@@ -35,7 +35,9 @@
     blogdown.author	= "Shun Asai",
 	  blogdown.ext = ".Rmd",
     ## help use browser
-    help_type = "html"
+    help_type = "html",
+    ## ProjectTemplate templates
+    ProjectTemplate.templatedir = "~/Dropbox/repos/github/five-dots/ProjectTemplateTemplates"
   )
 
   ## Load libraries
@@ -81,12 +83,13 @@ if (.nodename == "DESK1") {
 ## From notebook
 } else {
   ## From home
-  if (.getGlobalIp() == .home_gip) {
-    .mssql_server <- paste0(.desk1_lip, ";")
-  ## From outside
-  } else {
-    .mssql_server <- paste0(.home_gip, ";")
-  }
+  ## if (.getGlobalIp() == .home_gip) {
+  ##   .mssql_server <- paste0(.desk1_lip, ";")
+  ## ## From outside
+  ## } else {
+  ##   .mssql_server <- paste0(.home_gip, ";")
+  ## }
+  .mssql_server <- paste0(.home_gip, ";")
 }
 
 ## Switch driver based on OS
