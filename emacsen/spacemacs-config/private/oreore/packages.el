@@ -12,34 +12,35 @@
 (defconst oreore-packages
   '(
     crontab-mode
-    dotnet
-    exec-path-from-shell
+    ;; dotnet
+    ;; exec-path-from-shell
+    ;; evil-fringe-mark
     google-this
     helpful
     lispxmp
-    lispy
+    ;; lispy
     magit-todos
     quickrun
-    recentf-ext
-    (hatena-blog-mode
-     :location
-     (recipe :fetcher github :repo "fnwiya/hatena-blog-mode"))
+    ;; recentf-ext
+    ;; (hatena-blog-mode
+    ;;  :location
+    ;;  (recipe :fetcher github :repo "fnwiya/hatena-blog-mode"))
     visual-regexp
     visual-regexp-steroids
     ;; undohist
     ;; TODO flx for fuzzy matching
 
     ;; org-mode
-    (ox-hatena
-     :location
-     (recipe :fetcher github :repo "yynozk/ox-hatena"))
+    ;; (ox-hatena
+    ;;  :location
+    ;;  (recipe :fetcher github :repo "yynozk/ox-hatena"))
     (ox-qmd
      :location
      (recipe :fetcher github :repo "0x60df/ox-qmd"))
 
     ;; ui
-    beacon
     centaur-tabs
+    ;; beacon
     hide-mode-line
     highlight-indent-guides
     ivy-posframe
@@ -54,7 +55,7 @@
     ;; TODO snippets for R
 
     ;; japanese
-    ddskk
+    ;; ddskk
     pangu-spacing
     mozc
     ))
@@ -69,34 +70,40 @@
     :mode (("\\.cron\\(tab\\)?\\'" . crontab-mode)
            ("cron\\(tab\\)?\\." . crontab-mode))))
 
-(defun oreore/init-dotnet ()
-  (use-package dotnet
-    :hook
-    (csharp-mode . dotnet-mode)
-    :config
-    (spacemacs/declare-prefix-for-mode 'csharp-mode "mc" "dotnet-cli")
-    (spacemacs/declare-prefix-for-mode 'csharp-mode "mcg" "goto")
-    (spacemacs/declare-prefix-for-mode 'csharp-mode "mcs" "sln")
-    (spacemacs/set-leader-keys-for-major-mode 'csharp-mode
-      "c ." 'dotnet-run
-      "c b" 'dotnet-build
-      "c c" 'dotnet-clean
-      "c n" 'dotnet-new
-      "c p" 'dotnet-add-package
-      "c r" 'dotnet-add-reference
-      "c t" 'dotnet-test
-      ;; goto
-      "c g p" 'dotnet-goto-csproj
-      "c g s" 'dotnet-goto-sln
-      ;; sln
-      "c s l" 'dotnet-sln-list
-      "c s n" 'dotnet-sln-new
-      "c s r" 'dotnet-sln-remove)))
+;; (defun oreore/init-dotnet ()
+;;   (use-package dotnet
+;;     :hook
+;;     (csharp-mode . dotnet-mode)
+;;     :config
+;;     (spacemacs/declare-prefix-for-mode 'csharp-mode "mc" "dotnet-cli")
+;;     (spacemacs/declare-prefix-for-mode 'csharp-mode "mcg" "goto")
+;;     (spacemacs/declare-prefix-for-mode 'csharp-mode "mcs" "sln")
+;;     (spacemacs/set-leader-keys-for-major-mode 'csharp-mode
+;;       "c ." 'dotnet-run
+;;       "c b" 'dotnet-build
+;;       "c c" 'dotnet-clean
+;;       "c n" 'dotnet-new
+;;       "c p" 'dotnet-add-package
+;;       "c r" 'dotnet-add-reference
+;;       "c t" 'dotnet-test
+;;       ;; goto
+;;       "c g p" 'dotnet-goto-csproj
+;;       "c g s" 'dotnet-goto-sln
+;;       ;; sln
+;;       "c s l" 'dotnet-sln-list
+;;       "c s n" 'dotnet-sln-new
+;;       "c s r" 'dotnet-sln-remove)))
 
-(defun oreore/init-exec-path-from-shell ()
-  (use-package exec-path-from-shell
-    :config
-    (exec-path-from-shell-initialize)))
+;; (defun oreore/init-evil-fringe-mark ()
+;;   (use-package exec-path-from-shell
+;;     :init
+;;     (global-evil-fringe-mark-mode)
+;;     (setq-default left-fringe-width 16)))
+
+;; (defun oreore/init-exec-path-from-shell ()
+;;   (use-package exec-path-from-shell
+;;     :config
+;;     (exec-path-from-shell-initialize)))
 
 (defun oreore/init-google-this ()
   (use-package google-this
@@ -111,12 +118,12 @@
     ;; (setq counsel-describe-variable-function #'helpful-variable)
     ))
 
-(defun oreore/init-lispy ()
-  (use-package lispy
-    ;; :hook
-    ;; (emacs-lisp-mode . lispy-mode)
-    ;; (lisp-interaction-mode . lispy-mode)
-    ))
+;; (defun oreore/init-lispy ()
+;;   (use-package lispy
+;;     ;; :hook
+;;     ;; (emacs-lisp-mode . lispy-mode)
+;;     ;; (lisp-interaction-mode . lispy-mode)
+;;     ))
 
 (defun oreore/init-lispxmp ()
   (use-package lispxmp
@@ -126,8 +133,8 @@
     (spacemacs/set-leader-keys-for-major-mode 'lisp-interaction-mode
       "e x" 'lispxmp)))
 
-(defun oreore/init-recentf-ext ()
-  (use-package recentf-ext))
+;; (defun oreore/init-recentf-ext ()
+;;   (use-package recentf-ext))
 
 (defun oreore/init-magit-todos ()
   (use-package magit-todos))
@@ -135,14 +142,14 @@
 (defun oreore/init-quickrun ()
   (use-package quickrun))
 
-(defun oreore/init-hatena-blog-mode ()
-  (use-package hatena-blog-mode
-    :config
-    (setq hatena-id "five-dots")
-    (setq hatena-blog-api-key my/hatena-blog-api-key)
-    (setq hatena-blog-id "five-dots.hatenablog.com")
-    (setq hatena-blog-editing-mode "md")
-    (setq hatena-blog-backup-dir nil)))
+;; (defun oreore/init-hatena-blog-mode ()
+;;   (use-package hatena-blog-mode
+;;     :config
+;;     (setq hatena-id "five-dots")
+;;     (setq hatena-blog-api-key my/hatena-blog-api-key)
+;;     (setq hatena-blog-id "five-dots.hatenablog.com")
+;;     (setq hatena-blog-editing-mode "md")
+;;     (setq hatena-blog-backup-dir nil)))
 
 (defun oreore/init-visual-regexp ()
   (use-package visual-regexp))
@@ -152,8 +159,9 @@
 
 
 ;;; org-mode
-(defun oreore/init-ox-hatena ()
-  (use-package ox-hatena))
+
+;; (defun oreore/init-ox-hatena ()
+;;   (use-package ox-hatena))
 
 (defun oreore/init-ox-qmd ()
   (use-package ox-qmd
@@ -163,13 +171,6 @@
 
 
 ;;; ui
-(defun oreore/init-beacon ()
-  (use-package beacon
-    :defer t
-    :hook (after-init . beacon-mode)
-    :config
-    (setq beacon-blink-when-window-scrolls nil)))
-
 (defun oreore/init-centaur-tabs ()
   (use-package centaur-tabs
     :hook
@@ -229,6 +230,13 @@
       (kbd "C-M-,") 'centaur-tabs-backward
       (kbd "C-M-.") 'centaur-tabs-forward)
     (centaur-tabs-headline-match)))
+
+;; (defun oreore/init-beacon ()
+;;   (use-package beacon
+;;     :defer t
+;;     :hook (after-init . beacon-mode)
+;;     :config
+;;     (setq beacon-blink-when-window-scrolls nil)))
 
 (defun oreore/init-hide-mode-line ()
   (use-package hide-mode-line
@@ -338,7 +346,7 @@
     (setq ess-offset-continued '(straight . 2)) ; or '(cascade . 2)
     (setq ess-nuke-trailing-whitespace-p t)
     (setq ess-use-flymake nil) ; set nil to use flycheck
-    (setq ess-style 'DEFAULT)
+    (setq ess-style 'RStudio)
     (setq ess-eldoc-show-on-symbol t)
     (setq ess-history-file nil)
     (setq ess-indent-with-fancy-comments nil)
@@ -556,66 +564,67 @@ _sq_: Quit
 
 
 ;;; japanese
-(defun oreore/init-ddskk ()
-  (use-package ddskk
-    :disabled t
-    :defer t
-    :commands skk-mode
-    :hook
-    ;; Always start using latin mode
-    (evil-insert-state-entry . skk-mode)
-    ;; Disable skk mode when entering normal state
-    (evil-normal-state-entry . (lambda () (skk-mode -1)))
-    (skk-mode . skk-latin-mode-on)
 
-    :init
-    (setq default-input-method "japanese-skk")
-    ;; No new line by kakutei
-    (setq skk-egg-like-newline t)
-    ;; Henkan candidates
-    (setq skk-show-inline t)
-    ;; Cursor color
-    (setq skk-cursor-hiragana-color "yellow")
-    (setq skk-cursor-katakana-color "blue violet")
-    ;; Record file
-    (setq skk-record-file "~/Dropbox/skk/record")
+;; (defun oreore/init-ddskk ()
+;;   (use-package ddskk
+;;     :disabled t
+;;     :defer t
+;;     :commands skk-mode
+;;     :hook
+;;     ;; Always start using latin mode
+;;     (evil-insert-state-entry . skk-mode)
+;;     ;; Disable skk mode when entering normal state
+;;     (evil-normal-state-entry . (lambda () (skk-mode -1)))
+;;     (skk-mode . skk-latin-mode-on)
 
-    ;;; Jisyo
-    (setq skk-save-jisyo-instantly t)
-    ;; Personal jisyo
-    (setq skk-jisyo "~/Dropbox/skk/jisyo/skk-jisyo")
-    (setq skk-backup-jisyo "~/Dropbox/skk/jisyo/skk-jisyo.bak")
-    ;; large jisyo
-    (setq skk-large-jisyo "~/Dropbox/skk/jisyo/SKK-JISYO.L")
-    ;; Extra jisyo
-    ;; (setq skk-extra-jisyo-file-list
-    ;;       (list "~/Dropbox/skk/jisyo/SKK-JISYO.JIS2"
-    ;;             '("~/Dropbox/skk/jisyo/SKK-JISYO.JIS3_4" . euc-jisx0213)
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.assoc"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.notes"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.geo"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.hukugougo"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.jinmei"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.law"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.lisp"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.okinawa"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.propernoun"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.pubdic+"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.station"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.zipcode"
-    ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.office.zipcode"))
-    ;; saving skk jisyo ... done というメッセージが表示されるのを省略
-    ;; http://slackwareirregulars.blogspot.com/2018/03/skk.html
-    ;; FIXME saving skk jisyo ... が引き続き表示されてしまう
-    (defun skk-save-jisyo (&optional quiet)
-      (interactive "P")
-      (funcall skk-save-jisyo-function 'quiet))
-    ;; :config
-    ;; TODO 現在の skk mode に応じて [muhenkan] key で
-    ;; latin <-> hiragana を切り替える関数
-    ;; (bind-keys :map skk-latin-mode-map
-    ;;            ([muhenkan] . skk-kakutei))
-    ))
+;;     :init
+;;     (setq default-input-method "japanese-skk")
+;;     ;; No new line by kakutei
+;;     (setq skk-egg-like-newline t)
+;;     ;; Henkan candidates
+;;     (setq skk-show-inline t)
+;;     ;; Cursor color
+;;     (setq skk-cursor-hiragana-color "yellow")
+;;     (setq skk-cursor-katakana-color "blue violet")
+;;     ;; Record file
+;;     (setq skk-record-file "~/Dropbox/skk/record")
+
+;;     ;;; Jisyo
+;;     (setq skk-save-jisyo-instantly t)
+;;     ;; Personal jisyo
+;;     (setq skk-jisyo "~/Dropbox/skk/jisyo/skk-jisyo")
+;;     (setq skk-backup-jisyo "~/Dropbox/skk/jisyo/skk-jisyo.bak")
+;;     ;; large jisyo
+;;     (setq skk-large-jisyo "~/Dropbox/skk/jisyo/SKK-JISYO.L")
+;;     ;; Extra jisyo
+;;     ;; (setq skk-extra-jisyo-file-list
+;;     ;;       (list "~/Dropbox/skk/jisyo/SKK-JISYO.JIS2"
+;;     ;;             '("~/Dropbox/skk/jisyo/SKK-JISYO.JIS3_4" . euc-jisx0213)
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.assoc"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.notes"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.geo"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.hukugougo"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.jinmei"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.law"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.lisp"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.okinawa"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.propernoun"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.pubdic+"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.station"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.zipcode"
+;;     ;;             "~/Dropbox/skk/jisyo/SKK-JISYO.office.zipcode"))
+;;     ;; saving skk jisyo ... done というメッセージが表示されるのを省略
+;;     ;; http://slackwareirregulars.blogspot.com/2018/03/skk.html
+;;     ;; FIXME saving skk jisyo ... が引き続き表示されてしまう
+;;     (defun skk-save-jisyo (&optional quiet)
+;;       (interactive "P")
+;;       (funcall skk-save-jisyo-function 'quiet))
+;;     ;; :config
+;;     ;; TODO 現在の skk mode に応じて [muhenkan] key で
+;;     ;; latin <-> hiragana を切り替える関数
+;;     ;; (bind-keys :map skk-latin-mode-map
+;;     ;;            ([muhenkan] . skk-kakutei))
+;;     ))
 
 (defun oreore/init-pangu-spacing ()
   (use-package pangu-spacing

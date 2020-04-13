@@ -1,35 +1,65 @@
+
 ;;; Load private libraries
 (load (expand-file-name "funcs" my/elisp-dir))
 
+
+;;; misc
+
+(when my/mac-p ; Use osx command as meta
+  (setq mac-command-modifier 'meta))
+
+(use-package vc
+  :config
+  (setq vc-follow-symlinks t))
+
+(use-package recentf
+  :config
+  ;; recentf per host
+  (setq recentf-save-file
+        (concat spacemacs-cache-directory "recentf/" system-name))
+  ;; (setq recentf-auto-cleanup 60)
+  (setq recentf-max-saved-items 1000)
+  (setq recentf-exclude '(".recentf")))
+
+(use-package saveplace
+  :config
+  (setq save-place-file
+        (concat spacemacs-cache-directory "saveplace/" system-name)))
+
+(use-package projectile
+  :config
+  (setq projectile-known-projects-file
+        (concat spacemacs-cache-directory "projectile-bookmarks/" system-name ".eld")))
+
+(use-package google-translate
+  :config
+  (setq google-translate-pop-up-buffer-set-focus t)
+  (setq google-translate-default-source-language "en")
+  (setq google-translate-default-target-language "ja"))
+
+
 ;;; evil
+
 (use-package evil
   :config
   (evil-define-key '(normal visual) 'global
-    "H"  'evil-first-non-blank-of-visual-line
-    "J"  'evil-forward-paragraph
-    "K"  'evil-backward-paragraph
-    "L"  'evil-end-of-visual-line
-    "j"  'evil-next-visual-line
-    "k"  'evil-previous-visual-line
+    (kbd "<next>") 'evil-forward-paragraph
+    (kbd "<prior>") 'evil-backward-paragraph
+    "j" 'evil-next-visual-line
+    "k" 'evil-previous-visual-line
     "gj" 'evil-next-line
     "gk" 'evil-previous-line)
-  ;; "za" '+fold/toggle
-  ;; "zo" '+fold/open
-  ;; "zO" '+fold/open
-  ;; "zr" '+fold/open-all
-  ;; "zc" '+fold/close
-  ;; "zC" '+fold/close
-  ;; "zm" '+fold/close-all
-  ;; "zj" '+fold/next
-  ;; "zk" '+fold/previous
-  (evil-define-key '(normal) 'global
-   (kbd "C-M-h") 'evil-window-left
-   (kbd "C-M-j") 'evil-window-down
-   (kbd "C-M-k") 'evil-window-up
-   (kbd "C-M-l") 'evil-window-right))
+  ;; TODO do not use C-M
+  ;; (evil-define-key '(normal) 'global
+  ;;  (kbd "C-M-h") 'evil-window-left
+  ;;  (kbd "C-M-j") 'evil-window-down
+  ;;  (kbd "C-M-k") 'evil-window-up
+  ;;  (kbd "C-M-l") 'evil-window-right)
+  )
 
 
 ;;; completion
+
 (use-package company
   :bind
   (:map company-active-map
@@ -37,6 +67,7 @@
         ("M-/" . company-search-candidates)
         ("M-d" . company-next-page)
         ("M-i" . company-show-doc-buffer)
+        ;; TODO change quickhelp font for osx
         ("M-p" . company-quickhelp-manual-begin)
         ("M-u" . company-previous-page)
         ("M-w" . company-show-location))
@@ -44,6 +75,7 @@
   (setq completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
   (setq read-buffer-completion-ignore-case t)
+  ;; TODO explore lighten company setting
   ;; Delay
   (setq company-idle-delay 0.1)
   ;; (setq company-idle-delay 1)
@@ -51,9 +83,16 @@
   (evil-define-key 'insert 'global
     (kbd "M-,") 'company-manual-begin))
 
+(use-package company-statistics
+  :config
+  (setq company-statistics-file
+        (concat spacemacs-cache-directory "company-statistics-cache/" system-name ".el")))
+
 (use-package counsel
   :config
-  (setq counsel-yank-pop-separator "\n------------------------------\n")
+  ;; TODO align separator length with ivy-posframe length
+  (setq counsel-yank-pop-separator
+        "\n------------------------------\n")
   (add-to-list 'ivy-height-alist
                '(counsel-yank-pop . 15)))
 
@@ -64,6 +103,7 @@
   (doom-themes-org-config))
 
 (use-package treemacs
+  ;; TODO do not use C-M
   :bind
   (:map treemacs-mode-map
         ("C-M-h" . evil-window-left)
@@ -73,16 +113,16 @@
   :init
   (setq treemacs-use-follow-mode nil)
   :config
+  (setq treemacs-persist-file
+        (concat user-emacs-directory ".cache/treemacs-persist/" system-name))
   (setq treemacs-position 'right)
   (setq treemacs-lock-width t)
   (treemacs-resize-icons 18))
 
-;; frame size
-(when (display-graphic-p)
+(when (display-graphic-p) ; frame size
   (set-frame-size (selected-frame) 120 50))
 
-;; font
-(when (display-graphic-p)
+(when (display-graphic-p) ; font
   ;; |abcdef ghijkl|
   ;; |ABCDEF GHIJKL|
   ;; |'";:-+ =/\~`?|
@@ -129,6 +169,7 @@
   :config
   (add-to-list 'page-break-lines-modes 'ess-r-mode)
   (add-to-list 'page-break-lines-modes 'python-mode)
+  (add-to-list 'page-break-lines-modes 'shell-script-mode)
   (global-page-break-lines-mode))
 
 
@@ -201,20 +242,37 @@
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
   :config
+  ;; TODO bullet for SF Mono Squre
   (setq org-bullets-bullet-list '("" "" "" "" "" "" "" "" "" "")))
 
-;; (use-package org-variable-pitch
-;;   :diminish
-;;   :commands (org-variable-pitch-minor-mode)
-;;   ;; :init
-;;   ;; (add-hook 'org-mode-hook (lambda () (org-variable-pitch-minor-mode 1)))
-;;   :config
-;;   (dolist (f org-variable-pitch-fixed-faces)
-;;     (set-face-attribute f nil :fontset "fontset-auto1" :font "fontset-auto1")))
+(progn ; org-variable-pitch
+  ;; (use-package org-variable-pitch
+  ;;   :diminish
+  ;;   :commands (org-variable-pitch-minor-mode)
+  ;;   ;; :init
+  ;;   ;; (add-hook 'org-mode-hook (lambda () (org-variable-pitch-minor-mode 1)))
+  ;;   :config
+  ;;   (dolist (f org-variable-pitch-fixed-faces)
+  ;;     (set-face-attribute f nil :fontset "fontset-auto1" :font "fontset-auto1")))
+  )
 
-;; (use-package org-babel-eval-in-repl
-;;   :init
-;;   (bind-keys :map org-mode-map ("C-<return>" . ober-eval-in-repl)))
+(progn ; org-babel-eval-in-repl
+  ;; (use-package org-babel-eval-in-repl
+  ;;   :init
+  ;;   (bind-keys :map org-mode-map ("C-<return>" . ober-eval-in-repl)))
+  )
+
+(progn ; org-qiita
+  ;; (use-package org-qiita
+  ;;   ;; emacs の org-mode で書いた記事を qiita に投稿する org-qiita.el
+  ;;   ;; https://qiita.com/dwarfJP/items/594a8d4b0ac6d248d1e4
+  ;;   ;; Private Layer 側で github からインストールすると以下のエラーが発生
+  ;;   ;; Error getting PACKAGE-DESC: (error Package lacks a file header)
+  ;;   :load-path "~/Dropbox/repos/github/ifritJP/org-qiita-el"
+  ;;   :config
+  ;;   (setq org-qiita-token my/qiita-token)
+  ;;   (setq org-qiita-export-and-post nil))
+  )
 
 (use-package ox-hugo
   :config
@@ -222,20 +280,12 @@
   (setq org-hugo-front-matter-format "toml") ; toml or yaml
   (setq org-hugo-use-code-for-kbd t))
 
-(use-package org-qiita
-  ;; emacs の org-mode で書いた記事を qiita に投稿する org-qiita.el
-  ;; https://qiita.com/dwarfJP/items/594a8d4b0ac6d248d1e4
-  ;; Private Layer 側で github からインストールすると以下のエラーが発生
-  ;; Error getting PACKAGE-DESC: (error Package lacks a file header)
-  :load-path "~/Dropbox/repos/github/ifritJP/org-qiita-el"
-  :config
-  (setq org-qiita-token my/qiita-token)
-  (setq org-qiita-export-and-post nil))
-
 
 ;;; lang
 
-;; (add-hook 'emacs-lisp-mode-hook 'my/set-company-backend-for-el)
+(progn ; company backend for elisp
+  ;; (add-hook 'emacs-lisp-mode-hook 'my/set-company-backend-for-el)
+  )
 
 (use-package python
   :config
@@ -333,14 +383,14 @@
   ;; (setq lsp-ui-sideline-code-actions-prefix "")
   )
 
-(use-package lsp-python-ms
-  :config
-  (setq lsp-python-ms-python-executable-cmd "python3"))
+;; (use-package lsp-python-ms
+;;   :config
+;;   (setq lsp-python-ms-python-executable-cmd "python3"))
 
-(use-package company-lsp
-  :config
-  (setq company-lsp-cache-candidates t)
-  (setq company-lsp-enable-recompletion nil))
+;; (use-package company-lsp
+;;   :config
+;;   (setq company-lsp-cache-candidates t)
+;;   (setq company-lsp-enable-recompletion nil))
 
 (use-package dap-mode
   ;; TODO dap-ui-mode debug 実行時のウィンドウレイアウト
@@ -356,34 +406,25 @@
   (use-package dap-gdb-lldb))
 
 (use-package flycheck
-  ;; :hook
-  ;; (ess-r-mode . flycheck-mode)
+  :hook
+  (ess-r-mode . flycheck-mode)
   :config
-  ;; Disable specific linters from the default
+  (setq flycheck-check-syntax-automatically '(save mode-enabed))
   (setq flycheck-lintr-linters
-        "default_linters[-which(names(default_linters) == 'commented_code_linter')]"))
-
-
-;;; tools
-(use-package vc
-  :config
-  (setq vc-follow-symlinks t))
-
-(use-package recentf
-  :config
-  (setq recentf-max-saved-items 1000)
-  (setq recentf-exclude '(".recentf"))
-  (setq recentf-auto-cleanup 60)
-  (run-with-idle-timer 60 t 'recentf-save-list))
-
-(use-package google-translate
-  :config
-  (setq google-translate-pop-up-buffer-set-focus t)
-  (setq google-translate-default-source-language "en")
-  (setq google-translate-default-target-language "ja"))
+        "with_defaults(
+           line_length_linter(length = 80L),
+           implicit_integer_linter,
+           T_and_F_symbol_linter,
+           todo_comment_linter,
+           object_name_linter = NULL,
+           cyclocomp_linter = NULL,
+           pipe_continuation_linter = NULL,
+           commented_code_linter = NULL
+        )"))
 
 
 ;;; leader map
+
 (spacemacs/set-leader-keys
   "," 'ivy-switch-buffer
   "." 'ivy-resume

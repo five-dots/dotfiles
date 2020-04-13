@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -73,8 +75,8 @@ xterm*|rxvt*)
 esac
 
 # Load aliases
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f ~/.aliases ]; then
+    . ~/.aliases
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -94,4 +96,9 @@ fi
 # For WSL X-Server
 if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
     export DISPLAY=localhost:0.0
+fi
+
+## IQFeed setting
+if [ -f ~/.iqfeed_credentials ]; then
+	  . ~/.iqfeed_credentials.sh
 fi

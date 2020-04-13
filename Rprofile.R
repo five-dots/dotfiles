@@ -2,11 +2,14 @@
 .switchLibPath <- function() {
   version <- paste(R.version$major,
                    sub("\\..*$", "", R.version$minor),
-                   sep=".")
-  if (Sys.info()["sysname"] == "Windows") {
+                   sep = ".")
+  os <- Sys.info()["sysname"]
+  if (os == "Windows") {
     path <- paste0("~/Dropbox/R/win-library/", version)
-  } else {
+  } else if (os == "Linux") {
     path <- paste0("~/Dropbox/R/x86_64-pc-linux-gnu-library/", version)
+  }  else if (os == "Darwin") {
+  path <- paste0("~/Dropbox/R/x86_64-apple-darwin-library/", version)
   }
   Sys.setenv(R_LIBS_USER = path)
   .libPaths(path)
@@ -24,7 +27,7 @@
   options(
     ## repos = "http://cran.rstudio.com/",
     ## stringsAsFactors = FALSE,
-    max.print = 1000,
+    max.print = 1000L,
     devtools.name = "Shun Asai",
     devtools.desc.author = 'c(person(given = "Shun", family = "Asai",
                               email = "syun.asai@gmail.com",
@@ -33,11 +36,12 @@
     ## devtools.install.args = c("--no-lock"),
     usethis.full_name = "Shun Asai",
     blogdown.author	= "Shun Asai",
-	  blogdown.ext = ".Rmd",
+    blogdown.ext = ".Rmd",
     ## help use browser
     help_type = "html",
     ## ProjectTemplate templates
-    ProjectTemplate.templatedir = "~/Dropbox/repos/github/five-dots/ProjectTemplateTemplates"
+    ProjectTemplate.templatedir =
+      "~/Dropbox/repos/github/five-dots/ProjectTemplateTemplates"
   )
 
   ## Load libraries
@@ -134,4 +138,3 @@ settings$gmail_app_pwd <- .gmail_app_pwd
 
 ### Github personal access token
 settings$github_pat <- .github_pat
-

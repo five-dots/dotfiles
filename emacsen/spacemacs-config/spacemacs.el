@@ -76,6 +76,11 @@ This function should only modify configuration layer settings."
      ;; ipython-notebook
      ivy
 
+     (json
+      :variables
+      js-indent-level 2
+      json-fmt-tool 'prettier)
+
      (lsp
       :variables
       lsp-navigation 'peek)
@@ -88,23 +93,23 @@ This function should only modify configuration layer settings."
       org-enable-hugo-support t
       org-enable-github-support t)
 
-     pandoc
+     ;; pandoc
 
      (python
       :variables
       python-backend 'lsp
       python-lsp-server 'mspyls ; or 'pyls
-      python-lsp-git-root "~/.spacemacs.d/.extension/mspyls"
+      python-lsp-git-root
+      (expand-file-name
+       "~/Dropbox/repos/github/Miscrosoft/python-language-server")
       python-formatter 'lsp
       python-formatter-on-save t
       ;; python-test-runner 'pytest ; or 'nose (or both)
       python-sort-imports-on-save t)
 
-     (shell
-      :variables
-      shell-default-height 30
-      shell-default-position 'bottom)
-
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
      ;; spell-checking
      syntax-checking
      treemacs
@@ -112,17 +117,11 @@ This function should only modify configuration layer settings."
      (version-control
       :variables
       version-control-diff-tool 'git-gutter ; 'diff-hl, 'git-gutter or 'git-gutter+
-      version-control-diff-side 'right ; or 'right
-      )
+      version-control-diff-side 'right)
 
-     yaml
-
-     ;; my-ess
-     ;; my-fold
-     ;; my-japanese
-     ;; my-tools
-     ;; my-ui
+     ;; yaml
      oreore
+
      )
 
    ;; List of additional packages that will be installed without being
@@ -147,7 +146,7 @@ This function should only modify configuration layer settings."
    ;; installs only the used packages but won't delete unused ones. `all'
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
-   dotspacemacs-install-packages 'used-only))
+   dotspacemacs-install-packages 'used-but-keep-unused))
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -222,6 +221,11 @@ It should only modify the values of Spacemacs settings."
    ;; (default 'vim)
    dotspacemacs-editing-style 'vim
 
+   ;; If non-nil show the version string in the Spacemacs buffer. It will
+   ;; appear as (spacemacs version)@(emacs version)
+   ;; (default t)
+   dotspacemacs-startup-buffer-show-version t
+
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
    ;; banner, `random' chooses a random text banner in `core/banners'
@@ -268,26 +272,36 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   ;; dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
    dotspacemacs-mode-line-theme 'doom
+   ;; dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
 
    ;; Default font or prioritized list of fonts.
-   dotspacemacs-default-font `("Consolas NF"
-                               :size ,(let ((name (system-name))
-                                            (num-disp (length (display-monitor-attributes-list)))
-                                            (default-size 9.8))
-                                        (cond
-                                         ((equal name "desk1") default-size)
-                                         ;; Larger font for high DPI Display
-                                         ((and (equal name "x1") (= num-disp 1)) 14.3) ; 14.3
-                                         ((and (equal name "x1") (> num-disp 1)) default-size)
-                                         (t default-size)))
+   dotspacemacs-default-font `(,(cond
+                                 ((equal system-type 'gnu/linux) "Consolas NF")
+                                 ((equal system-type 'darwin) "Consolas NF")) ; or SF Mono Square
+                               :size
+                               ,(let ((name (system-name))
+                                      (num-disp (length (display-monitor-attributes-list)))
+                                      (default-size 9.8))
+                                  (cond
+                                   ((equal name "desk1") default-size)
+                                   ;; Larger font for high DPI Display
+                                   ((and (equal name "x1") (= num-disp 1)) 14.3) ; 14.3
+                                   ((and (equal name "x1") (> num-disp 1)) default-size)
+                                   ((and (equal name "mbp1.local") (= num-disp 1)) 14)
+                                   ((and (equal name "mbp1.local") (> num-disp 1)) 14.3)
+                                   (t default-size)))
                                :weight normal
                                :width normal)
+
+   ;; dotspacemacs-default-font '("Source Code Pro"
+   ;;                             :size 10.0
+   ;;                             :weight normal
+   ;;                             :width normal)
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
@@ -308,8 +322,10 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-major-mode-leader-key ","
 
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
-   ;; (default "C-M-m")
-   dotspacemacs-major-mode-emacs-leader-key "C-M-m"
+   ;; (default "C-M-m" for terminal mode, "<M-return>" for GUI mode).
+   ;; Thus M-RET should work as leader key in both GUI and terminal modes.
+   ;; C-M-m also should work in terminal mode, but not in GUI mode.
+   dotspacemacs-major-mode-emacs-leader-key (if window-system "<M-return>" "C-M-m")
 
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs `C-i', `TAB' and `C-m', `RET'.
@@ -507,6 +523,13 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
 
+   ;; If non nil activate `clean-aindent-mode' which tries to correct
+   ;; virtual indentation of simple modes. This can interfer with mode specific
+   ;; indent handling like has been reported for `go-mode'.
+   ;; If it does deactivate it here.
+   ;; (default t)
+   dotspacemacs-use-clean-aindent-mode t
+
    ;; Either nil or a number of seconds. If non-nil zone out after the specified
    ;; number of seconds. (default nil)
    dotspacemacs-zone-out-when-idle nil
@@ -531,13 +554,15 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
+  ;; Add private layer directory
   (setq spacemacs-private-directory
         (expand-file-name
          "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/spacemacs-config/private/"))
 
-  ;; Load private variables
-  (load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/elisp/vars.el"))
-  (load (expand-file-name "vars-secret.el" my/elisp-dir)))
+  ;; Load private libraries
+  (load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/elisp/const.el"))
+  (load (expand-file-name "const-secret.el" my/elisp-dir))
+  (load (expand-file-name "vars.el" my/elisp-dir)))
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
@@ -554,11 +579,8 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
   ;; Load org config file
-  ;; (org-babel-load-file
-  ;;  (expand-file-name
-  ;;   "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/spacemacs-config/config-babel.org"))
   (load (expand-file-name
-         "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/spacemacs-config/config.el")))
+        "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/spacemacs-config/config.el")))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

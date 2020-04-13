@@ -12,7 +12,7 @@ define_multipurpose_modmap({
 })
 
 define_keymap(None, {
-    K("C-h"): K("Backspace"),
+    # K("C-h"): K("Backspace"),
     K("Semicolon"): K("Enter"),
     K("C-Semicolon"): K("Semicolon"),
 

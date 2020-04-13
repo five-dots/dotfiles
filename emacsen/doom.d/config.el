@@ -1,113 +1,392 @@
-;;; Dropbox/repos/github/five-dots/dotfiles/doom.d/config.el -*- lexical-binding: t; -*-
-;; Place your private configuration here
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/elisp/vars.el"))
-(load (expand-file-name "vars-secret.el" my/elisp-dir))
-(load (expand-file-name "funcs" my/elisp-dir))
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; sync' after modifying this file!
+
+;; presets
+(progn
+  ;; Some functionality uses this to identify you, e.g. GPG configuration, email
+  ;; clients, file templates and snippets.
+  (setq user-full-name "John Doe"
+        user-mail-address "john@doe.com")
+
+  ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
+  ;; are the three important ones:
+  ;;
+  ;; + `doom-font'
+  ;; + `doom-variable-pitch-font'
+  ;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
+  ;;   presentations or streaming.
+  ;;
+  ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
+  ;; font string. You generally only need these two:
+  ;;
+  (let ((num-disp (length (display-monitor-attributes-list)))
+        (font-size 13)
+        (big-font-size 19))
+    ;; Larger font for high DPI Display
+    (cond
+     ;; mbp
+     ((and (string= system-name "mbp1.local") (= num-disp 1))
+      (setq font-size 19)
+      (setq big-font-size 27))
+     ;; x1
+     ((and (string= system-name "x1") (= num-disp 1))
+      (setq font-size 19)
+      (setq big-font-size 27)))
+    (setq doom-font (font-spec :family "Consolas NF" :size font-size))
+    (setq doom-big-font (font-spec :family "Consolas NF" :size big-font-size))
+    (setq doom-unicode-font (font-spec :family "MeiryoKe_Console" :size font-size))
+    (add-to-list 'face-font-rescale-alist '(".*Meiryo*." . 1.09)
+    ;; |abcdef ghijkl|
+    ;; |ABCDEF GHIJKL|
+    ;; |'";:-+ =/\~`?|
+    ;; |αβγδεζ ηθικλμ|
+    ;; |ΑΒΓΔΕΖ ΗΘΙΚΛΜ|
+    ;; |日本語 の美観|
+    ;; |あいう えおか|
+    ;; |アイウ エオカ|
+    ;; |ｱｲｳｴｵｶ ｷｸｹｺｻｼ|
+    ))
+
+  ;; There are two ways to load a theme. Both assume the theme is installed and
+  ;; available. You can either set `doom-theme' or manually load a theme with the
+  ;; `load-theme' function. This is the default:
+  (setq doom-theme 'doom-one)
+
+  ;; If you use `org' and don't want your org files in the default location below,
+  ;; change `org-directory'. It must be set before org loads!
+  (setq org-directory "~/org/")
+
+  ;; This determines the style of line numbers in effect. If set to `nil', line
+  ;; numbers are disabled. For relative line numbers, set this to `relative'.
+  (setq display-line-numbers-type nil)
+
+
+  ;; Here are some additional functions/macros that could help you configure Doom:
+  ;;
+  ;; - `load!' for loading external *.el files relative to this one
+  ;; - `use-package' for configuring packages
+  ;; - `after!' for running code after a package has loaded
+  ;; - `add-load-path!' for adding directories to the `load-path', relative to
+  ;;   this file. Emacs searches the `load-path' when you load packages with
+  ;;   `require' or `use-package'.
+  ;; - `map!' for binding new keys
+  ;;
+  ;; To get information about any of these functions/macros, move the cursor over
+  ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
+  ;; This will open documentation for it, including demos of how they are used.
+  ;;
+  ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
+  ;; they are implemented.
+  )
+
+;; load private libraries
+(progn
+  (load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/elisp/const.el"))
+  (load (expand-file-name "const-secret.el" my/elisp-dir))
+  (load (expand-file-name "vars.el" my/elisp-dir))
+  (load (expand-file-name "funcs.el" my/elisp-dir)))
+
+
+;;; core
+
+;; TODO change recentf-save-file
+;; TODO need exec-path-from-shell ?
+
+(use-package! recentf-ext)
+
+
+;;; input
+
+(use-package! ddskk
+  :disabled
+  :after evil
+  :defer t
+  :commands skk-mode
+
+  :hook
+  ;; Always start using latin mode
+  (evil-insert-state-entry . skk-mode)
+  (skk-mode . skk-latin-mode-on)
+
+  :init
+  (setq default-input-method "japanese-skk")
+
+  :config
+  ;; Henkan candidates
+  (setq skk-show-inline t)
+  ;; Cursor color
+  (setq skk-cursor-hiragana-color "yellow")
+  (setq skk-cursor-katakana-color "blue violet")
+
+  ;; Record file
+  (setq skk-record-file "~/Dropbox/skk/record")
+  ;; Personal jisyo
+  (setq skk-jisyo "~/Dropbox/skk/jisyo/skk-jisyo")
+  (setq skk-backup-jisyo "~/Dropbox/skk/jisyo/skk-jisyo.bak")
+  ;; large jisyo
+  (setq skk-large-jisyo "~/Dropbox/skk/jisyo/SKK-JISYO.L")
+  ;; Extra jisyo
+  (setq skk-extra-jisyo-file-list
+        (list "~/Dropbox/skk/jisyo/SKK-JISYO.JIS2"
+              '("~/Dropbox/skk/jisyo/SKK-JISYO.JIS3_4" . euc-jisx0213)
+              "~/Dropbox/skk/jisyo/SKK-JISYO.assoc"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.notes"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.geo"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.hukugougo"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.jinmei"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.law"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.lisp"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.okinawa"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.propernoun"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.pubdic+"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.station"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.zipcode"
+              "~/Dropbox/skk/jisyo/SKK-JISYO.office.zipcode"))
+
+  ;; Disable skk mode when entering normal state
+  (add-hook 'evil-normal-state-entry-hook
+            '(lambda () (when skk-mode (skk-mode -1))))
+  ;; suppress message "saving skk jisyo ... done"
+  ;; http://slackwareirregulars.blogspot.com/2018/03/skk.html
+  (defun skk-save-jisyo (&optional quiet)
+    (interactive "P")
+    (funcall skk-save-jisyo-function 'quiet)))
+
+(use-package! mozc
+  :init
+  (setq default-input-method "japanese-mozc")
+
+  :hook
+  (evil-insert-state-exit . my/deactivate-ime)
+
+  :config
+  (map! :i [muhenkan] #'toggle-input-method)
+
+  (setq mozc-candidate-style 'echo-area)
+
+  ;; Disable mozc-mode properly by [muhenkan]/[zenkaku-hankaku]
+  ;; http://nos.hateblo.jp/entry/20120317/1331985029
+  (defadvice my/mozc-handle-event (around intercept-keys (event))
+    (if (member event (list 'zenkaku-hankaku 'henkan))
+        (progn
+          (mozc-clean-up-session)
+          (toggle-input-method))
+      (progn
+        ;; (message "%s" event) ; debug
+        ad-do-it)))
+  (ad-activate 'my/mozc-handle-event))
 
 
 ;;; completion
 
-;; FIXME show-doc
 (after! company
+  (setq company-idle-delay 0.1)
+  (setq company-show-numbers t)
+
+  ;; ignore case
   (setq completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
   (setq read-buffer-completion-ignore-case t)
-  (setq company-idle-delay 0.4)
-  ;; company backend (non-lsp)
-  (set-company-backend! 'emacs-lisp-mode
-    '(company-capf company-files :with company-yasnippet))
-  (set-company-backend! 'org-mode
-    '(company-dabbrev company-files company-yasnippet))
-  (when (featurep! :lang ess)
-    (set-company-backend! 'ess-r-mode
-      '(company-capf company-files company-yasnippet)))
-  (set-company-backend! 'stan-mode
-    '(company-stan-backend company-files company-yasnippet)))
 
-(use-package! company-lsp
+  ;; NOTE config from centaur-emacs/doom-emacs
+  ;; (setq company-tooltip-align-annotations t)
+  ;; (setq company-tooltip-limit 12) ; default 10
+  ;; (setq company-echo-delay (if (display-graphic-p) nil 0))
+  ;; (setq company-require-match nil) ; default 'never (or 'company-explicit-action)
+  ;; (setq company-dabbrev-ignore-case nil)  ; default 'keep-prefix
+  ;; (setq company-dabbrev-downcase nil)
+  ;; (setq company-global-modes '(not erc-mode message-mode help-mode gud-mode eshell-mode shell-mode))
+
+  ;; set company backends (non-lsp)
+  ;; (set-company-backend! 'emacs-lisp-mode
+  ;;   '(company-capf company-files :with company-yasnippet))
+  ;; (set-company-backend! 'org-mode
+  ;;   '(company-dabbrev company-files company-yasnippet))
+  ;; (when (featurep! :lang ess)
+  ;;   (set-company-backend! 'ess-r-mode
+  ;;     '(company-capf company-files company-yasnippet)))
+  ;; (set-company-backend! 'stan-mode
+  ;;   '(company-stan-backend company-files company-yasnippet))
+  )
+
+;; TODO show quickhelp manually (maybe popup setting is related)
+(use-package! company-quickhelp :disabled
+  :hook
+  (company-mode . company-quickhelp-mode)
+
   :init
+  (setq company-quickhelp-delay nil))
+
+(after! company-lsp
+  ;; NOTE should use use-package! and `:init' ?
   (setq +lsp-company-backend
         '(company-lsp company-files :with company-yasnippet)))
 
+(use-package! all-the-icons-ivy-rich
+  ;; Better experience with icons
+  ;; Enable it before`ivy-rich-mode' for better performance
+  ;; https://github.com/seagle0128/all-the-icons-ivy-rich
+
+  :hook
+  (ivy-mode . all-the-icons-ivy-rich-mode)
+
+  :init
+  (setq all-the-icons-ivy-rich-icon-size 0.8)
+
+  :config
+  (let ((switch-buffer-trans
+         '(:columns
+           ((all-the-icons-ivy-rich-buffer-icon)
+            (ivy-rich-candidate (:width 30))
+            (ivy-rich-switch-buffer-size (:width 7))
+            (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
+            (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
+            (ivy-rich-switch-buffer-project (:width 15 :face success))
+            (ivy-rich-switch-buffer-path (:width 26)))
+           :predicate (lambda (cand) (get-buffer cand))
+           :delimiter "\t"))
+        (function-trans
+         '(:columns
+           ((all-the-icons-ivy-rich-function-icon)
+            (counsel-M-x-transformer (:width 50))
+            (ivy-rich-counsel-function-docstring (:width 54 :face font-lock-doc-face)))))
+        (variable-trans
+         '(:columns
+           ((all-the-icons-ivy-rich-variable-icon)
+            (counsel-M-x-transformer (:width 50))
+            (ivy-rich-counsel-function-docstring (:width 54 :face font-lock-doc-face)))))
+        (recentf-trans
+         '(:columns
+           ((all-the-icons-ivy-rich-file-icon)
+            (counsel-buffer-or-recentf-transformer))
+           :delimiter "\t")))
+    ;; switch-buffer
+    (plist-put all-the-icons-ivy-rich-display-transformers-list
+               'ivy-switch-buffer switch-buffer-trans)
+    (plist-put all-the-icons-ivy-rich-display-transformers-list
+               'ivy-switch-buffer-other-window switch-buffer-trans)
+    (plist-put all-the-icons-ivy-rich-display-transformers-list
+               'counsel-switch-buffer switch-buffer-trans)
+    (plist-put all-the-icons-ivy-rich-display-transformers-list
+               'counsel-switch-buffer-other-window switch-buffer-trans)
+    ;; describe
+    (plist-put all-the-icons-ivy-rich-display-transformers-list
+               'counsel-M-x function-trans)
+    (plist-put all-the-icons-ivy-rich-display-transformers-list
+               'counsel-describe-function function-trans)
+    ;; describe
+    (plist-put all-the-icons-ivy-rich-display-transformers-list
+               'counsel-describe-variable variable-trans)
+    (plist-put all-the-icons-ivy-rich-display-transformers-list
+               'counsel-set-variable variable-trans)
+    ;; recentf
+    ;; TODO trancate long path string into one line
+    (plist-put all-the-icons-ivy-rich-display-transformers-list
+               'counsel-recentf recentf-trans)
+    (plist-put all-the-icons-ivy-rich-display-transformers-list
+               'counsel-buffer-or-recentf recentf-trans)))
+
 (after! ivy
+  (setq ivy-height 10)
   (setq ivy-use-virtual-buffers t)
-  (setq counsel-yank-pop-separator "\n--------------------\n")
+
+  ;; TODO change `counsel-yank-pop' value (not add newly)
   (add-to-list 'ivy-height-alist
                '(counsel-yank-pop . 15)))
 
-(use-package! ivy-posframe
-  :config
+(after! ivy-posframe
   (setq ivy-posframe-border-width 1)
-  (setq ivy-posframe-min-width 90)
-  (setq ivy-posframe-min-height 15)
-  (setq ivy-posframe-height 15)
+  (setq ivy-posframe-width 110)
+  (setq ivy-posframe-min-width 110)
+  (setq ivy-posframe-min-height 10)
+  (setq ivy-posframe-height 10)
   (setq ivy-posframe-parameters
-        '((left-fringe . 5)
-          (right-fringe . 5)))
+        '((left-fringe  . 5) (right-fringe . 5)))
+
+  ;; Per command settings
   (setq ivy-posframe-display-functions-alist
         '((swiper . ivy-display-function-fallback)
           (swiper-all . ivy-display-function-fallback)
           (counsel-rg . ivy-display-function-fallback)
           (counsel-yank-pop . ivy-display-function-fallback)
+          (counsel-git-grep . ivy-display-function-fallback)
+          (counsel-grep . ivy-display-function-fallback)
           (t . ivy-posframe-display-at-frame-center)))
-  :custom-face
-  (ivy-posframe ((t (:background "#282a36"))))
-  (ivy-posframe-border ((t (:background "#6272a4"))))
-  (ivy-posframe-cursor ((t (:background "#61bfff")))))
+
+  ;; Per command height settings
+  (setq ivy-posframe-height-alist
+        '((swiper . 20)
+          (swiper-all . 20)
+          (counsel-rg . 20)
+          (counsel-yank-pop . 20)
+          (counsel-git-grep . 20)
+          (counsel-grep . 20)
+          (t . 10)))
+
+  (set-face-attribute 'ivy-posframe nil :background "#282a36")
+  (set-face-attribute 'ivy-posframe-border nil :background "#6272a4")
+  (set-face-attribute 'ivy-posframe-cursor nil :background "#61bfff"))
+
+(after! counsel
+  (setq counsel-yank-pop-separator "\n--------------------\n"))
+
+
+;;; ui
+
+(after! doom-themes
+  (setq doom-themes-treemacs-theme "doom-atom") ; "doom-atom" or "Default"
+  (setq doom-themes-treemacs-enable-variable-pitch nil))
+
+(after! treemacs
+  (map!
+   [remap +treemacs/toggle] #'treemacs)
+
+  ;; TODO enable hl-line-mode
+  (setq treemacs-show-cursor t)
+  (setq treemacs-position 'right)
+  (treemacs-resize-icons 18))
+
+(use-package! page-break-lines
+  :config
+  (add-to-list 'page-break-lines-modes 'ess-r-mode)
+  (add-to-list 'page-break-lines-modes 'python-mode)
+  (global-page-break-lines-mode))
+
+;; frame-size
+(when (display-graphic-p)
+  (set-frame-size (selected-frame) 120 50))
+
+
+;;; editor
 
 (after! yasnippet
   (add-to-list 'yas-snippet-dirs my/snippets-dir))
 
 
-;;; ui
-(after! treemacs
-  (setq treemacs-show-cursor t)
-  (setq treemacs-position 'right)
-  (treemacs-resize-icons 18))
+;;; checkers
 
-(use-package! hide-mode-line
-  :hook (treemacs-mode . hide-mode-line-mode))
-
-(use-package! page-break-lines
-  :config
-  (dolist (mode '(ess-r-mode python-mode))
-    (add-to-list 'page-break-lines-modes mode))
-  (global-page-break-lines-mode))
-
-;; font
-(let ((num-disp (length (display-monitor-attributes-list)))
-      (font-size 13)) ; default font height (size)
-  ;; High DPI and no external display
-  (when (and (equal (system-name) "x1") (= num-disp 1))
-    (setq font-size 19))
-  (setq doom-font (font-spec :family "Consolas NF" :size font-size))
-  (setq doom-unicode-font (font-spec :family "MeiryoKe_Console" :size font-size))
-  ;; |abcdef ghijkl|
-  ;; |ABCDEF GHIJKL|
-  ;; |'";:-+ =/\~`?|
-  ;; |αβγδεζ ηθικλμ|
-  ;; |ΑΒΓΔΕΖ ΗΘΙΚΛΜ|
-  ;; |日本語 の美観|
-  ;; |あいう えおか|
-  ;; |アイウ エオカ|
-  ;; |ｱｲｳｴｵｶ ｷｸｹｺｻｼ|
-  (add-to-list 'face-font-rescale-alist '(".*Meiryo*." . 1.09)))
-
-(when window-system
-  (set-frame-size (selected-frame) 110 50))
-
-(use-package! beacon
-  :hook (after-init . beacon-mode)
-  :config
-  (setq beacon-blink-when-window-scrolls nil))
+(after! flycheck
+  (setq flycheck-lintr-linters
+        "with_defaults(
+           line_length_linter(length = 80L),
+           implicit_integer_linter,
+           T_and_F_symbol_linter,
+           todo_comment_linter,
+           object_name_linter = NULL,
+           cyclocomp_linter = NULL,
+           pipe_continuation_linter = NULL,
+           commented_code_linter = NULL
+        )"))
 
 
 ;;; tools
+
 (when (featurep! :ui popup)
   (set-popup-rules!
     '(
-      ;;; Available options
+      ;; NOTE Available options
       ;; :ignore BOOL
       ;; :actions ACTIONS
       ;; :side 'bottom|'top|'left|'right
@@ -119,7 +398,8 @@
       ;; :modeline BOOL|FN|LIST
       ;; :autosave BOOL|FN
       ;; :parameters ALIST
-      ("^\\*[Hh]elp" :side right :size 81 :select t :quite current)
+
+      ;; ("^\\*[Hh]elp" :side right :size 81 :select t :quite current)
 
       ;;; ESS
       ("^\\*R dired" :ignore t)
@@ -135,151 +415,14 @@
       ;; TODO company-doc
       )))
 
-(use-package! google-this
-  :defer t)
-
-(use-package! google-translate
-  :init
-  (setq google-translate-pop-up-buffer-set-focus t)
-  (setq google-translate-default-source-language "en")
-  (setq google-translate-default-target-language "ja"))
-
-(use-package! rainbow-delimiters
-  :hook
-  (ess-r-mode . rainbow-delimiters-mode))
-
-(use-package! exec-path-from-shell
-  :config
-  (exec-path-from-shell-initialize))
-
-(use-package! recentf-ext)
-
-(after! recentf
-  (setq recentf-max-saved-items 1000))
-
-(use-package! skk
-  ;; :disabled t
-  :load-path ".local/straight/build/ddskk"
-  :defer t
-  :commands skk-mode
-
-  :hook
-  ;; Always start using latin mode
-  (evil-insert-state-entry . skk-mode)
-  ;; Disable skk mode when entering normal state
-  (evil-normal-state-entry . (lambda () (skk-mode -1)))
-  (skk-mode . skk-latin-mode-on)
-
-  :init
-  (setq default-input-method "japanese-skk")
-  :config
-  ;; No new line by kakutei
-  (setq skk-egg-like-newline t)
-  ;; Henkan candidates
-  (setq skk-show-inline t)
-  ;; Cursor color
-  (setq skk-cursor-hiragana-color "yellow")
-  (setq skk-cursor-katakana-color "blue violet")
-  ;; Record file
-  (setq skk-record-file "~/Dropbox/skk/record")
-
-  ;;; Jisyo
-  (setq skk-save-jisyo-instantly t)
-  ;; Personal jisyo
-  (setq skk-jisyo "~/Dropbox/skk/jisyo/skk-jisyo")
-  (setq skk-backup-jisyo "~/Dropbox/skk/jisyo/skk-jisyo.bak")
-  ;; large jisyo
-  (setq skk-large-jisyo "~/Dropbox/skk/jisyo/SKK-JISYO.L")
-  ;; Extra jisyo
-  ;; (setq skk-extra-jisyo-file-list
-  ;;       (list "~/Dropbox/skk/jisyo/SKK-JISYO.JIS2"
-  ;;       '("~/Dropbox/skk/jisyo/SKK-JISYO.JIS3_4" . euc-jisx0213)
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.assoc"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.notes"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.geo"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.hukugougo"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.jinmei"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.law"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.lisp"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.okinawa"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.propernoun"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.pubdic+"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.station"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.zipcode"
-  ;;       "~/Dropbox/skk/jisyo/SKK-JISYO.office.zipcode"))
-  ;; saving skk jisyo ... done というメッセージが表示されるのを省略
-  ;; http://slackwareirregulars.blogspot.com/2018/03/skk.html
-  (defun skk-save-jisyo (&optional quiet)
-    (interactive "P")
-    (funcall skk-save-jisyo-function 'quiet))
-  ;; skk の ▽ フォントを確実に変更する
-  (add-hook 'skk-load-hook
-            (λ! (set-fontset-font nil '#x25bd (font-spec :family "MeiryoKe_Console")))))
-
-(use-package! pangu-spacing
-  :init
-  (setq pangu-spacing-chinese-before-english-regexp
-        (rx (group-n 1 (category japanese))
-            (group-n 2 (in "a-zA-Z0-9"))))
-  (setq pangu-spacing-chinese-after-english-regexp
-        (rx (group-n 1 (in "a-zA-Z0-9"))
-            (group-n 2 (category japanese))))
-  (setq pangu-spacing-real-insert-separtor t)
-  (global-pangu-spacing-mode 1))
-
-;; TODO enable in minibuffer
-(use-package! mozc
-  :disabled t
-  :init
-  (setq default-input-method "japanese-mozc")
-  :hook
-  (evil-insert-state-exit . my/deactivate-ime)
-  :config
-  (setq mozc-candidate-style 'echo-area)
-  ;; Disable mozc-mode properly by [muhenkan]/[zenkaku-hankaku]
-  ;; http://nos.hateblo.jp/entry/20120317/1331985029
-  (defadvice mozc-handle-event (around intercept-keys (event))
-    (if (member event (list 'zenkaku-hankaku 'henkan))
-        (progn
-          (mozc-clean-up-session)
-          (toggle-input-method))
-      (progn
-        ; (message "%s" event) ; debug
-        ad-do-it)))
-  (ad-activate 'mozc-handle-event))
-
 
 ;;; lang
 
-(use-package! dap-mode
-  :defer t
-  :hook (lsp-mode . dap-mode)
-  :init
-  (setq dap-utils-extension-path doom-etc-dir)
-  (setq dap-gdb-lldb-path
-        (expand-file-name "vscode/webfreak.debug" dap-utils-extension-path))
-  (use-package! dap-ui
-    :hook (dap-mode . dap-ui-mode))
-  (use-package! dap-python
-    :config
-    (setq dap-python-executable "python3"))
-  (use-package! dap-gdb-lldb)
-  :config
-  (setq dap-breakpoints-file
-        (expand-file-name "dap-breakpoints" doom-cache-dir)))
-
-(use-package! flycheck
-  ;; :hook
-  ;; (ess-r-mode . flycheck-mode)
-  :config
-  ;; Disable specific linters from the default
-  (setq flycheck-lintr-linters
-        "default_linters[-which(names(default_linters) == 'commented_code_linter')]"))
-
 (use-package! org
-  :hook
-  (org-mode . visual-line-mode)
+  ;; :hook
+  ;; (org-mode . visual-line-mode)
   ;; (org-babel-after-execute . my/org-redisplay-inline-images)
+
   :config
   ;; Replace "-" with "•"
   (font-lock-add-keywords
@@ -314,7 +457,6 @@
 (after! org-bullets
   (setq org-bullets-bullet-list '("" "" "" "" "" "" "" "" "" "")))
 
-;; TODO Complete hydra map for ess-tracebug
 (after! ess
   (setq ess-offset-continued '(straight . 2)) ; or '(cascade . 2)
   (setq ess-eldoc-show-on-symbol t)
@@ -361,10 +503,11 @@
                   (reusable-frames . nil))
                  ))
       (add-to-list 'display-buffer-alist l)))
-    (add-hook 'ess-r-mode-hook #'my/set-ess-display-buffer-alist)
+  (add-hook 'ess-r-mode-hook #'my/set-ess-display-buffer-alist)
 
+  ;; TODO Complete hydra map for ess-tracebug
   (defhydra hydra-ess-tracebug (:color pink :hint nil)
-      "
+    "
 ^Stepping^            ^Breakpoints^        ^Debugging^
 ^^--------------------^^-------------------^^------------------------
 _sc_: Continue        _bt_: Toggle         _d`_: Traceback
@@ -374,38 +517,37 @@ _sN_: Next multi      _bD_: Delete all     _dd_: Flag for debugging
 _su_: Up frame        _bc_: Set condition  _du_: Unflag for debugging
 _sq_: Quit            _bl_: Set logger     _dw_: Watch window
 "
-      ;; Stepping
-      ("sc" ess-debug-command-continue)
-      ("sC" ess-debug-command-continue-multi)
-      ("sn" ess-debug-command-next)
-      ("sN" ess-debug-command-next-multi)
-      ("su" ess-debug-command-up)
-      ("sq" ess-debug-command-quit)
-      ;; Breakpoints
-      ("bt" ess-bp-toggle-state)
-      ("ba" ess-bp-set)
-      ("bd" ess-bp-kill)
-      ("bD" ess-bp-kill-all)
-      ("bc" ess-bp-set-conditional)
-      ("bl" ess-bp-set-logger)
-      ;; Debugging
-      ("d`" ess-show-traceback)
-      ("d~" ess-show-call-stack)
-      ("de" ess-debug-toggle-error-action)
-      ("dd" ess-debug-flag-for-debugging)
-      ("du" ess-debug-unflag-for-debugging)
-      ("dw" ess-watch)
-      ("q" nil "Close" :color blue)))
+    ;; Stepping
+    ("sc" ess-debug-command-continue)
+    ("sC" ess-debug-command-continue-multi)
+    ("sn" ess-debug-command-next)
+    ("sN" ess-debug-command-next-multi)
+    ("su" ess-debug-command-up)
+    ("sq" ess-debug-command-quit)
+    ;; Breakpoints
+    ("bt" ess-bp-toggle-state)
+    ("ba" ess-bp-set)
+    ("bd" ess-bp-kill)
+    ("bD" ess-bp-kill-all)
+    ("bc" ess-bp-set-conditional)
+    ("bl" ess-bp-set-logger)
+    ;; Debugging
+    ("d`" ess-show-traceback)
+    ("d~" ess-show-call-stack)
+    ("de" ess-debug-toggle-error-action)
+    ("dd" ess-debug-flag-for-debugging)
+    ("du" ess-debug-unflag-for-debugging)
+    ("dw" ess-watch)
+    ("q" nil "Close" :color blue)))
 
-(use-package! ess-smart-equals
-  :hook
-  ((ess-r-mode . ess-smart-equals-mode)
-   (inferior-ess-r-mode . ess-smart-equals-mode)
-   (ess-r-transcript-mode . ess-smart-equals-mode)))
+;; TODO ess-smart-equals
 
 (use-package! ess-r-spreadsheet
-  :after (:any ess-r-mode inferior-ess-r-mode ess-r-transcript)
-  :commands (ess-r-spreadsheet))
+  :after
+  (:any ess-r-mode inferior-ess-r-mode ess-r-transcript)
+
+  :commands
+  (ess-r-spreadsheet))
 
 (use-package! stan-mode
   :mode ("\\.stan\\'" . stan-mode)
@@ -444,7 +586,8 @@ _sq_: Quit            _bl_: Set logger     _dw_: Watch window
          ("cron\\(tab\\)?\\." . crontab-mode)))
 
 
-;;; keymap
+;;; keybindings
+
 ;; TODO prefix: g, z, [, ], @(macro)
 
 ;; global
@@ -466,7 +609,7 @@ _sq_: Quit            _bl_: Set logger     _dw_: Watch window
 (map!
  :leader
  :desc "M-x"                   "SPC" #'execute-extended-command
- :desc "Project sidebar"       "0"   #'treemacs-select-window
+ :desc "Project sidebar"       "0"   #'+treemacs/toggle
  :desc "Switch buffer"         ","   #'switch-to-buffer
  :desc "Switch to last buffer" "TAB" #'evil-switch-to-windows-last-buffer
  :desc "Resume last search"    "."
@@ -512,22 +655,28 @@ _sq_: Quit            _bl_: Set logger     _dw_: Watch window
 
 ;; company
 (map!
+ ;; NOTE +company commands
+ ;; (+company/dabbrev)
+ ;; (+company/complete)
+ ;; (+company/whole-lines)
+ ;; (+company/dict-or-keywords)
+ ;; (+company/dabbrev-code-previous)
+ ;; (+company/toggle-auto-completion)
+
  (:after company
    :i "M-," #'+company/complete
    (:map company-active-map
      "C-SPC" #'company-complete-common
-     "TAB"   #'company-complete-selection
-     [tab]   #'company-complete-selection
+     "<tab>" #'company-complete-selection
      "M-."   #'company-filter-candidates
      "M-/"   #'company-search-candidates
      "M-d"   #'company-next-page
-     "M-i"   #'company-show-doc-buffer
-     ;; "M-p"   #'company-quickhelp-manual-begin
      "M-u"   #'company-previous-page
+     "M-i"   #'company-show-doc-buffer
+     "M-p"   #'company-quickhelp-manual-begin
      "M-w"   #'company-show-location
-     "M-n"   nil
-     "M-p"   nil
-     "M-v"   nil)))
+     "M-c"   #'counsel-company
+     )))
 
 ;; treemacs
 (map!

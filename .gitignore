@@ -7,3 +7,4 @@ emacsen/vanilla-emacs.d/
 emacsen/doom-emacs.d/
 emacsen/spacemacs-config/config-babel.el
 emacsen/elisp/vars-secret.el
+emacsen/elisp/const-secret.el

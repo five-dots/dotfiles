@@ -1,11 +1,42 @@
+;; funcs.el --- Define functions.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2019-2020 Shun Asai
+
+;; Author: Shun Asai <syun.asai@gmail.com>
+;; URL: https://github.com/five-dots/dotfiles
+
+;; This file is not part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 2, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;;
+
+;;; Commentary:
+;;
+;; Define functions.
+;;
+
+;;; Code:
 
 (require 'dash)
 (require 's)
 (require 'f)
 (require 'cl-lib)
+(require 'cl)
 
 
-
 (defun my/switch-to-scratch-buffer ()
   (interactive)
   (switch-to-buffer (get-buffer-create "*scratch*"))
@@ -52,7 +83,6 @@ If prefix ARG is set, prompt for a directory to search from."
 
 ;;; display, ui
 
-;; Dislay size
 (defun my/get-display-size (index)
   "Get display size by index."
   (let* ((attrs (display-monitor-attributes-list))
@@ -61,24 +91,32 @@ If prefix ARG is set, prompt for a directory to search from."
     ;; (x-size . y-size)
     (cons (nth 3 size) (nth 4 size))))
 
-;; Display setting
-(cl-defun my/get-display-setting-str ()
+(defun my/get-display-setting-str ()
   "Return display setting by string."
   (interactive)
   (let* ((attrs (display-monitor-attributes-list))
-	 (count (length attrs)))
-    ;; desk1
-    (when (equal (system-name) "desk1")
-      (return-from my-funs/get-disp-setting-str "desk1"))
-    ;; x1
+         (count (length attrs)))
     (cond
-     ((eq count 1) "x1-single")
-     ;; x1 + Pao's LG (2560 x 1080)
-     ((and (eq count 2) (equal (my-funs/get-display-size 1) '(2560 . 1080))) "x1+pao-lg")
-     ;; x1 + unknown display
-     (t "x1+unknown-disp"))))
+     ;; desk1
+     ((equal system-name "desk1")
+      "desk1")
+     ;; x1
+     ((equal system-name "x1")
+      (cond
+       ((eq count 1) "x1")
+       ;; x1 + Pao's LG (2560 x 1080)
+       ((and (eq count 2) (equal (my-funs/get-display-size 1) '(2560 . 1080))) "x1+pao-lg")
+       ;; x1 + unknown display
+       (t "x1+unknown")))
+     ;; mbp1
+     ((equal system-name "mbp1.local")
+      (cond
+       ((eq count 1) "mbp1")
+       ;; mbp1 + Pao's LG (2560 x 1080)
+       ((and (eq count 2) (equal (my-funs/get-display-size 1) '(2560 . 1080))) "mbp1+pao-lg")
+       ;; mbp1 + unknown display
+       (t "mbp1+unknown"))))))
 
-;; Latin and Greek char's fonts
 (defun my/set-latin-greek-fonts (fontset font-name)
   "Overwrite latin and greek char's fonts"
   (set-fontset-font fontset '(#x0250 . #x02AF) (font-spec :family font-name))
@@ -100,7 +138,7 @@ If prefix ARG is set, prompt for a directory to search from."
                 ((eq (current-buffer) b) b)
                 ((buffer-file-name b) b)
                 ((char-equal ?\  (aref (buffer-name b) 0)) nil)
-                ;; *scratch*バッファは表示する
+                ;; *scratch* バッファは表示する
                 ;; ((equal "*scratch*" (buffer-name b)) b)
                 ;; それ以外の * で始まるバッファは表示しない
                 ((char-equal ?* (aref (buffer-name b) 0)) nil)
@@ -108,19 +146,19 @@ If prefix ARG is set, prompt for a directory to search from."
            (buffer-list))))
 
 
+;;; evil
+
+
 ;;; ivy-rich
 
-;; ivy-rich icons for buffer
-;; FIXME Adjust icon height
 (defun my/ivy-rich-buffer-icon (candidate)
+  ;; TODO Adjust icon height
   (with-current-buffer (get-buffer candidate)
     (let ((icon (all-the-icons-icon-for-mode major-mode :height 1.1)))
       (when (symbolp icon)
         (setq icon (all-the-icons-icon-for-mode 'fundamental-mode :height 1.1)))
       (format "%s\t" icon))))
 
-;; ivy-rich icons for file
-;; FIXME Change folder icons
 (defun my/ivy-rich-file-icon (candidate)
   (let ((icon (all-the-icons-icon-for-file candidate)))
     (when (equal icon "")
@@ -156,7 +194,6 @@ If prefix ARG is set, prompt for a directory to search from."
 
 ;;; org
 
-;; Custom function to get ramdom file name
 (cl-defun my/get-babel-file
     (&key
      (dir (expand-file-name "~/Dropbox/memo/img/babel/"))
@@ -165,13 +202,13 @@ If prefix ARG is set, prompt for a directory to search from."
   (concat dir (make-temp-name prefix) suffix))
 (defalias 'get-babel-file 'my/get-babel-file)
 
-;; Update inline images
 (defun my/org-redisplay-inline-images ()
+  "Update inline images."
   (when org-inline-image-overlays
     (org-redisplay-inline-images)))
 
-;; Replace "\( \)" => "$ $" or "\[ \]" => "$$ $$" when exporting to markdown
 (defun my/org-replace-latex-wrap (text backend _info)
+  ;; Replace "\( \)" => "$ $" or "\[ \]" => "$$ $$" when exporting to markdown
   (when (org-export-derived-backend-p backend 'gfm)
     (cond
      ((s-starts-with? "\\(" text)
@@ -198,7 +235,6 @@ If prefix ARG is set, prompt for a directory to search from."
           company-files
           :with company-yasnippet))))
 
-;; FIXME not enabled
 (defun my/set-company-backend-for-el ()
   (interactive)
   (set (make-local-variable 'company-backends)
@@ -206,7 +242,6 @@ If prefix ARG is set, prompt for a directory to search from."
           company-files
           :with company-yasnippet))))
 
-;; FIXME not enabled
 (defun my/set-company-backend-for-org ()
   (interactive)
   (set (make-local-variable 'company-backends)
@@ -222,7 +257,6 @@ If prefix ARG is set, prompt for a directory to search from."
           company-files
           :with company-yasnippet))))
 
-;; FIXME not enabled
 (defun my/set-company-backend-for-lsp ()
   (interactive)
   (set (make-local-variable 'company-backends)
@@ -231,7 +265,9 @@ If prefix ARG is set, prompt for a directory to search from."
           company-files
           :with company-yasnippet))))
 
-;; Change fringe width mainly for dap-mode breakpoints
 (defun my/change-fringe-width ()
+  "Change fringe width mainly for dap-mode breakpoints."
   (setq left-fringe-width 15
         right-fringe-width 0))
+
+;;; funcs.el ends here
