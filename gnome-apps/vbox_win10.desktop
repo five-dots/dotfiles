@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=VirtualBox Windows 10
+Exec=virtualbox /home/shun/virtualbox/windows10/windows10.vbox
+Icon=/home/shun/Dropbox/picture/win10-logo.jpg
+Type=Application
+Terminal=false
+StartupWMClass=Windows10

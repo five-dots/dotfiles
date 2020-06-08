@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Trader Workstation U1655952
+Exec=/home/shun/Dropbox/repos/private/scripts/IB/IBC/linux/twsstart_U1655952.sh
+Icon=/home/shun/Jts/.install4j/tws.png
+Categories=Application;
+StartupWMClass=install4j-jclient-Launcher

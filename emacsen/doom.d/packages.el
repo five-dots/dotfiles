@@ -47,11 +47,42 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! all-the-icons-ivy-rich)
+(package! calfw-ical)
 (package! company-quickhelp)
 (package! crontab-mode)
 (package! dotnet)
-(package! ess-r-spreadsheet :recipe (:host github :repo "five-dots/ess-r-spreadsheet"))
-(package! mozc)
+(package! evcxr-mode :recipe (:host github :repo "serialdev/evcxr-mode")) ; Rust REPL
+(package! google-translate)
+(package! hydra-posframe :recipe (:host github :repo "Ladicle/hydra-posframe"))
+(package! japanese-holidays)
+(package! lispxmp)
+(package! major-mode-hydra)
+(package! nameless)
+(package! ox-gfm)
+(package! ox-qmd)
 (package! page-break-lines)
+(package! parsec) ; Haskell's Parsec like package
 (package! recentf-ext)
+(package! smooth-scrolling)
+
+;; mozc
+(package! mozc)
+(package! mozc-popup)
+
+;; ess
+(package! ess-r-spreadsheet :recipe (:host github :repo "five-dots/ess-r-spreadsheet"))
+(package! ess-smart-equals)
+
+;; stan
 (package! stan-mode)
+(package! company-stan)
+(package! eldoc-stan)
+(package! flycheck-stan)
+
+;; sql
+(package! sql-indent)
+(package! sqlup-mode)
+
+;; disabled packages
+;; TODO cmigemo not work
+(package! migemo :disable t)

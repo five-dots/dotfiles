@@ -1,0 +1,39 @@
+#+STARTUP: folded indent inlineimages latexpreview
+
+* UI
+
+- TODO gc-cons-threshold
+
+#+begin_src emacs-lisp
+
+;; dashboard
+;; (dashboard-setup-startup-hook)
+
+;; doom-theme
+(enable-theme 'doom-one)
+;; (doom-themes-treemacs-config)
+;; (doom-themes-org-config)
+
+;; doom-modeline
+;; (doom-modeline-init)
+
+;; Missing modes
+(global-font-lock-mode)
+(transient-mark-mode)
+(blink-cursor-mode)
+
+
+(when (display-graphic-p)
+  ;; Disable UI elements
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (menu-bar-mode -1)
+  
+  ;; Frame size
+  (set-frame-size (selected-frame) 120 50)
+  
+  ;; goto-address-mode
+  (add-hook 'prog-mode-hook 'goto-address-prog-mode)
+  (add-hook 'text-mode-hook 'goto-address-mode))
+#+end_src
+

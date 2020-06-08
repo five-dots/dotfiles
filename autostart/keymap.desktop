@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Exec=bash -c "sleep 20; /home/shun/.keymap.sh"
+Name=Keymap Setup
+Comment=Setup keymaps using xmodmap and xcape

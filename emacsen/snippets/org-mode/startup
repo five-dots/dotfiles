@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: startup
+# key: startup
+# --
+#+STARTUP: ${1:folded} ${2:indent} ${3:inlineimages} ${4:latexpreview}
+$0

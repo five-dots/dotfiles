@@ -1,9 +1,21 @@
 {
-    "editor.fontFamily": "'Consolas NF'",
-    "editor.fontSize": 11,
+    "editor.fontFamily": "Consolas NF",
+    "editor.fontSize": 12,
+    "terminal.integrated.fontFamily": "Consolas NF",
+    "terminal.integrated.fontSize": 12,
+
     "workbench.colorTheme": "Dracula",
+    "workbench.iconTheme": "vscode-icons",
     "workbench.sideBar.location": "right",
-    "window.zoomLevel": 1,
+    
+    "window.zoomLevel": 0,
+
+    "explorer.confirmDelete": false,
+    "python.pythonPath": "python",
+
+    "r.rterm.linux": "/home/shun/.local/bin/radian",
+    "r.rterm.option": [""],
+
     "vim.useSystemClipboard": true,
     "vim.visualstar": true,
     "vim.leader": "<space>",
@@ -1144,5 +1156,4 @@
             ]
         }
     ],
-    "explorer.confirmDelete": false,
 }

@@ -2,6 +2,6 @@
 # name: babel-r
 # key: bbl-r
 # --
-#+begin_src R
+#+begin_src R :exports both
 $0
 #+end_src

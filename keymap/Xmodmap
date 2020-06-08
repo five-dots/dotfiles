@@ -1,0 +1,44 @@
+
+! Caps_Lock to Control_L
+! Control_L to Caps_Lock
+! Alt_L to Mode_switch
+! Super_L (windows key) to Alt_L
+! Alt_R to Super_R
+! Mode_switch + navigation keys
+
+! remove from modifier groups
+remove lock = Caps_Lock
+remove control = Control_L
+remove mod1 = Alt_L
+remove mod4 = Super_L
+remove mod1 = Alt_R
+
+! new modifilers
+keycode 66 = Control_L   
+keycode 37 = Caps_Lock
+!keycode 64 = Mode_switch ! from Alt_L
+keycode 64 = Hyper_R
+keycode 133 = Alt_L
+keycode 108 = Super_R
+
+! hjkl + Mode_switch
+!keycode 43 = h H Left Left
+!keycode 44 = j J Down Down
+!keycode 45 = k K Up Up
+!keycode 46 = l L Right Right
+
+! Home/Next/Prior/End
+!keycode 42 = g G Home Home
+!keycode 58 = m M Next Next
+!keycode 31 = i I Prior Prior
+!keycode 47 = colon semicolon End End
+
+! n + Mode_switch to backspace
+!keycode 57 = n N BackSpace BackSpace
+
+! Add to modifilers groups
+add control = Control_L
+add lock = Caps_Lock
+add mod1 = Alt_L
+add mod3 = Hyper_R
+add mod4 = Super_R

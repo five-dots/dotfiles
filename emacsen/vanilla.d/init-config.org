@@ -1,0 +1,40 @@
+#+STARTUP: folded indent inlineimages latexpreview
+
+* Core
+** User libraries
+
+#+begin_src emacs-lisp
+(load (expand-file-name "~/Dropbox/repos/github/five-dots/dotfiles/emacsen/elisp/const.el"))
+(load (expand-file-name "const-secret.el" my/elisp-dir))
+(load (expand-file-name "vars.el" my/elisp-dir))
+(load (expand-file-name "funcs.el" my/elisp-dir))
+#+end_src
+
+** evil
+** general
+
+#+begin_src emacs-lisp
+
+#+end_src
+
+* UI
+
+#+begin_src emacs-lisp
+(when (display-graphic-p) 
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (menu-bar-mode -1)
+  (set-frame-size (selected-frame) 120 50)
+  ;; goto-address-mode
+  (add-hook 'prog-mode-hook 'goto-address-prog-mode)
+  (add-hook 'text-mode-hook 'goto-address-mode))
+  
+;; doom theme
+(load-theme 'doom-one t)
+;; (doom-themes-treemacs-config)
+;; (doom-themes-org-config)
+
+(dashboard-setup-startup-hook)
+#+end_src
+
+* Keybindings

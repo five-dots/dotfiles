@@ -181,6 +181,22 @@ If prefix ARG is set, prompt for a directory to search from."
   (interactive)
   (ess-execute "ProjectTemplate::load.project()" 'buffer))
 
+(defun my/ess-print-at-point ()
+  (interactive)
+  (let ((obj (ess-read-object-name-default)))
+    (ess-execute (format "%s" obj) 'buffer)))
+
+(defun my/ess-str-at-point ()
+  (interactive)
+  (let ((obj (ess-read-object-name-default)))
+    (ess-execute (format "str(%s)" obj) 'buffer)))
+
+(defun my/ess-r-devtools-test-file ()
+  (interactive)
+  (let* ((file (buffer-file-name))
+         (cmd (format "testthat::test_file(\"%s\")" file)))
+    (ess-execute cmd 'buffer)))
+
 
 ;;; ime
 
@@ -192,14 +208,33 @@ If prefix ARG is set, prompt for a directory to search from."
     (deactivate-input-method)))
 
 
-;;; org
+;;; lsp
 
+(defun my/toggle-lsp-ui-doc ()
+    (interactive)
+    (if lsp-ui-doc-mode
+        (progn
+          (lsp-ui-doc-mode -1)
+          (lsp-ui-doc--hide-frame))
+      (lsp-ui-doc-mode 1)))
+
+
+;;; org
+(defun my/babel-file ()
+  (let* ((dir (expand-file-name "~/Dropbox/repos/github/five-dots/notes/img/babel/"))
+         (prefix "fig-")
+         (suffix ".png")
+         (path (concat dir (make-temp-name prefix) suffix)))
+    (f-relative path default-directory)))
+
+;; DEPRECATED
 (cl-defun my/get-babel-file
     (&key
      (dir (expand-file-name "~/Dropbox/memo/img/babel/"))
      (prefix "fig-")
      (suffix ".png"))
   (concat dir (make-temp-name prefix) suffix))
+
 (defalias 'get-babel-file 'my/get-babel-file)
 
 (defun my/org-redisplay-inline-images ()
@@ -223,22 +258,45 @@ If prefix ARG is set, prompt for a directory to search from."
            (s-wrap it "$$"))))))
 
 
+;;; calendar
+(defun my/open-calendar ()
+  (interactive)
+  (cfw:open-calendar-buffer
+   :contents-sources
+   (list
+    (cfw:org-create-source "Orange")
+    (cfw:ical-create-source "gcal-shared" my/cfw:ical-gcal-shared-url "IndianRed")
+    (cfw:ical-create-source "gcal-work" my/cfw:ical-gcal-work-url "LightBlue")
+    (cfw:ical-create-source "gcal-family" my/cfw:ical-gcal-family-url "Pink")
+    )))
+
+
 ;;; company
 
 (defun my/set-company-backend-for-r ()
   (interactive)
   (set (make-local-variable 'company-backends)
-       '((company-R-library
+       '((
+          company-R-library
           company-R-args
           company-R-objects
-          ;; company-capf ; too heavy load
           company-files
-          :with company-yasnippet))))
+          ;; company-capf ; too heavy load
+          :with company-yasnippet
+          ))))
 
 (defun my/set-company-backend-for-el ()
   (interactive)
   (set (make-local-variable 'company-backends)
        '((company-capf
+          company-files
+          :with company-yasnippet))))
+
+(defun my/set-company-backend-for-sh ()
+  (interactive)
+  (set (make-local-variable 'company-backends)
+       '((company-shell
+          company-shell-env
           company-files
           :with company-yasnippet))))
 
