@@ -11,7 +11,6 @@
     "window.zoomLevel": 0,
 
     "explorer.confirmDelete": false,
-    "python.pythonPath": "python",
 
     "r.rterm.linux": "/home/shun/.local/bin/radian",
     "r.rterm.option": [""],
@@ -1156,4 +1155,17 @@
             ]
         }
     ],
+
+    "python.dataScience.sendSelectionToInteractiveWindow": true,
+    "python.dataScience.askForKernelRestart": false,
+    "python.languageServer": "Microsoft",
+    "python.autoComplete.extraPaths": [
+        "~/.local/lib/python3.8/site-packages/"
+    ],
+
+    "python.defaultInterpreterPath": "python3",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "breadcrumbs.enabled": true,
+    "workbench.activityBar.visible": true,
 }
