@@ -161,6 +161,9 @@
              ;; ("^\\*helpful"
              ;;  (display-buffer-reuse-window display-buffer-below-selected)
              ;;  (reusable-frames . nil))
+             ;; ("^\\*lsp-help*"
+             ;;  (display-buffer-reuse-window display-buffer-below-selected)
+             ;;  (reusable-frames . nil))
              ;; ESS
              ;; ("^\\*ess-describe"
              ;;  (display-buffer-reuse-window display-buffer-same-window)
@@ -347,7 +350,12 @@
 
 (use-package python
   :config
-  (setq python-shell-interpreter "ipython3") ; "python3" or "ipython3"
+  (require 'eval-in-repl-python)
+
+  (setq python-shell-interpreter "python3") ; "python3" or "ipython3"
+  (when (string-equal python-shell-interpreter "python3")
+    (setq python-shell-interpreter-args "-i"))
+
   (setq org-babel-python-command "python3")
 
   (setq python-shell-completion-native-enable nil) ; default t
@@ -403,7 +411,10 @@
   ;; (setq lsp-document-sync-method 'incremental)
   ;; (setq lsp-enable-completion-at-point nil)
   ;; (setq lsp-prefer-flymake nil) ; flymake or lsp-ui
-  (setq lsp-session-file (expand-file-name ".cache/lsp-session" user-emacs-directory)))
+  (setq lsp-session-file (expand-file-name ".cache/lsp-session" user-emacs-directory))
+
+  ;; lsp-signature-mode
+  (setq lsp-signature-render-documentation nil))
 
 (use-package lsp-ui
   :defer t
@@ -416,26 +427,32 @@
   ;;         (lsp-ui-doc-mode -1)
   ;;         (lsp-ui-doc--hide-frame))
 	;;     (lsp-ui-doc-mode 1)))
-  ;;; lsp-ui-doc
-  (setq lsp-ui-doc-enable nil)
+
+  ;; lsp-ui-doc
+  ;; (setq lsp-ui-doc-enable nil)
   ;; (setq lsp-ui-doc-header nil)
   ;; (setq lsp-ui-doc-include-signature nil)
   ;; (setq lsp-ui-doc-position 'at-point)
   ;; (setq lsp-ui-doc-max-width 150)
-  ;; (setq lsp-ui-doc-max-height 30)
+  (setq lsp-ui-doc-max-height 30)
   ;; (setq lsp-ui-doc-use-childframe t)
   ;; (setq lsp-ui-doc-use-webkit nil)
-  ;;; lsp-ui-flycheck
+  (setq lsp-ui-doc-delay 1.0)
+
+  ;; lsp-ui-flycheck
   ;; (setq lsp-ui-flycheck-enable t)
-  ;;; lsp-ui-peek
+
+  ;; lsp-ui-peek
   ;; (setq lsp-ui-peek-enable t)
   ;; (setq lsp-ui-peek-peek-height 20)
   ;; (setq lsp-ui-peek-list-width 50)
   ;; (setq lsp-ui-peek-fontify 'on-demand) ;; never, on-demand, or always
-  ;;; lsp-ui-imenu
+
+  ;; lsp-ui-imenu
   ;; (setq lsp-ui-imenu-enable nil)
   ;; (setq lsp-ui-imenu-kind-position 'top)
-  ;;; lsp-ui-sideline
+
+  ;; lsp-ui-sideline
   ;; (setq lsp-ui-sideline-enable nil)
   ;; (setq lsp-ui-sideline-enable nil)
   ;; (setq lsp-ui-sideline-ignore-duplicate t) ; nil
@@ -490,6 +507,30 @@
            commented_code_linter = NULL
         )"))
 
+(use-package sql
+  :defer t
+
+  :config
+  (setq sql-connection-alist
+        '((rds-psql-market-data-01
+           (sql-product 'postgres)
+           (sql-server "psql-market-data-01.cuqrjz6jimsm.ap-northeast-1.rds.amazonaws.com")
+           (sql-user "shun")
+           (sql-database "test")
+           (sql-port 5432))
+          (rds-psql-test-01
+           (sql-product 'postgres)
+           (sql-server "psql-test-01.cuqrjz6jimsm.ap-northeast-1.rds.amazonaws.com")
+           (sql-user "shun")
+           (sql-database "rdataset")
+           (sql-port 5432))
+          (redshift-cluster-1
+           (sql-product 'postgres)
+           (sql-server "redshift-cluster-1.cnheyicocvox.ap-northeast-1.redshift.amazonaws.com")
+           (sql-user "awsuser")
+           (sql-database "dev")
+           (sql-port 5439)))))
+
 
 ;;; tool
 
@@ -498,6 +539,10 @@
 
   :config
   (setq vc-follow-symlinks t))
+
+(use-package magit
+  :config
+  (setq magit-branch-read-upstream-first 'fallback))
 
 (use-package google-translate
   :defer t
@@ -564,7 +609,7 @@
   (setq mac-command-modifier 'hyper))
 
 (spacemacs/set-leader-keys ; leader keys
-  "," #'counsel-switch-buffer
+  "," #'ivy-switch-buffer
   "." #'ivy-resume
 
   ;; applications
@@ -573,7 +618,7 @@
   "aC" #'calc-dispatch
 
   ;; buffer
-  "b b" #'counsel-switch-buffer
+  "b b" #'ivy-switch-buffer
 
   ;; windows
   "w/" #'split-window-right-and-focus
@@ -602,7 +647,7 @@
 (progn ; hyper prefix keys
   (evil-define-key '(motion) 'global
     (kbd "H-'") #'evil-avy-goto-char-2
-    (kbd "H-,") #'counsel-switch-buffer
+    (kbd "H-,") #'ivy-switch-buffer
     (kbd "H-/") #'swiper-isearch
     (kbd "H-b") #'evil-backward-char
 
@@ -636,3 +681,20 @@
 (bind-keys ; comint-mode-map
  :map comint-mode-map
  ("C-l" . comint-clear-buffer))
+
+(progn ; python-mode-map
+  (bind-keys
+   :map python-mode-map
+   ("C-<return>" . eir-eval-in-python))
+
+  (spacemacs/declare-prefix-for-mode 'python-mode "ms" nil)
+  (spacemacs/declare-prefix-for-mode 'python-mode "me" "eval")
+  (spacemacs/set-leader-keys-for-major-mode 'python-mode
+    "eB" 'spacemacs/python-shell-send-buffer-switch
+    "eb" 'spacemacs/python-shell-send-buffer
+    "eF" 'spacemacs/python-shell-send-defun-switch
+    "ef" 'spacemacs/python-shell-send-defun
+    "ei" 'spacemacs/python-start-or-switch-repl
+    "eR" 'spacemacs/python-shell-send-region-switch
+    "er" 'spacemacs/python-shell-send-region)
+  )

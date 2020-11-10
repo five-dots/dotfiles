@@ -99,6 +99,7 @@ This function should only modify configuration layer settings."
 
      ;; multiple-cursors
 
+     octave
      (org
       :variables
       org-enable-hugo-support t
@@ -116,7 +117,7 @@ This function should only modify configuration layer settings."
       python-formatter 'lsp
       python-formatter-on-save t
       ;; python-test-runner 'pytest ; or 'nose (or both)
-      python-sort-imports-on-save t)
+      python-sort-imports-on-save nil)
 
      (shell :variables
             shell-default-height 30
@@ -128,7 +129,10 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      syntax-checking
 
-     (sql :variables sql-capitalize-keywords t)
+     (sql :variables
+          sql-capitalize-keywords t
+          sql-capitalize-keywords-blacklist
+          '("id" "name" "value" "hour" "date" "month" "year" "state" "timestamp" "scale"))
 
      treemacs
 

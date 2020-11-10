@@ -53,7 +53,8 @@
           (rx (group-n 1 (in "a-zA-Z0-9"))
               (group-n 2 (category japanese))))
     (setq pangu-spacing-real-insert-separtor t)
-    (global-pangu-spacing-mode 1)))
+    ;; (global-pangu-spacing-mode 1)
+    ))
 
 (defun my-japanese/init-mozc ()
   (use-package mozc

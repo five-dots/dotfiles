@@ -15,6 +15,7 @@
     ;; dotnet
     ;; exec-path-from-shell
     ;; evil-fringe-mark
+    eval-in-repl
     google-this
     helpful
     lispxmp
@@ -81,6 +82,13 @@
 ;;     :config
 ;;     (exec-path-from-shell-initialize)))
 
+(defun my-tools/init-eval-in-repl ()
+  (use-package eval-in-repl
+    :config
+    ;; Echo command text in REPL
+    (setq eir-use-python-shell-send-string nil)))
+
+
 (defun my-tools/init-google-this ()
   (use-package google-this
     :commands google-this))

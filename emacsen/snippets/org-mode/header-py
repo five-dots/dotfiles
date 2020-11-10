@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: header-py
+# key: header-py
+# --
+#+PROPERTY: header-args:python :results output :session *Python:${1:session_name}*
+$0
