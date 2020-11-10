@@ -4,3 +4,10 @@
 [url "github:"]
 	InsteadOf = https://github.com/
 	InsteadOf = git@github.com:
+
+[url "gitlab:"]
+	InsteadOf = https://gitlab.unerry.jp/
+	InsteadOf = git@gitlab.unnery.jp:
+
+[alias]
+  tree = log --oneline --graph
