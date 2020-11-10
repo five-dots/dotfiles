@@ -23,6 +23,10 @@ export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 export PATH="$GOBIN:$PATH"
 
+# CUDA
+export PATH="/usr/local/cuda/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
+
 # Spark
 export SPARK_HOME="$HOME/spark/spark"
 export PATH="$SPARK_HOME/bin:$PATH"
@@ -31,6 +35,24 @@ export PATH="$SPARK_HOME/bin:$PATH"
 export MKL_ROOT_DIR="/opt/intel/mkl"
 export LD_LIBRARY_PATH="$MKL_ROOT_DIR/lib/intel64:/opt/intel/lib/intel64_lin:$LD_LIBRARY_PATH"
 export LIBRARY_PATH="$MKL_ROOT_DIR/lib/intel64:$LIBRARY_PATH"
+
+# GCP
+if [[ $(hostname) = 'desk1' ]]; then
+    # export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.gcp/stoked-coder-215413-ff6c3baa10f5.json"
+    export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.gcp/beaconbank-analytics-cf2038f236ec.json"
+    # export GCS_AUTH_FILE="$HOME/.gcp/stoked-coder-215413-ff6c3baa10f5.json"
+    export GCS_AUTH_FILE="$HOME/.gcp/beaconbank-analytics-cf2038f236ec.json"
+fi
+if [[ $(hostname) = 'x1' ]]; then
+    # export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.gcp/stoked-coder-215413-26c9179fe9d7.json"
+    export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.gcp/beaconbank-analytics-cf2038f236ec.json"
+    # export GCS_AUTH_FILE="$HOME/.gcp/stoked-coder-215413-26c9179fe9d7.json"
+    export GCS_AUTH_FILE="$HOME/.gcp/beaconbank-analytics-cf2038f236ec.json"
+fi
+export GCS_DEFAULT_BUCKET=stoked-coder-test-01
+
+# Airflow
+export AIRFLOW_HOME="$HOME/airflow"
 
 # Linux only
 if [ $(uname -s) = 'Linux' ]; then
@@ -42,6 +64,12 @@ if [ $(uname -s) = 'Linux' ]; then
         export PATH="$HOME/.anyenv/bin:$PATH"
         eval "$(anyenv init -)"
     fi
+
+    ## pyenv-virtualenv
+    if [ -d ~/.anyenv/envs/pyenv/plugins/pyenv-virtualenv ]; then
+        eval "$(pyenv virtualenv-init -)"
+    fi
+
 fi
 
 # MacOS only
