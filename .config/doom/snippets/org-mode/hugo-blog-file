@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: hugo-blog-per-file
+# key: hugo-blog-file
+# --
+#+STARTUP: folded indent inlineimages latexpreview
+#+PROPERTY: header-args:R :results output :exports both :cache yes
+#+PROPERTY: header-args:R+ :session *R:blog* :width 640 :height 480
+#+OPTIONS: author:nil H:6 toc:nil
+#+HUGO_BASE_DIR: ~/Dropbox/repos/github/five-dots/blog
+#+HUGO_SECTION: post/${1:2019}/${2:11}/
+
+#+TITLE: ${3:Title}
+#+DATE: ${4:yyyy-mm-dd}
+#+HUGO_CATEGORIES: ${5:categories}
+#+HUGO_TAGS: ${6:tag1 tag2}
+#+HUGO_CUSTOM_FRONT_MATTER: :toc true
+
+$0
+
+* COMMENT Local Variables                          :ARCHIVE:
+# Local Variables:
+# eval: (org-hugo-auto-export-mode)
+# End:

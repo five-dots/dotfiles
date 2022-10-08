@@ -1,0 +1,5 @@
+Emacs*useXIM: false
+
+! Base DPI = 96
+!Xft.dpi: 168 ! x1.5
+!Xft.dpi: 192 ! x2.0

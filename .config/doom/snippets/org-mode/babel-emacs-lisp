@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: babel-emacs-lisp
+# key: bbl-el
+# --
+#+begin_src emacs-lisp
+$0
+#+end_src

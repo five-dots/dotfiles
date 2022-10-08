@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: babel-stan
+# key: bbl-stan
+# --
+#+begin_src stan :file models/test.stan
+$0
+#+end_src

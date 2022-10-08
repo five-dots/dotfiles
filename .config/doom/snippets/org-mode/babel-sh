@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: babel-sh
+# key: bbl-sh
+# --
+#+begin_src shell
+$0
+#+end_src

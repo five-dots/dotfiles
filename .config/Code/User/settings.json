@@ -1,0 +1,717 @@
+{
+  // Editor
+  "editor.foldingHighlight": false,
+  "editor.fontFamily": "JetBrainsMono Nerd Font",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 13,
+  "editor.guides.indentation": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.lineHeight": 16, // 行間 (fontSize=13 の場合はデフォルトで、18)
+  "editor.lineNumbers": "off",
+  "editor.minimap.enabled": false,
+  "editor.overviewRulerBorder": false,
+  "editor.renderLineHighlight": "none",
+  "editor.renderWhitespace": "none",
+  "editor.scrollBeyondLastLine": false,
+
+  // Window
+  "window.menuBarVisibility": "toggle",
+  "window.zoomLevel": 1,
+
+  // Workbench
+  "workbench.colorTheme": "doom-one",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.sideBar.location": "right",
+  "workbench.startupEditor": "none",
+  "workbench.tree.indent": 16,
+
+  // Debug
+  "debug.console.fontSize": 13,
+
+  // Explorer
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false,
+  "explorer.compactFolders": false,
+  "explorer.decorations.colors": true,
+
+  // Terminal
+  "terminal.integrated.fontSize": 13,
+
+  // Files
+  "files.trimTrailingWhitespace": true,
+  "files.associations": {
+    "*.sql": "bigquery",
+    // vscode-dbt
+    "**/dbtvault_test/**/*.yaml": "jinja-yaml",
+    "**/dbtvault_test/**/*.yml": "jinja-yaml",
+    "**/dbtvault_test/**/*.sql": "jinja-sql",
+    "**/dbtvault_test/**/docs/**/*.md": "jinja-md"
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true,
+    "**/.venv/**": true
+  },
+
+  // Explorer
+  "explorer.autoReveal": false,
+
+  // Git
+  "git.confirmSync": false,
+
+  // Project Manager
+  "projectManager.projectsLocation": "/home/shun/.config/Code/User",
+  "projectManager.sortList": "Recent",
+  "projectManager.git.baseFolders": [
+    "/home/shun/Dropbox/repos/github",
+    "/home/shun/Dropbox/repos/tmkc",
+    "/home/shun/Dropbox/repos/unerry"
+  ],
+
+  // VSCode Neovim
+  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  "vscode-neovim.neovimInitVimPaths.linux": "/home/shun/.config/nvim/init.lua",
+
+  // // Customize UI
+  // "customizeUI.stylesheet": {
+  //   // Let the quick pick take the full window height, so that more bindings are visible.
+  //   ".quick-input-widget > .quick-input-list > .monaco-list": "max-height: 100vh !important;",
+  //   // Colorize icons uniformly and add some extra padding
+  //   ".quick-input-widget > .quick-input-list .codicon": "color: #83a598 !important; padding-right: 5px;",
+  //   // Colorize entries starting with a `+` differently
+  //   ".quick-input-widget > .quick-input-list .monaco-list-row[aria-label*=\" +\"] .label-description": "color: #8ec07c;",
+  // },
+
+  // Path Intellisense
+  "path-intellisense.absolutePathToWorkspace": false,
+  "path-intellisense.showHiddenFiles": true,
+  "path-intellisense.mappings": {
+    "~/": "/home/shun"
+  },
+
+  // Explicit Folding
+  "explicitFolding.rules": {
+    "*": {
+      "begin": "{{{",
+      "end": "}}}"
+    }
+  },
+
+  // Remote
+  "remote.SSH.useLocalServer": false,
+  "remote.SSH.remotePlatform": {
+    "user-profile-01-beaconbank-analytics": "linux",
+    "anlaytics-developer-asai-01-beaconbank-analytics": "linux"
+  },
+
+  // GitHub Copilot
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": true,
+    "markdown": false
+  },
+
+  // Markdown
+  "markdown.preview.fontSize": 13,
+
+  // GitLens
+  "gitlens.views.showRelativeDateMarkers": false,
+
+  // JSONC
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // R
+  "r.alwaysUseActiveTerminal": true,
+  "r.bracketedPaste": true, // for Radian console
+  "r.plot.useHttpgd": true,
+  "r.rterm.linux": "/home/shun/.local/bin/radian",
+  "r.session.levelOfObjectDetail": "Detailed",
+  "r.sessionWatcher": true,
+  "r.workspaceViewer.showObjectSize": true,
+
+  "[r]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "REditorSupport.r",
+    // "editor.formatOnSave": true,
+    "explicitFolding.rules": [
+      {
+        "begin": "{",
+        "end": "}"
+      },
+      {
+        "begin": "(",
+        "end": ")"
+      }
+      // {
+      //   "beginRegex": "if (.*) {",
+      //   "middleRegex": "} else",
+      //   "endRegex": "}",
+      // }
+    ]
+  },
+
+  // Python
+  "python.analysis.typeCheckingMode": "basic",
+  "python.formatting.provider": "black",
+  "python.languageServer": "Pylance",
+  "python.terminal.activateEnvironment": false, // direnv + layout_poetry で仮想環を有効にするので、false にしておく
+
+  "[python]": {
+    "files.trimTrailingWhitespace": false,
+    "editor.tabSize": 4
+  },
+
+  // AREPL
+  // "AREPL.defaultImports": ["from arepl_dump import dump"],
+
+  // Notebook
+  "notebook.showCellStatusBar": "hidden",
+
+  // Jupyter
+  "jupyter.enableCellCodeLens": false,
+  "jupyter.askForKernelRestart": false,
+
+  // SQL & BigQuery
+  "[sql]": {
+    "editor.defaultFormatter": "adpyke.vscode-sql-formatter",
+    "editor.tabSize": 2,
+  },
+  "[jinja-sql]": {
+    "editor.tabSize": 2
+  },
+  "[bigquery]": {
+    "editor.defaultFormatter": "dr666m1.bq-extension-vscode",
+    "editor.tabSize": 2,
+    "explicitFolding.rules": [
+      {
+        "begin": "(",
+        "end": ")"
+      }
+    ]
+  },
+
+  // BigQuery Extension for VSCode
+  // "bqExtensionVSCode.formatting.printKeywordsInUpperCase": true,
+  // "bqExtensionVSCode.formatting.printPseudoColumnsInUpperCase": false,
+  "bqExtensionVSCode.formatting.formatMultilineComment": true,
+
+  // Visual-BigQuery
+  "visual-bigquery.hover": true,
+
+  // BigQuery Runner
+  "bigqueryRunner.keyFilename": "/home/shun/.gcp/user-profile-beaconbank-analytics.json",
+
+  // dbt
+
+  // Lua
+  "Lua.telemetry.enable": false,
+  // "Lua.diagnostics.globals": [
+  //   "vim"
+  // ],
+  // "Lua.workspace.library": [
+  //   "/usr/share/nvim/runtime/lua/vim"
+  // ],
+
+  // Terraform
+  "[terraform]": {
+    "editor.tabSize": 2
+  },
+
+  // Golang
+  "[go]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": false
+    }
+  },
+
+  // Notion
+  "VSCodeNotion.accessToken": "b72db6e42b2240a02a361c3b6554776cffcc23a9e1f7ee3a0348b5c9cce17a2a8360bd8775828b441e4e2bd8174a652500072251b638b1ce879f3a002a6c78341eafe08667f91f49195df7fe863b",
+
+  // Which Key
+  "whichkey.delay": 400,
+  "whichkey.bindings": [
+    {
+      "key": " ",
+      "name": "Commands",
+      "icon": "rocket",
+      "type": "command",
+      "command": "workbench.action.showCommands"
+    },
+    {
+      "key": "`",
+      "name": "Last buffer",
+      "icon": "go-to-file",
+      "type": "commands",
+      "commands": [
+        "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+        "list.select"
+      ]
+    },
+    {
+      "key": ".",
+      "name": "Repeat most recent action",
+      "type": "command",
+      "command": "whichkey.repeatMostRecent"
+    },
+    {
+      "key": "!",
+      "name": "Show terminal",
+      "type": "command",
+      "command": "workbench.action.terminal.focus"
+    },
+    {
+      "key": "0",
+      "name": "Explorer",
+      "icon": "list-tree",
+      "type": "command",
+      "command": "workbench.files.action.focusFilesExplorer"
+    },
+    {
+      "key": "",
+      "name": "--------------------------------------------------"
+    },
+    // Buffers
+    {
+      "key": "b",
+      "name": "+Buffer",
+      "icon": "file-binary",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "b",
+          "name": "Show all buffers",
+          "icon": "file-binary",
+          "type": "command",
+          "command": "workbench.action.showAllEditors"
+        },
+        {
+          "key": "d",
+          "name": "Close active buffer",
+          "icon": "close",
+          "type": "command",
+          "command": "workbench.action.closeActiveEditor"
+        },
+        {
+          "key": "",
+          "name": "--------------------------------------------------"
+        },
+        {
+          "key": "h",
+          "name": "Move buffer into left window",
+          "icon": "triangle-left",
+          "type": "command",
+          "command": "workbench.action.moveEditorToLeftGroup"
+        },
+        {
+          "key": "j",
+          "name": "Move buffer into below window",
+          "icon": "triangle-down",
+          "type": "command",
+          "command": "workbench.action.moveEditorToBelowGroup"
+        },
+        {
+          "key": "k",
+          "name": "Move buffer into above window",
+          "icon": "triangle-up",
+          "type": "command",
+          "command": "workbench.action.moveEditorToAboveGroup"
+        },
+        {
+          "key": "l",
+          "name": "Move buffer into right window",
+          "icon": "triangle-right",
+          "type": "command",
+          "command": "workbench.action.moveEditorToRightGroup"
+        },
+        {
+          "key": "",
+          "name": "--------------------------------------------------"
+        },
+        {
+          "key": "s",
+          "name": "Scratch buffer",
+          "icon": "note",
+          "type": "command",
+          "command": "workbench.action.files.newUntitledFile"
+        }
+      ]
+    },
+    // File
+    {
+      "key": "f",
+      "name": "+File",
+      "icon": "file",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "f",
+          "name": "Open file",
+          "icon": "folder-opened",
+          "type": "command",
+          "command": "workbench.action.files.openFile"
+        }
+        // workbench.explorer.fileView.focus
+        // workbench.action.quickOpenworkbench.action.quickOpen
+      ]
+    },
+    // Project
+    {
+      "key": "p",
+      "name": "+Project",
+      "icon": "project",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "p",
+          "name": "List projects to open",
+          "icon": "list-filter",
+          "type": "command",
+          "command": "projectManager.listProjects"
+        },
+        {
+          "key": "P",
+          "name": "List projects to open in new window",
+          "icon": "list-flat",
+          "type": "command",
+          "command": "projectManager.listProjectsNewWindow"
+        },
+        {
+          "key": "",
+          "name": "--------------------------------------------------"
+        },
+        {
+          "key": "f",
+          "name": "Open file in project",
+          "icon": "folder-opened",
+          "type": "command",
+          "command": "workbench.action.quickOpen"
+        },
+        {
+          "key": "s",
+          "name": "Open project settings",
+          "icon": "settings-gear",
+          "type": "command",
+          "command": "workbench.action.openFolderSettingsFile"
+        },
+        {
+          "key": "S",
+          "name": "Open workspace settings",
+          "icon": "settings",
+          "type": "command",
+          "command": "workbench.action.openWorkspaceSettingsFile"
+        },
+        {
+          "key": "",
+          "name": "--------------------------------------------------"
+        },
+        {
+          "key": "a",
+          "name": "Add project to workspace",
+          "icon": "add",
+          "type": "command",
+          "command": "projectManager.addToWorkspace"
+        },
+        {
+          "key": "e",
+          "name": "Edit projects.json",
+          "icon": "edit",
+          "type": "command",
+          "command": "projectManager.editProjects"
+        },
+        {
+          "key": "r",
+          "name": "Refresh projects",
+          "icon": "refresh",
+          "type": "command",
+          "command": "projectManager.refreshProjects"
+        },
+        {
+          "key": "",
+          "name": "--------------------------------------------------"
+        },
+        {
+          "key": "v",
+          "name": "View project manager",
+          "icon": "project",
+          "type": "command",
+          "command": "workbench.view.extension.project-manager"
+        },
+        {
+          "key": "n",
+          "name": "Open new empty frame",
+          "icon": "window",
+          "type": "command",
+          "command": "workbench.action.newWindow"
+        },
+        {
+          "key": "l",
+          "name": "Switch frame",
+          "icon": "project",
+          "type": "command",
+          "command": "workbench.action.quickSwitchWindow"
+        },
+        {
+          "key": "t",
+          "name": "Toggle tree/explorer view",
+          "icon": "list-tree",
+          "type": "conditional",
+          "bindings": [
+            {
+              "key": "",
+              "name": "Show explorer view",
+              "type": "command",
+              "command": "workbench.view.explorer"
+            },
+            {
+              "key": "when:sideBarVisible && explorerViewletVisible",
+              "name": "Hide side bar",
+              "type": "command",
+              "command": "workbench.action.toggleSidebarVisibility"
+            },
+          ]
+        }
+      ]
+    },
+    // Window
+    {
+      "key": "w",
+      "name": "+Window",
+      "icon": "window",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "-",
+          "name": "Split window below",
+          "icon": "split-vertical",
+          "type": "command",
+          "command": "workbench.action.splitEditorDown"
+        },
+        {
+          "key": "/",
+          "name": "Split window right",
+          "icon": "split-horizontal",
+          "type": "command",
+          "command": "workbench.action.splitEditor"
+        },
+        {
+          "key": "",
+          "name": "--------------------------------------------------"
+        },
+        {
+          "key": "s",
+          "name": "Shrink window",
+          "icon": "remove",
+          "type": "transient",
+          "command": "workbench.action.decreaseViewSize",
+          "bindings": [
+            {
+              "key": "s",
+              "name": "Shrink window",
+              "icon": "remove",
+              "type": "command",
+              "command": "workbench.action.decreaseViewSize"
+            },
+            {
+              "key": "e",
+              "name": "Enlarge window",
+              "icon": "add",
+              "type": "command",
+              "command": "workbench.action.increaseViewSize"
+            }
+          ]
+        },
+        {
+          "key": "e",
+          "name": "Enlarge window",
+          "icon": "add",
+          "type": "transient",
+          "command": "workbench.action.increaseViewSize",
+          "bindings": [
+            {
+              "key": "s",
+              "name": "Shrink window",
+              "icon": "remove",
+              "type": "command",
+              "command": "workbench.action.decreaseViewSize"
+            },
+            {
+              "key": "e",
+              "name": "Enlarge window",
+              "icon": "add",
+              "type": "command",
+              "command": "workbench.action.increaseViewSize"
+            }
+          ]
+        },
+        {
+          "key": "=",
+          "name": "Reset window size",
+          "icon": "move",
+          "type": "command",
+          "command": "workbench.action.evenEditorWidths"
+        },
+        {
+          "key": "m",
+          "name": "Maximize window",
+          "icon": "chrome-maximize",
+          "type": "command",
+          "command": "workbench.action.toggleEditorWidths"
+        },
+        {
+          "key": "M",
+          "name": "Maximize window and hide side bar",
+          "icon": "screen-full",
+          "type": "command",
+          "command": "workbench.action.maximizeEditor"
+        },
+        {
+          "key": "z",
+          "name": "Combine all buffers",
+          "icon": "combine",
+          "type": "command",
+          "command": "workbench.action.joinAllGroups"
+        },
+        {
+          "key": "",
+          "name": "--------------------------------------------------"
+        },
+        {
+          "key": "d",
+          "name": "Close window",
+          "icon": "close",
+          "type": "command",
+          "command": "workbench.action.closeEditorsInGroup"
+        },
+        {
+          "key": "D",
+          "name": "Close all other windows",
+          "icon": "close-all",
+          "type": "command",
+          "command": "workbench.action.closeEditorsInOtherGroups"
+        },
+        {
+          "key": "x",
+          "name": "Close all windows",
+          "icon": "close-all",
+          "type": "command",
+          "command": "workbench.action.closeAllGroups"
+        },
+        {
+          "key": "",
+          "name": "--------------------------------------------------"
+        },
+        {
+          "key": "w",
+          "name": "Focus next window",
+          "icon": "arrow-small-down",
+          "type": "command",
+          "command": "workbench.action.focusNextGroup"
+        },
+        {
+          "key": "W",
+          "name": "Focus previous window",
+          "icon": "arrow-small-up",
+          "type": "command",
+          "command": "workbench.action.focusPreviousGroup"
+        },
+        {
+          "key": "",
+          "name": "--------------------------------------------------"
+        },
+        {
+          "key": "h",
+          "name": "Focus window left",
+          "icon": "arrow-left",
+          "type": "command",
+          // "command": "workbench.action.focusLeftGroup",
+          "command": "workbench.action.navigateLeft"
+        },
+        {
+          "key": "j",
+          "name": "Focus window down",
+          "icon": "arrow-down",
+          "type": "command",
+          // "command": "workbench.action.focusBelowGroup"
+          "command": "workbench.action.navigateDown"
+        },
+        {
+          "key": "k",
+          "name": "Focus window up",
+          "icon": "arrow-up",
+          "type": "command",
+          // "command": "workbench.action.focusAboveGroup"
+          "command": "workbench.action.navigateUp"
+        },
+        {
+          "key": "l",
+          "name": "Focus window right",
+          "icon": "arrow-right",
+          "type": "command",
+          // "command": "workbench.action.focusRightGroup"
+          "command": "workbench.action.navigateRight"
+        },
+        {
+          "key": "",
+          "name": "--------------------------------------------------"
+        },
+        {
+          "key": "H",
+          "name": "Move window left",
+          "icon": "triangle-left",
+          "type": "command",
+          "command": "workbench.action.moveActiveEditorGroupLeft"
+        },
+        {
+          "key": "J",
+          "name": "Move window down",
+          "icon": "triangle-down",
+          "type": "command",
+          "command": "workbench.action.moveActiveEditorGroupDown"
+        },
+        {
+          "key": "K",
+          "name": "Move window up",
+          "icon": "triangle-up",
+          "type": "command",
+          "command": "workbench.action.moveActiveEditorGroupUp"
+        },
+        {
+          "key": "L",
+          "name": "Move window right",
+          "icon": "triangle-right",
+          "type": "command",
+          "command": "workbench.action.moveActiveEditorGroupRight"
+        }
+      ]
+    },
+    // Major modes
+    {
+      "key": "m",
+      "name": "+Major",
+      "icon": "code",
+      "type": "conditional",
+      "bindings": [
+        // JSON with comments
+        {
+          "key": "languageId:jsonc",
+          "name": "JSON with Comments",
+          "type": "bindings",
+          "bindings": [
+            {
+              "key": "f",
+              "name": "Open file",
+              "type": "command",
+              "command": "workbench.action.files.openFileFolder"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "jupyter.interactiveWindowMode": "perFile"
+}

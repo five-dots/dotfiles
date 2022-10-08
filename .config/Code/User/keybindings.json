@@ -1,0 +1,47 @@
+[
+    // Leader Keys
+    {
+        "command": "whichkey.show",
+        "key": "space",
+        "when": "editorFocus && neovim.mode != insert",
+    },
+    {
+        "command": "whichkey.show",
+        "key": "ctrl+space",
+    },
+
+    // Tab
+    {
+        "command": "vscode-neovim.send",
+        "key": "ctrl+tab",
+        "when": "neovim.mode != insert",
+        "args": "gt",
+    },
+    {
+        "command": "vscode-neovim.send",
+        "key": "ctrl+shift+tab",
+        "when": "neovim.mode != insert",
+        "args": "gT",
+    },
+
+    // PageUp/Down
+    {
+        "command": "vscode-neovim.send",
+        "key": "pageup",
+        "when": "neovim.mode != insert && editorTextFocus",
+        "args": "{",
+    },
+    {
+        "command": "vscode-neovim.send",
+        "key": "pagedown",
+        "when": "neovim.mode != insert && editorTextFocus",
+        "args": "}",
+    },
+
+    // BigQuery Runner
+    {
+        "command": "bigqueryRunner.run",
+        "key": "ctrl+enter",
+        "when": "neovim.mode != insert && editorLangId == bigquery",
+    },
+]

@@ -1,0 +1,51 @@
+#!/usr/bin/env zsh
+
+set -ue
+
+readonly repo_dir="$(cd "$(dirname "$(readlink -f "${0}")")" && cd .. && pwd -P)"
+readonly backup_dir="${HOME}/.dotbackup"
+
+source "${repo_dir}/bin/helper.sh"
+
+install() {
+    # バックアップディレクトリを作成
+    mkdir -p "${backup_dir}"
+
+    # find で project 内の全てのファイルを list up
+    # - Top の . は除外 (-mindepth 1)
+    # - ディレクトリは除外 (-type f)
+    # - 先頭の "./" を除外 (-printf "%P\n")
+    for file in $(find "${repo_dir}" -mindepth 1 -type f -printf "%P\n"); do
+        # 除外するファイル
+        [[ "${file}" =~ "^README.*$" ]] && continue
+        [[ "${file}" =~ "^.git" ]] && continue
+        # .gitignore で指定したディレクトリ
+        [[ "${file}" =~ "^etc/" ]] && continue
+        [[ "${file}" =~ "^archive/" ]] && continue
+
+        local src_path="${repo_dir}/${file}"
+        local dst_path="${HOME}/${file}"
+
+        # 既に symlink でないファイルが存在していた場合はバックアップする
+        if [[ -e "${dst_path}" && ! -L "${dst_path}" ]]; then
+            local backup_path="${backup_dir}/${file}"
+
+            # ディレクトリがまだ存在しなければ作成する
+            mkdir -p "$(dirname "${backup_path}")"
+
+            echo "Backup ${backup_path}..."
+            mv "${dst_path}" "${backup_path}"
+        fi
+
+        # ディレクトリがまだ存在しなければ作成する
+        mkdir -p "$(dirname "${dst_path}")"
+
+        # シンボリックリンクを作成
+        echo "${dst_path}"
+        ln -sf "${src_path}" "${dst_path}"
+    done
+}
+
+echo_green "Install started!!!"
+install
+echo_green "Install completed!!!"

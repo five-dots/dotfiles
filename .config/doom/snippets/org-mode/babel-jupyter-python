@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: babel-jupyter-python
+# key: bbl-jupyter
+# --
+#+begin_src jupyter-python :session py
+$0
+#+end_src

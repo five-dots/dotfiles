@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Doom-Emacs
+GenericName=Text Editor
+Keywords=Text;Editor;
+Comment=An Emacs framework for the stubborn martian hacker
+MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
+Exec=/home/shun/emacs/emacs/bin/emacs %F
+Icon=/home/shun/Dropbox/picture/doom-emacs.png
+Type=Application
+Terminal=false
+Categories=Utility;Development;TextEditor;
+StartupWMClass=Doom-Emacs

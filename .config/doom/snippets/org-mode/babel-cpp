@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: babel-cpp
+# key: bbl-cpp
+# --
+#+begin_src C++ :async
+$0
+#+end_src

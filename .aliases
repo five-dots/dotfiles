@@ -1,0 +1,51 @@
+#!/usr/bin/env zsh
+
+# enable color support of ls and also add handy aliases
+if (( $+commands[anyenv] )); then
+    if [[ -r "${HOME}/.dir_colors" ]]; then
+        eval "$(dircolors -b "${HOME}/.dir_colors")"
+    else
+        eval "$(dircolors -b)"
+    fi
+
+    alias ls='ls -F --group-directories-first --color=auto'
+    alias dir='dir -F --color=auto'
+    alias vdir='vdir -F --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# ls
+if (( $+commands[exa] )); then
+    alias ls='exa -F --color=auto --group-directories-first --sort=.Name'
+    alias la='ls -a'
+    alias ll='la -lgh --git --time-style=long-iso'
+else
+    alias la='ls -Av'
+    alias ll='la -lv'
+fi
+
+# tree
+(( $+commands[tree] )) && alias tree='tree -F'
+
+# utils
+alias relogin='exec ${SHELL} -l'
+
+# bat
+(( $+commands[bat] )) && alias cat='bat'
+
+# ripgrep
+(( $+commands[rg] )) && alias rg='rg -i'
+
+# R
+(( $+commands[R] )) && alias R='R --no-save --no-restore-data'
+
+# radian
+(( $+commands[radian] )) && alias r='radian'
+
+# kitty ssh
+(( $+commands[kitty] )) && alias ssh='kitty +kitten ssh'
+
+# ranger
+(( $+commands[ranger] )) && alias f='ranger'

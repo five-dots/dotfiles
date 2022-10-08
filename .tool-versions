@@ -1,0 +1,23 @@
+python system system
+R system
+nodejs 16.16.0
+gcloud 403.0.0
+tmux 3.3a
+git 2.37.2
+awscli 2.7.22
+github-cli 2.16.1
+terraform 1.2.9
+tfsec 1.27.6
+tflint 0.40.0
+golang 1.19.1
+pulumi 3.40.0
+rust 1.64.0
+bat 0.22.1
+direnv 2.32.1
+exa 0.10.1
+fd 8.4.0
+hugo 0.104.1
+mysql system
+shellcheck 0.8.0
+sqlite 3.39.3
+dotnet-core 6.0.401

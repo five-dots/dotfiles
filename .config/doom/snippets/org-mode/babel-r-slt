@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: babel-r-slt
+# key: bbl-r-slt
+# --
+#+begin_src R :results silent
+$0
+#+end_src

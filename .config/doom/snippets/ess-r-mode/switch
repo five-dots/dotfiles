@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: switch
+# key: switch
+# --
+res <- switch(
+  ${1:var},
+  "${2:cond1}" = ${3:expr1},
+  "${4:cond2}" = ${5:expr2},
+  stop("${6}", call. = FALSE)
+)
+$0

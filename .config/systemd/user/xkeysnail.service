@@ -1,0 +1,17 @@
+[Unit]
+Description=xkeysnail
+
+[Service]
+ExecStart=/home/shun/.local/bin/xkeysnail /home/shun/.config/xkeysnail/config.py
+ExecStartPre=/usr/bin/xhost +SI:localuser:root
+
+StandardOutput=null
+Restart=always
+Type=simple
+RestartSec=10
+KillMode=process
+
+EnvironmentFile=/home/shun/.config/xkeysnail/env
+
+[Install]
+WantedBy=default.target

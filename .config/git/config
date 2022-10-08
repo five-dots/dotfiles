@@ -1,0 +1,18 @@
+[user]
+  email = syun.asai@gmail.com
+  name = Shun Asai
+
+[alias]
+  tree = log --oneline --graph
+
+[credential]
+  helper = cache
+
+[init]
+	defaultBranch = main
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true

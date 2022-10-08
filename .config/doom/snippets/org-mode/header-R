@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: header-R
+# key: header-R
+# --
+#+PROPERTY: header-args:R :results output :colnames yes :session *R:${1:session_name}*
+$0

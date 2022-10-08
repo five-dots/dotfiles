@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: babel-r-plt
+# key: bbl-r-plt
+# --
+#+begin_src R :results output graphics file :file (my/get-babel-file)
+$0
+#+end_src

@@ -1,0 +1,12 @@
+archive/
+etc/
+
+.aws/
+.dbt/
+.snowsql/
+
+.secrets
+.Renviron
+
+.streamlit/credentials.toml
+.config/kitty/kitty_default.conf

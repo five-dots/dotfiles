@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: babel-emacs-lisp-silent
+# key: bbl-el-slt
+# --
+#+begin_src emacs-lisp :results silent
+$0
+#+end_src

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: future_map
+# key: future_map
+# --
+library(furrr)
+
+prev_plan <- plan(multiprocess(workers = parallel::detectCores()))
+res <- future_map(${1:list}, function(${2:arg}) {
+  $0
+}, .progress = ${3:TRUE})
+future::plan(prev_plan)

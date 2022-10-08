@@ -1,0 +1,35 @@
+[
+	{
+		"name": "dotfiles",
+		"rootPath": "~/.config/Code/User/workspaces/dotfiles.code-workspace",
+		"tags": [
+			"private"
+		],
+		"enabled": true
+	},
+	{
+		"name": "notebooks",
+		"rootPath": "~/.config/Code/User/workspaces/notebooks.code-workspace",
+		"tags": [
+			"private"
+		],
+		"enabled": true
+	},
+	{
+		"name": "vscode_r",
+		"rootPath": "~/.config/Code/User/workspaces/vscode_r.code-workspace",
+		"tags": [
+			"private"
+		],
+		"enabled": true
+	},
+	{
+		"name": "train_data",
+		"rootPath": "~/.config/Code/User/workspaces/train_data.code-workspace",
+		"tags": [
+			"work",
+			"unerry"
+		],
+		"enabled": true
+	}
+]

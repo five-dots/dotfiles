@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: babel-python
+# key: bbl-py
+# --
+#+begin_src python :session
+$0
+#+end_src

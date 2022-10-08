@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: hugo-blog-per-tree
+# key: hugo-blog-tree
+# --
+#+STARTUP: content indent inlineimages latexpreview
+#+PROPERTY: header-args:R :results output :exports both :cache yes
+#+PROPERTY: header-args:R+ :session *R:blog* :width 640 :height 480
+#+OPTIONS: author:nil
+#+HUGO_BASE_DIR: ~/Dropbox/repos/github/five-dots/blog
+#+HUGO_SECTION: post
+
+* ${1:Title}
+:PROPERTIES:
+:EXPORT_FILE_NAME: ${2:file-name}
+:EXPORT_HUGO_SECTION*: 2019/${3:month}/
+:END:
+
+$0
+
+* Footnotes
+* COMMENT Local Variables                          :ARCHIVE:
+# Local Variables:
+# eval: (org-hugo-auto-export-mode)
+# End:

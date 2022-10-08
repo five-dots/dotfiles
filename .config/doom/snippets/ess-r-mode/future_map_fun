@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: future_map_fun
+# key: future_map_fun
+# --
+prev_plan <- future::plan(
+  strategy = future::multiprocess(workers = parallel::detectCores())
+)
+on.exit(future::plan(prev_plan))
+
+res <- suppressMessages(
+  furrr::future_map(${1:list}, function(${2:arg}) {
+    $0
+  }, .progress = ${3:TRUE})
+)
