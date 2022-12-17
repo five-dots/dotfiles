@@ -21,3 +21,6 @@ mysql system
 shellcheck 0.8.0
 sqlite 3.39.3
 dotnet-core 6.0.401
+lua 5.4.4
+minikube 1.28.0
+kubectl 1.25.4
