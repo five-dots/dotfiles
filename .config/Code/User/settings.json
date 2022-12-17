@@ -4,9 +4,10 @@
   "editor.fontFamily": "JetBrainsMono Nerd Font",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
+  "editor.formatOnSave": false,
   "editor.guides.indentation": false,
   "editor.inlineSuggest.enabled": true,
-  "editor.lineHeight": 16, // 行間 (fontSize=13 の場合はデフォルトで、18)
+  "editor.lineHeight": 16, // 行間を狭める (fontSize=13 の場合はデフォルトで、18)
   "editor.lineNumbers": "off",
   "editor.minimap.enabled": false,
   "editor.overviewRulerBorder": false,
@@ -39,14 +40,6 @@
 
   // Files
   "files.trimTrailingWhitespace": true,
-  "files.associations": {
-    "*.sql": "bigquery",
-    // vscode-dbt
-    "**/dbtvault_test/**/*.yaml": "jinja-yaml",
-    "**/dbtvault_test/**/*.yml": "jinja-yaml",
-    "**/dbtvault_test/**/*.sql": "jinja-sql",
-    "**/dbtvault_test/**/docs/**/*.md": "jinja-md"
-  },
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
@@ -61,6 +54,12 @@
   // Git
   "git.confirmSync": false,
 
+  // GitLens
+  "gitlens.views.showRelativeDateMarkers": false,
+
+  // Diff Editor
+  "diffEditor.ignoreTrimWhitespace": false,
+
   // Project Manager
   "projectManager.projectsLocation": "/home/shun/.config/Code/User",
   "projectManager.sortList": "Recent",
@@ -74,36 +73,11 @@
   "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
   "vscode-neovim.neovimInitVimPaths.linux": "/home/shun/.config/nvim/init.lua",
 
-  // // Customize UI
-  // "customizeUI.stylesheet": {
-  //   // Let the quick pick take the full window height, so that more bindings are visible.
-  //   ".quick-input-widget > .quick-input-list > .monaco-list": "max-height: 100vh !important;",
-  //   // Colorize icons uniformly and add some extra padding
-  //   ".quick-input-widget > .quick-input-list .codicon": "color: #83a598 !important; padding-right: 5px;",
-  //   // Colorize entries starting with a `+` differently
-  //   ".quick-input-widget > .quick-input-list .monaco-list-row[aria-label*=\" +\"] .label-description": "color: #8ec07c;",
-  // },
-
   // Path Intellisense
   "path-intellisense.absolutePathToWorkspace": false,
   "path-intellisense.showHiddenFiles": true,
   "path-intellisense.mappings": {
     "~/": "/home/shun"
-  },
-
-  // Explicit Folding
-  "explicitFolding.rules": {
-    "*": {
-      "begin": "{{{",
-      "end": "}}}"
-    }
-  },
-
-  // Remote
-  "remote.SSH.useLocalServer": false,
-  "remote.SSH.remotePlatform": {
-    "user-profile-01-beaconbank-analytics": "linux",
-    "anlaytics-developer-asai-01-beaconbank-analytics": "linux"
   },
 
   // GitHub Copilot
@@ -114,14 +88,14 @@
     "markdown": false
   },
 
+  // ** Settings for specific file types ** //
+
   // Markdown
   "markdown.preview.fontSize": 13,
 
-  // GitLens
-  "gitlens.views.showRelativeDateMarkers": false,
-
   // JSONC
   "[jsonc]": {
+    "editor.tabSize": 2,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
@@ -133,26 +107,9 @@
   "r.session.levelOfObjectDetail": "Detailed",
   "r.sessionWatcher": true,
   "r.workspaceViewer.showObjectSize": true,
-
   "[r]": {
     "editor.tabSize": 2,
-    "editor.defaultFormatter": "REditorSupport.r",
-    // "editor.formatOnSave": true,
-    "explicitFolding.rules": [
-      {
-        "begin": "{",
-        "end": "}"
-      },
-      {
-        "begin": "(",
-        "end": ")"
-      }
-      // {
-      //   "beginRegex": "if (.*) {",
-      //   "middleRegex": "} else",
-      //   "endRegex": "}",
-      // }
-    ]
+    "editor.defaultFormatter": "REditorSupport.r"
   },
 
   // Python
@@ -160,14 +117,10 @@
   "python.formatting.provider": "black",
   "python.languageServer": "Pylance",
   "python.terminal.activateEnvironment": false, // direnv + layout_poetry で仮想環を有効にするので、false にしておく
-
   "[python]": {
-    "files.trimTrailingWhitespace": false,
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "files.trimTrailingWhitespace": false
   },
-
-  // AREPL
-  // "AREPL.defaultImports": ["from arepl_dump import dump"],
 
   // Notebook
   "notebook.showCellStatusBar": "hidden",
@@ -175,38 +128,26 @@
   // Jupyter
   "jupyter.enableCellCodeLens": false,
   "jupyter.askForKernelRestart": false,
+  "jupyter.interactiveWindowMode": "perFile",
 
   // SQL & BigQuery
   "[sql]": {
-    "editor.defaultFormatter": "adpyke.vscode-sql-formatter",
     "editor.tabSize": 2,
+    "editor.defaultFormatter": "dorzey.vscode-sqlfluff"
   },
   "[jinja-sql]": {
     "editor.tabSize": 2
   },
   "[bigquery]": {
-    "editor.defaultFormatter": "dr666m1.bq-extension-vscode",
     "editor.tabSize": 2,
-    "explicitFolding.rules": [
-      {
-        "begin": "(",
-        "end": ")"
-      }
-    ]
+    // "editor.defaultFormatter": "dr666m1.bq-extension-vscode"
+    "editor.defaultFormatter": "dorzey.vscode-sqlfluff"
   },
 
-  // BigQuery Extension for VSCode
-  // "bqExtensionVSCode.formatting.printKeywordsInUpperCase": true,
-  // "bqExtensionVSCode.formatting.printPseudoColumnsInUpperCase": false,
-  "bqExtensionVSCode.formatting.formatMultilineComment": true,
-
-  // Visual-BigQuery
-  "visual-bigquery.hover": true,
-
-  // BigQuery Runner
-  "bigqueryRunner.keyFilename": "/home/shun/.gcp/user-profile-beaconbank-analytics.json",
-
-  // dbt
+  // sqlfluff
+  "sqlfluff.linter.run": "onSave",
+  "sqlfluff.linter.lintEntireProject": true,
+  "sqlfluff.format.arguments": ["--FIX-EVEN-UNPARSABLE"],
 
   // Lua
   "Lua.telemetry.enable": false,
@@ -229,10 +170,7 @@
     }
   },
 
-  // Notion
-  "VSCodeNotion.accessToken": "b72db6e42b2240a02a361c3b6554776cffcc23a9e1f7ee3a0348b5c9cce17a2a8360bd8775828b441e4e2bd8174a652500072251b638b1ce879f3a002a6c78341eafe08667f91f49195df7fe863b",
-
-  // Which Key
+  // ** Which Key ** //
   "whichkey.delay": 400,
   "whichkey.bindings": [
     {
@@ -472,7 +410,7 @@
               "name": "Hide side bar",
               "type": "command",
               "command": "workbench.action.toggleSidebarVisibility"
-            },
+            }
           ]
         }
       ]
@@ -712,6 +650,5 @@
         }
       ]
     }
-  ],
-  "jupyter.interactiveWindowMode": "perFile"
+  ]
 }
