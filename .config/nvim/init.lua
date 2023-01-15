@@ -11,9 +11,7 @@ end
 
 -- Clipboard by win32yank
 -- https://stackoverflow.com/questions/68435130/wsl-clipboard-win32yank-in-init-lua
--- https://mitchellt.com/2022/05/15/WSL-Neovim-Lua-and-the-Windows-Clipboard.html
-local in_wsl = os.getenv("WSL_DISTRO_NAME") ~= nil
-if in_wsl then
+if vim.fn.has("wsl") == 1 then
     vim.g.clipboard = {
         name = "win32yank-wsl",
         copy = {
