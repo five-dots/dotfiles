@@ -53,6 +53,7 @@
 
   // Git
   "git.confirmSync": false,
+  "git.suggestSmartCommit": false
 
   // GitLens
   "gitlens.views.showRelativeDateMarkers": false,
@@ -116,7 +117,7 @@
   "python.analysis.typeCheckingMode": "basic",
   "python.formatting.provider": "black",
   "python.languageServer": "Pylance",
-  "python.terminal.activateEnvironment": false, // direnv + layout_poetry で仮想環を有効にするので、false にしておく
+  "python.terminal.activateEnvironment": false, // direnv + layout_poetry で仮想環境を有効にするので、false にしておく
   "[python]": {
     "editor.tabSize": 4,
     "files.trimTrailingWhitespace": false
