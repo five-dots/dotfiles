@@ -240,6 +240,7 @@
   :init
   (setq default-input-method "japanese-mozc")
   (map! :i [henkan] #'toggle-input-method)
+  (map! :i [f12] #'toggle-input-method)
 
   (defun my/deactivate-ime ()
     "Deactivate IME."
@@ -254,10 +255,10 @@
   :config
   (setq mozc-candidate-style 'echo-area)
 
-  ;; Disable mozc-mode properly by [muhenkan]/[zenkaku-hankaku]
+  ;; Disable mozc-mode properly by [muhenkan]/[zenkaku-hankaku][f12]
   ;; http://nos.hateblo.jp/entry/20120317/1331985029
   (defadvice my/mozc-handle-event (around intercept-keys (event))
-    (if (member event (list 'zenkaku-hankaku 'henkan))
+    (if (member event (list 'zenkaku-hankaku 'henkan 'f12))
         (progn
           (mozc-clean-up-session)
           (toggle-input-method))
