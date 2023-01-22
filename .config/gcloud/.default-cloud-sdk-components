@@ -2,4 +2,5 @@ alpha
 beta
 cloud_sql_proxy
 docker-credential-gcr
+gke-gcloud-auth-plugin
 pubsub-emulator

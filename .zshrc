@@ -48,3 +48,7 @@ fi
 
 # gh cli completion
 (( $+commands[gh] )) && eval "$(gh completion -s zsh)"
+
+# gke-gcloud-auth-plugin
+# https://qiita.com/kiyc/items/beb55d223f27109ea9ab
+(( $+commands[gke-gcloud-auth-plugin] )) && export USE_GKE_GCLOUD_AUTH_PLUGIN=true
