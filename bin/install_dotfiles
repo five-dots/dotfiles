@@ -1,0 +1,61 @@
+#!/usr/bin/env zsh
+
+set -ue
+
+readonly repo_dir="$(cd "$(dirname "$(readlink -f "${0}")")" && cd .. && pwd -P)"
+readonly backup_dir="${HOME}/.dotbackup"
+
+source "${repo_dir}/bin/helper.sh"
+
+install() {
+    cd "${repo_dir}"
+
+    # バックアップディレクトリを作成
+    mkdir -p "${backup_dir}"
+
+    # fdfind で project 内の全てのファイルを list up
+    # 除外するファイルは、.fdignore で指定
+    # - 全てのファイル (--hidden)
+    # - ディレクトリは除外 (--type f)
+    # - 先頭の "./" を除外 (--strip-cwd-prefix)
+    for file in $(fdfind . --hidden --type f --strip-cwd-prefix); do
+        local src_path="${repo_dir}/${file}"
+        local dst_path="${HOME}/${file}"
+
+        # 既に ファイルが存在していた場合
+        if [[ -e "${dst_path}" ]]; then
+
+            # 同じファイルであれば、continue
+            local file_diff=$(diff "${src_path}" "${dst_path}")
+            [[ "${file_diff}" == "" ]] && continue
+
+            # バックアップを作成
+            local backup_path="${backup_dir}/${file}"
+
+            # ディレクトリがまだ存在しなければ作成する
+            mkdir -p "$(dirname "${backup_path}")"
+
+            echo "Backup ${backup_path}..."
+            mv "${dst_path}" "${backup_path}"
+        fi
+
+        # ディレクトリがまだ存在しなければ作成する
+        mkdir -p "$(dirname "${dst_path}")"
+
+        # bin/ の場合は、コピーではなく Symlink をはる
+        if [[ "${file}" =~ "^bin/" ]]; then
+            echo "${dst_path}"
+            \ln -sf "${src_path}" "${dst_path}"
+        # それ以外は、ファイルをコピー
+        else
+            echo "${dst_path}"
+            \cp -f "${src_path}" "${dst_path}"
+        fi
+    done
+}
+
+echo_green "Install started!!!"
+
+install
+
+echo_green "Install completed!!!"
