@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # https://github.com/direnv/direnv/wiki/Python#poetry
 layout_poetry() {
   if [[ ! -f pyproject.toml ]]; then
@@ -11,4 +13,20 @@ layout_poetry() {
   export VIRTUAL_ENV=$(poetry env info --path)
   export POETRY_ACTIVE=1
   PATH_add "$VIRTUAL_ENV/bin"
+}
+
+switch_google_adc() {
+  account="${1:-tmkc}"
+  adc_dir="${HOME}/.config/gcloud"
+  src_file="${adc_dir}/application_default_credentials_${account}.json"
+  dst_file="${adc_dir}/application_default_credentials.json"
+
+  # Stop if target adc file is not found
+  if [[ ! -e "${src_file}" ]]; then
+    echo "${src_file} not found."
+    exit 1
+  fi
+
+  echo "Switching Google ADC to ${account}"
+  \cp -f "${src_file}" "${dst_file}"
 }
