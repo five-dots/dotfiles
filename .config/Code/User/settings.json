@@ -53,7 +53,7 @@
 
   // Git
   "git.confirmSync": false,
-  "git.suggestSmartCommit": false
+  "git.suggestSmartCommit": false,
 
   // GitLens
   "gitlens.views.showRelativeDateMarkers": false,
@@ -120,7 +120,8 @@
   "python.terminal.activateEnvironment": false, // direnv + layout_poetry で仮想環境を有効にするので、false にしておく
   "[python]": {
     "editor.tabSize": 4,
-    "files.trimTrailingWhitespace": false
+    "files.trimTrailingWhitespace": false,
+    "editor.formatOnType": true
   },
 
   // Notebook
@@ -651,5 +652,6 @@
         }
       ]
     }
-  ]
+  ],
+  "redhat.telemetry.enabled": false
 }
