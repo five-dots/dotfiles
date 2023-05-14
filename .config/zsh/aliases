@@ -49,3 +49,6 @@ alias relogin='exec ${SHELL} -l'
 
 # ranger
 (( $+commands[ranger] )) && alias f='ranger'
+
+# cd-gitroot (https://github.com/mollifier/cd-gitroot)
+alias cdr='cd-gitroot'
