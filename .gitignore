@@ -5,7 +5,7 @@ etc/
 .dbt/
 .snowsql/
 
-.secrets
+secrets
 .Renviron
 
 .streamlit/credentials.toml

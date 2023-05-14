@@ -1,0 +1,37 @@
+#
+# Modules
+#
+
+zmodule archive
+zmodule environment
+zmodule fzf
+zmodule git
+zmodule input
+zmodule utility
+zmodule exa # Sourced after utility
+
+zmodule joke/zim-kubectl
+zmodule olets/zsh-abbr
+
+#
+# Prompt
+#
+
+zmodule prompt-pwd
+zmodule git-info
+zmodule sorin
+
+#
+# Completion
+#
+
+zmodule zsh-users/zsh-completions --fpath src
+zmodule completion # Sourced after all modules that add completion definitions
+
+#
+# Modules that must be initialized last
+#
+
+zmodule zsh-users/zsh-syntax-highlighting # sourced after completion
+zmodule zsh-users/zsh-history-substring-search # sourced after zsh-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions # Sourced last
