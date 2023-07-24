@@ -59,3 +59,4 @@ unset key
 
 fpath=("${ZDOTDIR}/functions" "${fpath[@]}")
 autoload -Uz cd-gitroot
+autoload -Uz lg
