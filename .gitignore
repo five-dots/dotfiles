@@ -10,4 +10,3 @@ secrets
 
 .streamlit/credentials.toml
 .config/kitty/kitty_default.conf
-.config/git
