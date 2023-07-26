@@ -1,0 +1,17 @@
+notARepository: 'skip'
+
+gui:
+  scrollHeight: 8
+  showIcons: true
+
+git:
+  paging:
+    colorArgs: always
+    pager: delta --dark --paging=never
+  branchLogCmd: "git log --graph --color=always --pretty='%C(yellow)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)<%an>%Creset' {{branchName}} --"
+  allBranchesLogCmd: "git log --graph --color=always --pretty='%C(yellow)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)<%an>%Creset' --all"
+
+keybinding:
+  universal:
+    nextTab: '['
+    prevTab: ']'
