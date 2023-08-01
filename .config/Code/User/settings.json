@@ -145,6 +145,9 @@
     // "editor.defaultFormatter": "dr666m1.bq-extension-vscode"
     "editor.defaultFormatter": "dorzey.vscode-sqlfluff"
   },
+  "[snowflake-sql]": {
+    "editor.tabSize": 2
+  },
 
   // sqlfluff
   "sqlfluff.linter.run": "onSave",
