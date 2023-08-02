@@ -17,10 +17,10 @@ if (( $+commands[anyenv] )); then
 fi
 
 # ls
-if (( $+commands[nnn] )); then
-    alias ls='nnn'
-    alias la='nnn -dGH'
-    alias ll='nnn -dG'
+if (( $+functions[n] )); then
+    alias ls='n'
+    alias la='n -dGH'
+    alias ll='n -dG'
 elif (( $+commands[exa] )); then
     alias ls='exa -F --color=auto --group-directories-first --sort=name'
     alias la='ls -a'
@@ -54,11 +54,10 @@ alias relogin='exec ${SHELL} -l'
 # ranger
 (( $+commands[ranger] )) && alias f='ranger'
 
-# nnn
-(( $+commands[nnn] )) && alias n='nnn -dG'
-
 # lazydocker
 (( $+commands[lazydocker] )) && alias lzd='lazydocker'
 
 # cd-gitroot (https://github.com/mollifier/cd-gitroot)
-alias cdr='cd-gitroot'
+if (( $+functions[cd-gitroot] )); then
+    alias cdr='cd-gitroot'
+fi

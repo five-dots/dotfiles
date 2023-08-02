@@ -1,8 +1,5 @@
 #!/usr/bin/env zsh
 
-# Alias
-[[ -f "${ZDOTDIR}/aliases" ]] && source "${ZDOTDIR}/aliases"
-
 # direnv
 (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
@@ -60,3 +57,7 @@ unset key
 fpath=("${ZDOTDIR}/functions" "${fpath[@]}")
 autoload -Uz cd-gitroot
 autoload -Uz lg
+autoload -Uz n
+
+# Load alias setting after function load
+[[ -f "${ZDOTDIR}/aliases" ]] && source "${ZDOTDIR}/aliases"
