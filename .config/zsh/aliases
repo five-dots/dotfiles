@@ -17,11 +17,7 @@ if (( $+commands[anyenv] )); then
 fi
 
 # ls
-if (( $+functions[n] )); then
-    alias ls='n'
-    alias la='n -dGH'
-    alias ll='n -dG'
-elif (( $+commands[exa] )); then
+if (( $+commands[exa] )); then
     alias ls='exa -F --color=auto --group-directories-first --sort=name'
     alias la='ls -a'
     alias ll='la -lgh --git --time-style=long-iso'
@@ -61,3 +57,6 @@ alias relogin='exec ${SHELL} -l'
 if (( $+functions[cd-gitroot] )); then
     alias cdr='cd-gitroot'
 fi
+
+# nnn
+(( $+functions[n] )) && alias n='n -adG'
