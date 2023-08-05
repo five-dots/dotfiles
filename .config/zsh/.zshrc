@@ -19,6 +19,13 @@ gcloud_comp="$(asdf where gcloud)/completion.zsh.inc"
 # gke-gcloud-auth-plugin https://qiita.com/kiyc/items/beb55d223f27109ea9ab
 (( $+commands[gke-gcloud-auth-plugin] )) && export USE_GKE_GCLOUD_AUTH_PLUGIN=true
 
+# jump
+(( $+commands[jump] )) && eval "$(jump shell)"
+
+# z
+z_path="${HOME}/repos/github/rupa/z/z.sh"
+[[ -f "${z_path}" ]] && source "${z_path}"
+
 #
 # Zim
 #

@@ -36,4 +36,4 @@ skip_global_compinit=1
 
 # nnn config
 export NNN_FIFO="/tmp/nnn.fifo"
-export NNN_PLUG="p:preview-tui"
+export NNN_PLUG="j:autojump;p:preview-tui"
