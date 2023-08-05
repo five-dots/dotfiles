@@ -63,7 +63,7 @@ unset key
 
 fpath=("${ZDOTDIR}/functions" "${fpath[@]}")
 autoload -Uz cd-gitroot
-autoload -Uz lg
+autoload -Uz lzg
 autoload -Uz n
 
 # Load alias setting after function load
