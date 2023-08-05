@@ -59,4 +59,4 @@ if (( $+functions[cd-gitroot] )); then
 fi
 
 # nnn
-(( $+functions[n] )) && alias n='n -aedG'
+(( $+functions[n] )) && alias n='n -aedGP p'
