@@ -35,4 +35,4 @@ done
 skip_global_compinit=1
 
 # nnn config
-export NNN_PLUG="j:autojump;p:preview-tui;d:dragdrop"
+export NNN_PLUG="d:dragdrop;c:fzcd;f:fzopen;g:gitroot;j:autojump;p:preview-tui;;:fzplug"
