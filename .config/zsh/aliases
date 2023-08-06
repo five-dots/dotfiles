@@ -60,3 +60,6 @@ fi
 
 # nnn
 (( $+functions[n] )) && alias n='n -aedGP p'
+
+# taskwarrior-tui
+(( $+commands[taskwarrior-tui] )) && alias tt='taskwarrior-tui'
