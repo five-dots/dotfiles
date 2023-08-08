@@ -32,3 +32,11 @@ data.location=~/.task
 # taskwarrior-tui
 uda.taskwarrior-tui.keyconfig.next-tab=[
 uda.taskwarrior-tui.keyconfig.previous-tab=]
+
+# Inthe.AM
+taskd.certificate=/home/shun/.ssh/inthe.am.private.certificate.pem
+taskd.key=/home/shun/.ssh/inthe.am.private.key.pem
+taskd.ca=/home/shun/.ssh/inthe.am.ca.cert.pem
+taskd.server=inthe.am:53589
+taskd.credentials=inthe_am/shun.asai/d57cd08a-38f3-457e-9ebe-13cd16b1377c
+taskd.trust=strict
