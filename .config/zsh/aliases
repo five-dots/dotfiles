@@ -26,11 +26,11 @@ else
     alias ll='la -lv'
 fi
 
-# tree
-(( $+commands[tree] )) && alias tree='tree -F'
-
 # utils
 alias relogin='exec ${SHELL} -l'
+
+# tree
+(( $+commands[tree] )) && alias tree='tree -F'
 
 # bat
 (( $+commands[bat] )) && alias cat='bat'
@@ -54,9 +54,7 @@ alias relogin='exec ${SHELL} -l'
 (( $+commands[lazydocker] )) && alias lzd='lazydocker'
 
 # cd-gitroot (https://github.com/mollifier/cd-gitroot)
-if (( $+functions[cd-gitroot] )); then
-    alias cdr='cd-gitroot'
-fi
+(( $+functions[cd-gitroot] )) && alias cdr='cd-gitroot'
 
 # nnn
 (( $+functions[n] )) && alias n='n -aedGP p'
