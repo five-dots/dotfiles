@@ -1,9 +1,0 @@
-#+STARTUP: folded indent
-
-* dotfiles
-
-#+begin_src shell
-git clone git@github.com:five-dots/dotfiles.git
-cd dotfiles
-./bin/install_dotfiles
-#+end_src
