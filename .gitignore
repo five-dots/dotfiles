@@ -10,3 +10,7 @@ secrets
 
 .streamlit/credentials.toml
 .config/kitty/kitty_default.conf
+
+# zsh
+.zcompdump*
+.zsh_history
