@@ -2,7 +2,6 @@ archive/
 etc/
 
 .aws/
-.dbt/
 .snowsql/
 
 secrets
@@ -10,6 +9,9 @@ secrets
 
 .streamlit/credentials.toml
 .config/kitty/kitty_default.conf
+
+# dbt
+dbt/
 
 # zsh
 .zcompdump*
