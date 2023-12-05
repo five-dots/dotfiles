@@ -26,6 +26,9 @@ gcloud_comp="$(asdf where gcloud)/completion.zsh.inc"
 z_path="${HOME}/repos/github/rupa/z/z.sh"
 [[ -f "${z_path}" ]] && source "${z_path}"
 
+# rye (Python package manager)
+[[ -f "${HOME}/.rye/env" ]] && source "${HOME}/.rye/env"
+
 #
 # Zim
 #
