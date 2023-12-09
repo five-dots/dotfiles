@@ -68,6 +68,7 @@ fpath=("${ZDOTDIR}/functions" "${fpath[@]}")
 autoload -Uz cd-gitroot
 autoload -Uz lzg
 autoload -Uz n
+autoload -Uz showoptions
 
 # Load alias setting after function load
 [[ -f "${ZDOTDIR}/aliases" ]] && source "${ZDOTDIR}/aliases"

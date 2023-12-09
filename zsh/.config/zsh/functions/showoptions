@@ -1,0 +1,5 @@
+# https://qiita.com/mollifier/items/26c67347734f9fcda274
+# zshでオプション一覧の出力を分かりやすくする
+function showoptions() {
+  set -o | sed -e 's/^no\(.*\)on$/\1  off/' -e 's/^no\(.*\)off$/\1  on/'
+}
