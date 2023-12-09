@@ -47,16 +47,13 @@ alias relogin='exec ${SHELL} -l'
 # kitty ssh
 (( $+commands[kitty] )) && alias ssh='kitty +kitten ssh'
 
-# ranger
-(( $+commands[ranger] )) && alias f='ranger'
-
 # lazydocker
 (( $+commands[lazydocker] )) && alias lzd='lazydocker'
 
 # cd-gitroot (https://github.com/mollifier/cd-gitroot)
 (( $+functions[cd-gitroot] )) && alias cdr='cd-gitroot'
 
-# nnn
+# nnn (n = cd on quit for nnn)
 (( $+functions[n] )) && alias n='n -aedGP p'
 
 # taskwarrior-tui
