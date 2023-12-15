@@ -31,6 +31,8 @@ z_path="${HOME}/repos/github/rupa/z/z.sh"
 
 #
 # Zim
+# Install Zim by:
+#   curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 #
 
 # Histroy
@@ -46,10 +48,11 @@ zstyle ':zim:input' double-dot-expand yes
 # zsh-syntax-highlighting
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
-# Initialize modules
-export ZIM_HOME="${XDG_CACHE_HOME}/zim"
+# Install missing modules and update the static initialization script
 [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]] && source ${ZIM_HOME}/zimfw.zsh init -q
-source ${ZIM_HOME}/init.zsh
+
+# Initialize modules
+[[ -f "${ZIM_HOME}/init.zsh" ]] && source ${ZIM_HOME}/init.zsh
 
 bindkey -v
 zmodload -F zsh/terminfo +p:terminfo

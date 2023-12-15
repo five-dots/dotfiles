@@ -28,11 +28,15 @@ for p in "${paths[@]}"; do
     export PATH="${p}:${PATH}"
 done
 
+# Zim
+export ZIM_HOME="${XDG_CACHE_HOME}/zim"
+
+# nnn config
+export NNN_PLUG="d:dragdrop;c:fzcd;f:fzopen;g:gitroot;j:autojump;p:preview-tui;;:fzplug"
+
 # Environment Variables - Secrets
 [[ -f "${ZDOTDIR}/secrets" ]] && source "${ZDOTDIR}/secrets"
 
 # Disalbe compinit as Zim controls compinit
 skip_global_compinit=1
 
-# nnn config
-export NNN_PLUG="d:dragdrop;c:fzcd;f:fzopen;g:gitroot;j:autojump;p:preview-tui;;:fzplug"
