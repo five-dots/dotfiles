@@ -6,8 +6,6 @@ etc/
 secrets
 .Renviron
 
-.config/kitty/kitty_default.conf
-
 # dbt
 dbt/
 
