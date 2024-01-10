@@ -6,5 +6,9 @@ cd dotfiles
 
 stow -Rvt ~ \
     asdf \
+    direnv \
+    jump \
+    lazydocker \
+    lazygit \
     zsh
 ```
