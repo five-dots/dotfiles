@@ -9,24 +9,25 @@ stow -Rvt ~ \
     asdf \
     direnv \
     fdfind \
-    fontconfig \
     git \
     jump \
-    kitty \
     lazydocker \
     lazygit \
     pypoetry \
     qmk \
+    R \
     radian \
     sql-formatter \
     streamlit \
     tmux \
-    wezterm \
     zsh
 
 # GUI
 stow -Rvt ~ \
+    fontconfig \
+    kitty \
     vscode \
+    wezterm \
     xkeysnail
 
 # Hidden
