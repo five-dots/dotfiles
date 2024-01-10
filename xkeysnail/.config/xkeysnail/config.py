@@ -72,9 +72,9 @@ from xkeysnail.transform import *
 #     K("Hyper-Equal"): K("F12"),
 # }, "Hyper mapping")
 
-# define_keymap(re.compile("gnome-terminal|kitty|code", re.IGNORECASE), {
-#     K("Esc"): [K("Muhenkan"), K("Esc")],
-# }, "Disable IME")
+define_keymap(re.compile("gnome-terminal|kitty|code", re.IGNORECASE), {
+    K("Esc"): [K("Muhenkan"), K("Esc")],
+}, "Disable IME")
 
 define_keymap(re.compile("gnome-terminal|kitty", re.IGNORECASE), {
     # Copy/Cut/Paste
