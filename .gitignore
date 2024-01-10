@@ -2,7 +2,6 @@ archive/
 etc/
 
 .aws/
-.snowsql/
 
 secrets
 .Renviron
@@ -20,3 +19,6 @@ dbt/
 # jump
 jump/.config/jump/scores.json
 jump/.config/jump/search.json
+
+# snowsql
+snowsql/
