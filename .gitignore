@@ -19,3 +19,4 @@ dbt/
 
 # jump
 jump/.config/jump/scores.json
+jump/.config/jump/search.json
