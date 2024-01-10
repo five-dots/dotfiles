@@ -6,7 +6,6 @@ etc/
 secrets
 .Renviron
 
-.streamlit/credentials.toml
 .config/kitty/kitty_default.conf
 
 # dbt
@@ -22,3 +21,6 @@ jump/.config/jump/search.json
 
 # snowsql
 snowsql/
+
+# streamlit
+streamlit/.streamlit/credentials.toml
