@@ -2,7 +2,6 @@ archive/
 etc/
 
 secrets
-.Renviron
 
 # dbt
 dbt/
@@ -28,3 +27,12 @@ vscode/.config/Code/User/workspaceStorage/
 
 # aws
 awscli/
+
+# lazygit
+lazygit/.config/lazygit/state.yml
+
+# tmux
+tmux/.config/tmux/plugins
+
+# R
+R/.Renviron
