@@ -1,12 +1,12 @@
 R system
 awscli 2.7.22
 bat 0.22.1
-direnv 2.32.1
+direnv system
 dotnet-core 6.0.401
 exa 0.10.1
 fd 8.4.0
 fzf 0.40.0
-gcloud 403.0.0
+gcloud 458.0.1
 git 2.37.2
 github-cli 2.16.1
 golang 1.19.1
