@@ -16,3 +16,6 @@ dbt/
 # zsh
 .zcompdump*
 .zsh_history
+
+# jump
+jump/.config/jump/scores.json
