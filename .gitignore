@@ -22,3 +22,8 @@ snowsql/
 
 # streamlit
 streamlit/.streamlit/credentials.toml
+
+# vscode
+vscode/.config/Code/User/globalStorage/
+vscode/.config/Code/User/History/
+vscode/.config/Code/User/workspaceStorage/
