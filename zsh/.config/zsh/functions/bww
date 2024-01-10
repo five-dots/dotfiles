@@ -1,0 +1,38 @@
+local account="$1"
+shift
+local rest_args="$@"
+
+# Check if app_data dir exists
+local appdata_dir="${XDG_CONFIG_HOME:-${HOME}/.config}/bitwarden_cli/${account}"
+if [[ ! -d "${appdata_dir=}" ]]; then
+    echo "App data direcotry \"${appdata_dir}\" not found."
+fi
+
+local bw_command="BITWARDENCLI_APPDATA_DIR=${appdata_dir} bw"
+
+# Get latest session key from env var
+local current_session_key=$(echo ${BW_SESSION_JSON} | jq -r ".${account} // empty")
+
+# Get new session key if no session key or 'locked' status
+local session_key=""
+if [[ -z "${current_session_key}" ]]; then
+    echo "No session key set"
+    session_key="$(eval ${bw_command} unlock --raw)"
+else
+    # Current bw status
+    local bw_status="$(eval ${bw_command} status --session ${current_session_key} | jq -r ".status")"
+    if [[ "${bw_status}" == "locked" ]]; then
+        echo "Status locked"
+        session_key="$(eval ${bw_command} unlock --raw)"
+    else
+        session_key="${current_session_key}"
+    fi
+fi
+
+# Add new session key into a JSON enviroment variable
+export BW_SESSION_JSON=$(
+    echo $BW_SESSION_JSON | jq --arg "${account}" "${session_key}" ". + {\""${account}"\": \""${session_key}"\"}"
+)
+
+# Run bw command
+eval ""${bw_command}" "${rest_args}" --session "${session_key}""

@@ -48,11 +48,14 @@ zstyle ':zim:input' double-dot-expand yes
 # zsh-syntax-highlighting
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
-# Install missing modules and update the static initialization script
-[[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]] && source ${ZIM_HOME}/zimfw.zsh init -q
+# Zim setup
+if [[ -f "${ZIM_HOME}/init.zsh" ]]; then
+    # Install missing modules and update the static initialization script
+    [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]] && source ${ZIM_HOME}/zimfw.zsh init -q
 
-# Initialize modules
-[[ -f "${ZIM_HOME}/init.zsh" ]] && source ${ZIM_HOME}/init.zsh
+    # Initialize modules
+    source ${ZIM_HOME}/init.zsh
+fi
 
 bindkey -v
 zmodload -F zsh/terminfo +p:terminfo
@@ -68,6 +71,7 @@ unset key
 #
 
 fpath=("${ZDOTDIR}/functions" "${fpath[@]}")
+autoload -Uz bww
 autoload -Uz cd-gitroot
 autoload -Uz lzg
 autoload -Uz n
