@@ -11,6 +11,7 @@ dbt/
 .zsh_history
 
 # jump
+jump/.config/jump/pins.json
 jump/.config/jump/scores.json
 jump/.config/jump/search.json
 
