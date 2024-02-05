@@ -24,4 +24,9 @@ config.window_background_opacity = 0.8
 -- https://wezfurlong.org/wezterm/config/lua/config/default_domain.html
 config.default_domain = "WSL:Ubuntu"
 
+-- For Wezterm + Komorebi
+-- https://github.com/wez/wezterm/issues/3934
+-- https://wezfurlong.org/wezterm/config/lua/config/allow_win32_input_mode.html
+config.allow_win32_input_mode = false
+
 return config
