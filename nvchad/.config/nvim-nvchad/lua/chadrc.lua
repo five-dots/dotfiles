@@ -11,6 +11,10 @@ M.ui = {
 	-- 	Comment = { italic = true },
 	-- 	["@comment"] = { italic = true },
 	-- },
+
+  telescope = {
+    style = "bordered",
+  },
 }
 
 return M
