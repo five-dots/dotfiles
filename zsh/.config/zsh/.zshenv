@@ -34,6 +34,9 @@ export ZIM_HOME="${XDG_CACHE_HOME}/zim"
 # nnn config
 export NNN_PLUG="d:dragdrop;c:fzcd;f:fzopen;g:gitroot;j:autojump;p:preview-tui;;:fzplug"
 
+# fzf config
+export FZF_DEFAULT_OPTS="--layout=reverse --border"
+
 # Environment Variables - Secrets
 [[ -f "${ZDOTDIR}/secrets" ]] && source "${ZDOTDIR}/secrets"
 
