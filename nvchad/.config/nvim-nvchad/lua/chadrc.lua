@@ -16,6 +16,10 @@ M.ui = {
     style = "bordered",
   },
 
+  tabufline = {
+    order = { "buffers", "tabs", "btns", "treeOffset", },
+  },
+
   term = {
     float = {
       row = 0.15,

@@ -35,4 +35,25 @@ return {
   -- 		},
   -- 	},
   -- },
+
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = {
+      git = {
+        ignore = false,
+      },
+      view = {
+        adaptive_size = true,
+        side = "right",
+        width = 40,
+      },
+      renderer = {
+        icons = {
+          show = {
+            git = false,
+          },
+        },
+      },
+    },
+  },
 }
