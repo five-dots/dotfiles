@@ -5,10 +5,20 @@ local del = vim.keymap.del
 
 -- Disable default mappings
 del("t", "<ESC>")
+del({ "n", "i" }, "<C-h>")
+del({ "n", "i" }, "<C-j>")
+del({ "n", "i" }, "<C-k>")
+del({ "n", "i" }, "<C-l>")
+del("i", "<C-b>")
+del("i", "<C-e>")
 
 -- add yours here
 map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>")
+
+map("n", "<Left>",  "<C-w>h", { desc = "Switch Window left" })
+map("n", "<Down>",  "<C-w>j", { desc = "Switch Window down" })
+map("n", "<Up>",    "<C-w>k", { desc = "Switch Window up" })
+map("n", "<Right>", "<C-w>l", { desc = "Switch Window right" })
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
