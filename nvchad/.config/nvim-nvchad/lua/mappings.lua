@@ -1,9 +1,12 @@
 require "nvchad.mappings"
 
--- add yours here
-
 local map = vim.keymap.set
+local del = vim.keymap.del
 
+-- Disable default mappings
+del("t", "<ESC>")
+
+-- add yours here
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
