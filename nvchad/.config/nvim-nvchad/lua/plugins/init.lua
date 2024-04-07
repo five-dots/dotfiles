@@ -92,7 +92,37 @@ return {
         end, { "i", "s" }), -- i=insert, c=command, s=select
       },
     },
+
+    dependencies = {
+      {
+        "hrsh7th/cmp-cmdline",
+        event = { "CmdLineEnter" },
+        opts = { history = true, updateevents = "CmdlineEnter,CmdlineChanged" },
+        config = function()
+          -- Enable ":" completion
+          cmp.setup.cmdline(":", {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = cmp.config.sources({
+              { name = 'path' }
+            },
+            {
+              { name = 'cmdline' }
+            }),
+            matching = { disallow_symbol_nonprefix_matching = false },
+          })
+
+          -- Enable "/" completion
+          cmp.setup.cmdline("/", {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = {
+              { name = "buffer" },
+            },
+          })
+        end,
+      },
+    },
   },
+
   {
     "folke/noice.nvim",
     event = "VeryLazy",
