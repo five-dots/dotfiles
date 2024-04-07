@@ -29,4 +29,20 @@ config.default_domain = "WSL:Ubuntu"
 -- https://wezfurlong.org/wezterm/config/lua/config/allow_win32_input_mode.html
 config.allow_win32_input_mode = false
 
+-- Key Binding
+config.keys = {
+  -- Disable next tab by Ctrl-Tab
+  {
+    key = "Tab",
+    mods = "CTRL",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+  -- Disable prev tab by Ctrl-Shift-Tab
+  {
+    key = "Tab",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+}
+
 return config
