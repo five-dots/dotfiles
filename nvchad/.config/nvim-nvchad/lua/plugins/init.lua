@@ -1,3 +1,5 @@
+local cmp = require "cmp"
+
 return {
   {
     "stevearc/conform.nvim",
@@ -55,6 +57,39 @@ return {
             git = false,
           },
         },
+      },
+    },
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    opts = {
+      completion = {
+        keyword_length = 2,
+      },
+      view = {
+        docs = {
+          auto_open = false,
+        },
+      },
+      mapping = {
+        ["<Up>"] = cmp.mapping.select_prev_item(),
+        ["<Down>"] = cmp.mapping.select_next_item(),
+        ["<C-S-Tab>"] = cmp.mapping.complete(),
+        ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
+        ["<PageDown>"] = cmp.mapping.scroll_docs(4),
+
+        -- Toggle docs
+        ["<Insert>"] = cmp.mapping(function(fallback)
+          if not cmp.visible() then
+            fallback()
+          end
+          if cmp.visible_docs() then
+            cmp.close_docs()
+          else
+            cmp.open_docs()
+          end
+        end, { "i", "s" }), -- i=insert, c=command, s=select
       },
     },
   },
