@@ -33,9 +33,29 @@ return {
   	"nvim-treesitter/nvim-treesitter",
   	opts = {
       ensure_installed = {
-        "vim", "lua", "vimdoc",
-        "html", "css",
+        -- defaults
+        "css",
+        "html",
+        "lua",
+        "vim",
+        "vimdoc",
+        -- language
+        "bash",
+        "dockerfile",
+        "go",
+        "markdown",
         "python",
+        "r",
+        "sql",
+        -- data
+        "csv",
+        "json",
+        "jsonc",
+        "toml",
+        "yaml",
+        -- missing noice.nvim requirements
+        "markdown_inline",
+        "regex",
   		},
   	},
   },
