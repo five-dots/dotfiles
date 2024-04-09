@@ -9,6 +9,7 @@ stow -Rvt ~ \
     asdf \
     direnv \
     fdfind \
+    gcloud \
     git \
     jump \
     lazydocker \

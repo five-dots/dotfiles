@@ -37,3 +37,7 @@ tmux/.config/tmux/plugins
 
 # R
 R/.Renviron
+
+# gcloud
+gcloud/.config/gcloud/*
+!gcloud/.config/gcloud/.default-cloud-sdk-components
