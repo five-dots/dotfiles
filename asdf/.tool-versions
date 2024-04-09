@@ -6,12 +6,12 @@ dotnet-core 6.0.401
 exa 0.10.1
 fd 8.4.0
 fzf 0.40.0
-gcloud 458.0.1
+gcloud 471.0.0
 git 2.37.2
 github-cli 2.16.1
 golang 1.21.5
 hugo 0.104.1
-kubectl 1.25.4
+kubectl 1.29.3
 lua 5.4.6
 minikube 1.28.0
 mysql system
