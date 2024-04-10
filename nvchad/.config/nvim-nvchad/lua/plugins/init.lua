@@ -175,4 +175,14 @@ return {
       require("project_nvim").setup(opts)
     end
   },
+
+  {
+    "kylechui/nvim-surround",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+        require("nvim-surround").setup{}
+    end,
+  },
 }
+
