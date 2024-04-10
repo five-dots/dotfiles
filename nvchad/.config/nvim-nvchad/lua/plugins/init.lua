@@ -22,9 +22,19 @@ return {
   	"williamboman/mason.nvim",
   	opts = {
   		ensure_installed = {
-        "lua-language-server", "stylua",
-  			"html-lsp", "css-lsp", "prettier",
+        -- default lsp
+  			"html-lsp",
+        "css-lsp",
+        "lua-language-server",
+        -- default formatter
+        "prettier",
+        "stylua",
+        -- additional lsp
+        "bash-language-server",
+        "json-lsp",
+        "lua-language-server",
         "pyright",
+        "yaml-language-server",
   		},
   	},
   },
