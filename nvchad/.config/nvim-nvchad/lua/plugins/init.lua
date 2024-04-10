@@ -1,6 +1,7 @@
 local cmp = require "cmp"
 
 return {
+  -- conform.nvim
   {
     "stevearc/conform.nvim",
     -- event = 'BufWritePre', -- uncomment for format on save
@@ -9,7 +10,7 @@ return {
     end,
   },
 
-  -- These are some examples, uncomment them if you want to see them work!
+  -- nvim-lspconfig
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -18,6 +19,7 @@ return {
     end,
   },
 
+  -- mason.nvim
   {
   	"williamboman/mason.nvim",
   	opts = {
@@ -39,6 +41,7 @@ return {
   	},
   },
 
+  -- nvim-treesitter
   {
   	"nvim-treesitter/nvim-treesitter",
   	opts = {
@@ -70,6 +73,7 @@ return {
   	},
   },
 
+  -- nvim-tree.lua
   {
     "nvim-tree/nvim-tree.lua",
     opts = {
@@ -91,6 +95,7 @@ return {
     },
   },
 
+  -- nvim-cmp
   {
     "hrsh7th/nvim-cmp",
     opts = {
@@ -153,6 +158,7 @@ return {
     },
   },
 
+  -- noice.nvim
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -169,6 +175,7 @@ return {
     },
   },
 
+  -- project.nvim
   {
     "ahmedkhalf/project.nvim",
     config = function(_, opts)
