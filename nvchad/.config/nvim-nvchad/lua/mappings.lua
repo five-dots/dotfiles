@@ -14,6 +14,8 @@ del("n", "<S-Tab>")
 del("i", "<C-b>")
 del("i", "<C-e>")
 
+del("n", "<Leader>fo")
+
 -- add yours here
 map("n", "j", "gj")
 map("n", "k", "gk")
@@ -44,4 +46,7 @@ map(
   end,
   { desc = "Toggle Lazygit" }
 )
+
+-- 
+map("n", "<Leader>fr", "<CMD>Telescope oldfiles<CR>", { desc = "Telescope Find oldfiles" })
 
