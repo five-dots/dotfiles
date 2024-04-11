@@ -81,8 +81,6 @@ return {
         ignore = false,
       },
       view = {
-        adaptive_size = true,
-        side = "right",
         width = 40,
       },
       renderer = {
