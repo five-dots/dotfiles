@@ -75,6 +75,7 @@ autoload -Uz bww
 autoload -Uz cd-gitroot
 autoload -Uz lzg
 autoload -Uz n
+autoload -Uz nvims
 autoload -Uz showoptions
 
 # Load alias setting after function load

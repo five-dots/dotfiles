@@ -58,3 +58,15 @@ alias relogin='exec ${SHELL} -l'
 
 # taskwarrior-tui
 (( $+commands[taskwarrior-tui] )) && alias tt='taskwarrior-tui'
+
+# nvim
+if (( $+commands[nvim] )); then
+    alias nvim-clean='NVIM_APPNAME="" nvim'
+    alias nvim-nvchad='NVIM_APPNAME=nvim-nvchad nvim'
+    alias nvim-custom='NVIM_APPNAME=nvim-custom nvim'
+    alias nv='nvim-nvchad'
+fi
+
+# nvim switcher
+(( $+functions[nvims] )) && alias nvs='nvims'
+
