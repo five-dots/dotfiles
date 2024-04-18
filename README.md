@@ -6,6 +6,7 @@ cd dotfiles
 
 # CLI
 stow -Rvt ~ \
+    R \
     asdf \
     direnv \
     fdfind \
@@ -14,9 +15,10 @@ stow -Rvt ~ \
     jump \
     lazydocker \
     lazygit \
+    nvchad \
+    nvim \
     pypoetry \
     qmk \
-    R \
     radian \
     sql-formatter \
     streamlit \
