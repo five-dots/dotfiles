@@ -2,6 +2,7 @@ readonly items=(
     "clean"
     "custom"
     "nvchad"
+    "kickstart"
 )
 
 selection=$(
