@@ -5,13 +5,13 @@ return {
     "CmdlineEnter",
   },
   dependencies = {
-    -- "hrsh7th/cmp-nvim-lsp",
-    -- "hrsh7th/cmp-nvim-lua",
     "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
-    -- "saadparwaiz1/cmp_luasnip",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-path",
     -- "L3MON4D3/LuaSnip",
+    -- "hrsh7th/cmp-nvim-lua",
+    -- "saadparwaiz1/cmp_luasnip",
   },
   config = function()
     local cmp = require("cmp")
@@ -41,11 +41,11 @@ return {
         ),
       },
       sources = {
-        -- { name = "nvim_lsp" },
-        -- { name = "luasnip" },
         { name = "buffer" },
-        -- { name = "nvim_lua" },
+        { name = "nvim_lsp" },
         { name = "path" },
+        -- { name = "luasnip" },
+        -- { name = "nvim_lua" },
       },
     })
 
