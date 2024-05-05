@@ -4,6 +4,7 @@ return {
   --   { "<leader>ts", function() require("onedark").toggle() end, desc = "Toggle onedark style" },
   -- },
   opts = {
+    style = "deep",
     toggle_style_key = "<leader>ts",
     toggle_style_list = {
       "dark",
