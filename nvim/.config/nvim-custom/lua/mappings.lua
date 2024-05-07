@@ -8,6 +8,7 @@ map("", "<space>", "<nop>")
 ]]
 map("n", "z;", "<cmd>write<cr>")
 map("n", "<esc>", "<cmd>nohlsearch<cr>")
+map("n", "<c-s>", "<cmd>write<cr>")
 
 --[[
   Motion
