@@ -101,7 +101,7 @@ return {
     "hrsh7th/nvim-cmp",
     opts = {
       completion = {
-        keyword_length = 2,
+        completeopt = "menu,menuone,noselect",
       },
       view = {
         docs = {
@@ -112,6 +112,7 @@ return {
         ["<up>"] = cmp.mapping.select_prev_item(),
         ["<down>"] = cmp.mapping.select_next_item(),
         ["<c-s-tab>"] = cmp.mapping.complete(),
+        ["<home>"] = cmp.mapping.abort(),
         ["<pageup>"] = cmp.mapping.scroll_docs(-4),
         ["<pagedown>"] = cmp.mapping.scroll_docs(4),
 
