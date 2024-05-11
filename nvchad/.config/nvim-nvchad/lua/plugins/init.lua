@@ -82,8 +82,11 @@ return {
       },
       view = {
         width = 40,
+        number = true,
+        relativenumber = true,
       },
       renderer = {
+        special_files = {},
         icons = {
           show = {
             git = false,
