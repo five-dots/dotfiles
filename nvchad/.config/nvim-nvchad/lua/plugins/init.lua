@@ -109,14 +109,14 @@ return {
         },
       },
       mapping = {
-        ["<Up>"] = cmp.mapping.select_prev_item(),
-        ["<Down>"] = cmp.mapping.select_next_item(),
-        ["<C-S-Tab>"] = cmp.mapping.complete(),
-        ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
-        ["<PageDown>"] = cmp.mapping.scroll_docs(4),
+        ["<up>"] = cmp.mapping.select_prev_item(),
+        ["<down>"] = cmp.mapping.select_next_item(),
+        ["<c-s-tab>"] = cmp.mapping.complete(),
+        ["<pageup>"] = cmp.mapping.scroll_docs(-4),
+        ["<pagedown>"] = cmp.mapping.scroll_docs(4),
 
         -- Toggle docs
-        ["<Insert>"] = cmp.mapping(function(fallback)
+        ["<insert>"] = cmp.mapping(function(fallback)
           if not cmp.visible() then
             fallback()
           end
