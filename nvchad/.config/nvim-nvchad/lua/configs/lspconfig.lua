@@ -3,14 +3,22 @@ local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
+-- -- Enable nvim-ufo folding
+-- capabilities.textDocument.foldingRange = {
+--   dynamicRegistration = false,
+--   lineFoldingOnly = true
+-- }
+
 local lspconfig = require "lspconfig"
 local servers = {
-  -- defaults
+  -- Default servers
   "cssls",
   "html",
-  -- additional servers
+  -- Additional servers
   "bashls",
+  "gopls",
   "jsonls",
+  "lua_ls",
   "pyright",
   "yamlls",
 }
