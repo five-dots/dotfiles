@@ -18,6 +18,12 @@ del({ "n", "v" }, "<leader>/")  -- Comment toggle
 del("n", "<leader>fo") -- Telescope find oldfiles
 del("n", "<leader>n")  -- Toggle line number
 del("n", "<leader>rn") -- Toggle relative number
+del("n", "<leader>h") -- New horizontal terminal
+del("n", "<leader>v") -- New vertical terminal
+
+del({ "n", "t" }, "<a-i>") -- Toggle float terminal
+del({ "n", "t" }, "<a-h>") -- Toggle horizontal terminal
+del({ "n", "t" }, "<a-v>") -- Toggle vertical terminal
 
 --[[
   Ex Command
@@ -26,6 +32,17 @@ map("n", "z;", "<cmd>write<cr>")
 map({ "n", "i" }, "<c-s>", "<cmd>write<cr>")
 
 -- Terminal
+map( { "n", "t" },
+  "<a-i>",
+  function ()
+    require("nvchad.term").toggle {
+      pos = "float",
+      id = "float",
+      cmd = "neofetch",
+    }
+  end,
+  { desc = "Toggle float terminal" }
+)
 map(
   { "n", "t" },
   "<a-g>",
@@ -37,6 +54,30 @@ map(
     }
   end,
   { desc = "Toggle Lazygit" }
+)
+map(
+  { "n", "t" },
+  "<a-h>",
+  function ()
+    require("nvchad.term").toggle {
+      pos = "sp",
+      id = "horizontal",
+      size = 0.4,
+    }
+  end,
+  { desc = "Toggle horizontal terminal" }
+)
+map(
+  { "n", "t" },
+  "<a-v>",
+  function ()
+    require("nvchad.term").toggle {
+      pos = "vsp",
+      id = "vertical",
+      size = 0.4,
+    }
+  end,
+  { desc = "Toggle vertical terminal" }
 )
 
 --[[
