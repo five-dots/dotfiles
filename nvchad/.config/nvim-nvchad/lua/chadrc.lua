@@ -18,9 +18,9 @@ M.ui = {
 
   term = {
     float = {
-      row = 0.15,
-      col = 0.1,
-      width = 0.8,
+      col = 0.05, -- Left margin
+      width = 0.9,
+      row = 0.1, -- Top margin
       height = 0.7,
     },
   },
