@@ -11,14 +11,13 @@ local capabilities = require("nvchad.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
 local servers = {
-  -- Default servers
+  -- Default servers (lua_ls is set by default, no need to add it)
   "cssls",
   "html",
   -- Additional servers
   "bashls",
   "gopls",
   "jsonls",
-  "lua_ls",
   "pyright",
   "yamlls",
 }
