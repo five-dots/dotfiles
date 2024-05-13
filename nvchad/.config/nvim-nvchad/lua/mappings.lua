@@ -31,6 +31,25 @@ del({ "n", "t" }, "<a-v>") -- Toggle vertical terminal
 map("n", "z;", "<cmd>write<cr>")
 map({ "n", "i" }, "<c-s>", "<cmd>write<cr>")
 
+-- hjkl motion
+map("n", "j", "gj")
+map("n", "k", "gk")
+map("n", "gj", "j")
+map("n", "gk", "k")
+map("n", "<home>", "^")
+map("n", "<pageup>", "{")
+map("n", "<pagedown>", "}")
+
+-- Window
+map("n", "<left>",  "<cmd>wincmd h<cr>", { desc = "Switch Window left" })
+map("n", "<down>",  "<cmd>wincmd j<cr>", { desc = "Switch Window down" })
+map("n", "<up>",    "<cmd>wincmd k<cr>", { desc = "Switch Window up" })
+map("n", "<right>", "<cmd>wincmd l<cr>", { desc = "Switch Window right" })
+
+-- Tab next/prev
+map("n", "<c-tab>", function() require("nvchad.tabufline").next() end)
+map("n", "<c-s-tab>", function() require("nvchad.tabufline").prev() end)
+
 -- Terminal
 map( { "n", "t" },
   "<a-i>",
@@ -79,27 +98,6 @@ map(
   end,
   { desc = "Toggle vertical terminal" }
 )
-
---[[
-  Motion
-]]
-map("n", "j", "gj")
-map("n", "k", "gk")
-map("n", "gj", "j")
-map("n", "gk", "k")
-map("n", "<home>", "^")
-map("n", "<pageup>", "{")
-map("n", "<pagedown>", "}")
-
--- Window
-map({ "n", "t" }, "<left>",  "<cmd>wincmd h<cr>", { desc = "Switch Window left" })
-map({ "n", "t" }, "<down>",  "<cmd>wincmd j<cr>", { desc = "Switch Window down" })
-map({ "n", "t" }, "<up>",    "<cmd>wincmd k<cr>", { desc = "Switch Window up" })
-map({ "n", "t" }, "<right>", "<cmd>wincmd l<cr>", { desc = "Switch Window right" })
-
--- Tab next/prev
-map("n", "<c-tab>", function() require("nvchad.tabufline").next() end)
-map("n", "<c-s-tab>", function() require("nvchad.tabufline").prev() end)
 
 --[[
   Leader
