@@ -1,5 +1,22 @@
 local cmp = require "cmp"
 
+local function on_attach_nvimtree(bufnr)
+  local api = require "nvim-tree.api"
+  local function opts(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  -- Default mappings
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- leap.nvim が使えるように s/S を削除する
+  vim.keymap.del("n", "s", { buffer = bufnr }) -- api.node.run.system
+  vim.keymap.del("n", "S", { buffer = bufnr }) -- api.tree.search_node
+
+  -- Run sysmtem は ! に割り当て
+  vim.keymap.set('n', '!', api.node.run.system, opts('Run System'))
+end
+
 return {
   -- conform.nvim
   {
@@ -82,6 +99,7 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     opts = {
+      on_attach = on_attach_nvimtree,
       git = {
         ignore = false,
       },
@@ -200,7 +218,7 @@ return {
     version = "*",
     event = "VeryLazy",
     config = function()
-        require("nvim-surround").setup{}
+      require("nvim-surround").setup{}
     end,
   },
 
@@ -299,5 +317,16 @@ return {
         fold_virt_text_handler = fold_virt_text_line_nums,
       }
     end
+  },
+
+  -- leap.nvim
+  {
+    "ggandor/leap.nvim",
+    keys = {
+      { "s", "<plug>(leap-forward)" , desc = "Leap forward", mode = { "n", "x", "o" } },
+      -- Visual mode (x) の S は、nvim-surround で使うので割り当てない
+      { "S", "<plug>(leap-backward)" , desc = "Leap backward", mode = { "n","o" } },
+      { "gs", "<plug>(leap-from-window)" , desc = "Leap from window", mode = { "n", "x", "o" } },
+    },
   },
 }
