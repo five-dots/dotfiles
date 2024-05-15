@@ -6,7 +6,7 @@ dotnet-core 6.0.401
 exa 0.10.1
 fd 8.4.0
 fzf 0.40.0
-gcloud 471.0.0
+gcloud 475.0.0
 git 2.37.2
 github-cli 2.16.1
 golang 1.21.5
