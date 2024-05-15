@@ -37,8 +37,8 @@ map("n", "k", "gk")
 map("n", "gj", "j")
 map("n", "gk", "k")
 map("n", "<home>", "^")
-map("n", "<pageup>", "{")
-map("n", "<pagedown>", "}")
+map({ "n", "x" }, "<pageup>", "{")
+map({ "n", "x" }, "<pagedown>", "}")
 
 -- Window
 map("n", "<left>",  "<cmd>wincmd h<cr>", { desc = "Switch Window left" })
@@ -52,31 +52,18 @@ map("n", "<c-s-tab>", function() require("nvchad.tabufline").prev() end)
 
 -- Terminal
 map( { "n", "t" },
-  "<a-i>",
+  "<c-k>",
   function ()
     require("nvchad.term").toggle {
       pos = "float",
       id = "float",
-      cmd = "neofetch",
     }
   end,
   { desc = "Toggle float terminal" }
 )
 map(
   { "n", "t" },
-  "<a-g>",
-  function ()
-    require("nvchad.term").toggle {
-      pos = "float",
-      id = "lazygit_float",
-      cmd = "lazygit",
-    }
-  end,
-  { desc = "Toggle Lazygit" }
-)
-map(
-  { "n", "t" },
-  "<a-h>",
+  "<c-h>",
   function ()
     require("nvchad.term").toggle {
       pos = "sp",
@@ -85,18 +72,6 @@ map(
     }
   end,
   { desc = "Toggle horizontal terminal" }
-)
-map(
-  { "n", "t" },
-  "<a-v>",
-  function ()
-    require("nvchad.term").toggle {
-      pos = "vsp",
-      id = "vertical",
-      size = 0.4,
-    }
-  end,
-  { desc = "Toggle vertical terminal" }
 )
 
 --[[
