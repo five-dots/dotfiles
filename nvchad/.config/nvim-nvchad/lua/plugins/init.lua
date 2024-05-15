@@ -105,9 +105,6 @@ return {
   {
     "hrsh7th/nvim-cmp",
     opts = {
-      completion = {
-        completeopt = "menu,menuone,noselect",
-      },
       view = {
         docs = {
           auto_open = false,
@@ -120,6 +117,8 @@ return {
         ["<home>"] = cmp.mapping.abort(),
         ["<pageup>"] = cmp.mapping.scroll_docs(-4),
         ["<pagedown>"] = cmp.mapping.scroll_docs(4),
+        -- nvchad の設定では select = true となっていてデフォルトで最初の選択肢が選ばれるので、false にする
+        ["<cr>"] = cmp.mapping.confirm({ select = false, }),
 
         -- Toggle docs
         ["<insert>"] = cmp.mapping(function(fallback)
