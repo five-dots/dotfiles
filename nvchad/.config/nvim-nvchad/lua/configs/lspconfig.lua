@@ -34,7 +34,6 @@ if not configs.bqls then
     },
   }
 end
--- lspconfig.bqls.setup()
 
 local servers = {
   -- Default servers (lua_ls is set by default, no need to add it)
