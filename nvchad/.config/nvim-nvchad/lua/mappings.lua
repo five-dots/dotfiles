@@ -52,7 +52,7 @@ map("n", "<c-s-tab>", function() require("nvchad.tabufline").prev() end)
 
 -- Terminal
 map( { "n", "t" },
-  "<c-k>",
+  "<c-l>",
   function ()
     require("nvchad.term").toggle {
       pos = "float",
@@ -63,7 +63,7 @@ map( { "n", "t" },
 )
 map(
   { "n", "t" },
-  "<c-h>",
+  "<c-k>",
   function ()
     require("nvchad.term").toggle {
       pos = "sp",
