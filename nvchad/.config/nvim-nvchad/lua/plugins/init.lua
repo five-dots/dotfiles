@@ -50,6 +50,7 @@ return {
         "gopls",
         "json-lsp",
         "pyright",
+        "typescript-language-server",
         "yaml-language-server",
         -- Additional linters
         "shellcheck",
