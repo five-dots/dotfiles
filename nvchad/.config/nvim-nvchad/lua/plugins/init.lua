@@ -123,6 +123,9 @@ return {
   {
     "hrsh7th/nvim-cmp",
     opts = {
+      completion = {
+        completeopt = "menu,menuone,noselect",
+      },
       view = {
         docs = {
           auto_open = false,
