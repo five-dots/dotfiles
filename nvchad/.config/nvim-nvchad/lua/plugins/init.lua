@@ -130,9 +130,10 @@ return {
   -- nvim-cmp
   {
     "hrsh7th/nvim-cmp",
+    event = { "InsertEnter", "CmdLineEnter" },
     opts = {
       completion = {
-        completeopt = "menu,menuone,noinsert,noselect",
+        completeopt = "menu,menuone,preview,noinsert,noselect",
       },
       view = {
         docs = {
@@ -146,8 +147,9 @@ return {
         ["<home>"] = cmp.mapping.abort(),
         ["<pageup>"] = cmp.mapping.scroll_docs(-4),
         ["<pagedown>"] = cmp.mapping.scroll_docs(4),
-        -- nvchad の設定では select = true となっていてデフォルトで最初の選択肢が選ばれるので、false にする
-        ["<cr>"] = cmp.mapping.confirm({ select = false, }),
+        ["<tab>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+        -- Preset された CR の挙動をリセットする
+        ["<cr>"] = cmp.mapping(function(fallback) fallback() end),
 
         -- Toggle docs
         ["<insert>"] = cmp.mapping(function(fallback)
@@ -160,6 +162,14 @@ return {
             cmp.open_docs()
           end
         end, { "i", "s" }), -- i=insert, c=command, s=select
+      },
+      sources = {
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+        { name = "buffer" },
+        { name = "nvim_lua" },
+        { name = "path" },
+        { name = "dictionary" },
       },
     },
 
@@ -189,6 +199,12 @@ return {
             },
           })
         end,
+      },
+      {
+        "uga-rosa/cmp-dictionary",
+        opts = {
+          paths = { os.getenv("HOME") .. "/.nvim-cmp-dict" },
+        },
       },
     },
   },

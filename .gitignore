@@ -41,3 +41,6 @@ R/.Renviron
 # gcloud
 gcloud/.config/gcloud/*
 !gcloud/.config/gcloud/.default-cloud-sdk-components
+
+# nvim-cmp-dict
+nvim-cmp-dict/
