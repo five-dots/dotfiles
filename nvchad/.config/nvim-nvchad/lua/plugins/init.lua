@@ -98,15 +98,15 @@ return {
         -- Ctrl-V は Paste が動いてしまうため削除
         vim.keymap.del("n", "<C-v>", { buffer = bufnr }) -- api.node.open.vertical
         -- Ctrl-X は押しにくいため削除
-        vim.keymap.del("n", "<c-x>", { buffer = bufnr }) -- api.node.open.horizontal
+        vim.keymap.del("n", "<C-x>", { buffer = bufnr }) -- api.node.open.horizontal
 
         --[[ 再割り当てする  ]]
         -- Run sysmtem は ! に割り当て
         vim.keymap.set('n', '!', api.node.run.system, opts('Run System'))
         -- 分割して開く系や Preview をより使いやすいキーに mapping
-        vim.keymap.set('n', '<c-h>', api.node.open.horizontal, opts('Open: Horizontal Split'))
-        vim.keymap.set('n', '<tab>', api.node.open.vertical, opts('Open: Vertical Split'))
-        vim.keymap.set('n', '<c-p>', api.node.open.preview, opts('Open Preview'))
+        vim.keymap.set('n', '<C-h>', api.node.open.horizontal, opts('Open: Horizontal Split'))
+        vim.keymap.set('n', '<Tab>', api.node.open.vertical, opts('Open: Vertical Split'))
+        vim.keymap.set('n', '<C-p>', api.node.open.preview, opts('Open Preview'))
       end,
       git = {
         ignore = false,
@@ -141,18 +141,18 @@ return {
         },
       },
       mapping = {
-        ["<up>"] = cmp.mapping.select_prev_item(),
-        ["<down>"] = cmp.mapping.select_next_item(),
-        ["<c-s-tab>"] = cmp.mapping.complete(),
-        ["<home>"] = cmp.mapping.abort(),
-        ["<pageup>"] = cmp.mapping.scroll_docs(-4),
-        ["<pagedown>"] = cmp.mapping.scroll_docs(4),
-        ["<tab>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+        ["<Up>"] = cmp.mapping.select_prev_item(),
+        ["<Down>"] = cmp.mapping.select_next_item(),
+        ["<C-S-Tab>"] = cmp.mapping.complete(),
+        ["<Home>"] = cmp.mapping.abort(),
+        ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
+        ["<PageDown>"] = cmp.mapping.scroll_docs(4),
+        ["<Tab>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
         -- Preset された CR の挙動をリセットする
-        ["<cr>"] = cmp.mapping(function(fallback) fallback() end),
+        ["<CR>"] = cmp.mapping(function(fallback) fallback() end),
 
         -- Toggle docs
-        ["<insert>"] = cmp.mapping(function(fallback)
+        ["<Insert>"] = cmp.mapping(function(fallback)
           if not cmp.visible() then
             fallback()
           end
@@ -350,10 +350,10 @@ return {
   {
     "ggandor/leap.nvim",
     keys = {
-      { "s", "<plug>(leap-forward)" , desc = "Leap forward", mode = { "n", "x", "o" } },
+      { "s", "<Plug>(leap-forward)" , desc = "Leap forward", mode = { "n", "x", "o" } },
       -- Visual mode (x) の S は、nvim-surround で使うので割り当てない
-      { "S", "<plug>(leap-backward)" , desc = "Leap backward", mode = { "n","o" } },
-      { "gs", "<plug>(leap-from-window)" , desc = "Leap from window", mode = { "n", "x", "o" } },
+      { "S", "<Plug>(leap-backward)" , desc = "Leap backward", mode = { "n","o" } },
+      { "gs", "<Plug>(leap-from-window)" , desc = "Leap from window", mode = { "n", "x", "o" } },
     },
   },
 
