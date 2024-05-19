@@ -96,7 +96,7 @@ return {
         vim.keymap.del("n", "s", { buffer = bufnr }) -- api.node.run.system
         vim.keymap.del("n", "S", { buffer = bufnr }) -- api.tree.search_node
         -- Ctrl-V は Paste が動いてしまうため削除
-        vim.keymap.del("n", "<c-v>", { buffer = bufnr }) -- api.node.open.vertical
+        vim.keymap.del("n", "<C-v>", { buffer = bufnr }) -- api.node.open.vertical
         -- Ctrl-X は押しにくいため削除
         vim.keymap.del("n", "<c-x>", { buffer = bufnr }) -- api.node.open.horizontal
 
@@ -355,5 +355,11 @@ return {
       { "S", "<plug>(leap-backward)" , desc = "Leap backward", mode = { "n","o" } },
       { "gs", "<plug>(leap-from-window)" , desc = "Leap from window", mode = { "n", "x", "o" } },
     },
+  },
+
+  -- copilot.vim
+  {
+    "github/copilot.vim",
+    event = "VeryLazy",
   },
 }
