@@ -170,10 +170,12 @@ return {
         { name = "nvim_lua" },
         { name = "path" },
         { name = "dictionary" },
+        { name = "copilot" },
       },
     },
 
     dependencies = {
+      -- cmp-cmdline
       {
         "hrsh7th/cmp-cmdline",
         event = { "CmdLineEnter" },
@@ -200,10 +202,32 @@ return {
           })
         end,
       },
+      -- cmp-dictionary
       {
         "uga-rosa/cmp-dictionary",
         opts = {
           paths = { os.getenv("HOME") .. "/.nvim-cmp-dict" },
+        },
+      },
+      -- copilot-cmp
+      {
+        "zbirenbaum/copilot-cmp",
+        config = function ()
+          require("copilot_cmp").setup()
+        end,
+        dependencies = {
+          -- copiot.lua
+          {
+            "zbirenbaum/copilot.lua",
+            cmd = "Copilot",
+            event = "InsertEnter",
+            config = function()
+              require("copilot").setup({
+                suggestion = { enabled = false },
+                panel = { enabled = false },
+              })
+            end,
+          },
         },
       },
     },
@@ -355,11 +379,5 @@ return {
       { "S", "<Plug>(leap-backward)" , desc = "Leap backward", mode = { "n","o" } },
       { "gs", "<Plug>(leap-from-window)" , desc = "Leap from window", mode = { "n", "x", "o" } },
     },
-  },
-
-  -- copilot.vim
-  {
-    "github/copilot.vim",
-    event = "VeryLazy",
   },
 }
