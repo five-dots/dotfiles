@@ -380,4 +380,13 @@ return {
       { "gs", "<Plug>(leap-from-window)" , desc = "Leap from window", mode = { "n", "x", "o" } },
     },
   },
+
+  -- gp.nvim
+  {
+    "robitx/gp.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("gp").setup()
+    end,
+  },
 }
