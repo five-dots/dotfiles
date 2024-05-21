@@ -52,12 +52,12 @@ map("n", "<C-S-Tab>", function() require("nvchad.tabufline").prev() end)
 
 -- Terminal
 map( { "n", "t" },
-  "<C-l>",
+  "<C-p>",
   function ()
-    require("nvchad.term").toggle {
+    require("nvchad.term").toggle({
       pos = "float",
       id = "float",
-    }
+    })
   end,
   { desc = "Toggle float terminal" }
 )
@@ -65,11 +65,11 @@ map(
   { "n", "t" },
   "<C-k>",
   function ()
-    require("nvchad.term").toggle {
+    require("nvchad.term").toggle({
       pos = "sp",
       id = "horizontal",
       size = 0.4,
-    }
+    })
   end,
   { desc = "Toggle horizontal terminal" }
 )
@@ -78,5 +78,6 @@ map(
   Leader
 ]]
 
+-- Find
 map("n", "<Leader>fr", "<Cmd>Telescope oldfiles<CR>", { desc = "Telescope Find oldfiles" })
 
