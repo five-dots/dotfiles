@@ -62,10 +62,12 @@ return {
         "bash",
         "dockerfile",
         "go",
+        "javascript",
         "markdown",
         "python",
         "r",
         "sql",
+        "typescript",
         -- data
         "csv",
         "json",
@@ -234,6 +236,23 @@ return {
         },
       },
     },
+  },
+
+  -- which-key.nvim
+  {
+    "folke/which-key.nvim",
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "whichkey")
+      require("which-key").setup(opts)
+      -- Add groups
+			require("which-key").register({
+				["<leader>"] = {
+					c = { name = "+[C]ode" },
+					f = { name = "+[F]ind" },
+					g = { name = "+[G]it" },
+				},
+			})
+    end,
   },
 
   -- noice.nvim

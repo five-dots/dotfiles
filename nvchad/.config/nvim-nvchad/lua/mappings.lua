@@ -14,12 +14,20 @@ del("n", "<S-Tab>") -- Buffer prev
 del("i", "<C-b>") -- Beginning of line
 del("i", "<C-e>") -- End of line
 
-del({ "n", "v" }, "<Leader>/")  -- Comment toggle
+del({ "n", "v" }, "<Leader>/") -- Comment toggle
+del("n", "<Leader>ch") -- Toggle NvChaetsheet
+del("n", "<Leader>cm") -- Telescope Git commits
+del("n", "<Leader>fm") -- Format Files
 del("n", "<Leader>fo") -- Telescope find oldfiles
+del("n", "<Leader>fw") -- Telescope Live grep
+del("n", "<Leader>fz") -- Telescope find in current buffer
+del("n", "<Leader>gt") -- Telescope Git status
+del("n", "<Leader>h")  -- New horizontal terminal
 del("n", "<Leader>n")  -- Toggle line number
+del("n", "<Leader>pt") -- Telescope Pick hidden term
 del("n", "<Leader>rn") -- Toggle relative number
-del("n", "<Leader>h") -- New horizontal terminal
-del("n", "<Leader>v") -- New vertical terminal
+del("n", "<Leader>th") -- Telescope Nvchad themes
+del("n", "<Leader>v")  -- New vertical terminal
 
 del({ "n", "t" }, "<A-i>") -- Toggle float terminal
 del({ "n", "t" }, "<A-h>") -- Toggle horizontal terminal
@@ -78,6 +86,21 @@ map(
   Leader
 ]]
 
+-- Code
+map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = true } end, { desc = "[F]ormat files" })
+
 -- Find
-map("n", "<Leader>fr", "<Cmd>Telescope oldfiles<CR>", { desc = "Telescope Find oldfiles" })
+map("n", "<Leader>fa", "<Cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "[A]ll files" })
+map("n", "<Leader>fb", "<Cmd>Telescope buffers<CR>", { desc = "[B]uffers" })
+map("n", "<Leader>ff", "<Cmd>Telescope find_files<CR>", { desc = "[F]iles" })
+map("n", "<Leader>fg", "<Cmd>Telescope live_grep<CR>", { desc = "[G]rep" })
+map("n", "<Leader>fh", "<Cmd>Telescope help_tags<CR>", { desc = "[H]elp pages" })
+map("n", "<Leader>fr", "<Cmd>Telescope oldfiles<CR>", { desc = "[R]ecent files" })
+map("n", "<Leader>ft", "<Cmd>Telescope terms<CR>", { desc = "[T]erminals" })
+map("n", "<Leader>fT", "<Cmd>Telescope themes<CR>", { desc = "[T]hemes" })
+
+-- Git
+map("n", "<Leader>gf", "<Cmd>Telescope git_bcommits<CR>", { desc = "[F]ile commit history" })
+map("n", "<Leader>gc", "<Cmd>Telescope git_commits<CR>", { desc = "[C]ommits" })
+map("n", "<Leader>gs", "<Cmd>Telescope git_status<CR>", { desc = "[S]tatus" })
 
