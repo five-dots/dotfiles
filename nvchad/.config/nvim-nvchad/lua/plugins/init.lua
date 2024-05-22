@@ -450,6 +450,10 @@ return {
   {
     "sindrets/diffview.nvim",
     cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+    keys = {
+      { "<Leader>gd", "<Cmd>DiffviewOpen<CR>", desc = "[D]iff" },
+      { "<Leader>gf", "<Cmd>DiffviewFileHistory %<CR>", desc = "[F]ile history" },
+    },
     opts = {
       keymaps = {
         view = {
