@@ -418,4 +418,27 @@ return {
       require("gp").setup()
     end,
   },
+
+  -- diffview.nvim
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+    opts = {
+      keymaps = {
+        view = {
+          { "n", "<Esc>", "<Cmd>DiffviewClose<CR>", { desc = "Close" } },
+        },
+        file_panel = {
+          { "n", "<Esc>", "<Cmd>DiffviewClose<CR>", { desc = "Close" } },
+          ["<up>"] = false,
+          ["<down>"] = false,
+        },
+        file_history_panel = {
+          { "n", "<Esc>", "<Cmd>DiffviewClose<CR>", { desc = "Close" } },
+          ["<up>"] = false,
+          ["<down>"] = false,
+        },
+      },
+    },
+  },
 }

@@ -100,8 +100,9 @@ map("n", "<Leader>ft", "<Cmd>Telescope terms<CR>", { desc = "[T]erminals" })
 map("n", "<Leader>fT", "<Cmd>Telescope themes<CR>", { desc = "[T]hemes" })
 
 -- Git
-map("n", "<Leader>gf", "<Cmd>Telescope git_bcommits<CR>", { desc = "[F]ile commit history" })
 map("n", "<Leader>gc", "<Cmd>Telescope git_commits<CR>", { desc = "[C]ommits" })
+map("n", "<Leader>gd", "<Cmd>DiffviewOpen<CR>", { desc = "[D]iff" })
+map("n", "<Leader>gf", "<Cmd>DiffviewFileHistory %<CR>", { desc = "[F]ile history" })
 map("n", "<Leader>gs", "<Cmd>Telescope git_status<CR>", { desc = "[S]tatus" })
 
 -- Toggle
