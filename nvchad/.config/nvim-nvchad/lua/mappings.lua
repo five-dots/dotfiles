@@ -104,3 +104,6 @@ map("n", "<Leader>gf", "<Cmd>Telescope git_bcommits<CR>", { desc = "[F]ile commi
 map("n", "<Leader>gc", "<Cmd>Telescope git_commits<CR>", { desc = "[C]ommits" })
 map("n", "<Leader>gs", "<Cmd>Telescope git_status<CR>", { desc = "[S]tatus" })
 
+-- Toggle
+map("n", "<Leader>tb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "[B]lame current line" })
+map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "[I]ndent blank line" })

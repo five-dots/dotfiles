@@ -250,9 +250,16 @@ return {
 					c = { name = "+[C]ode" },
 					f = { name = "+[F]ind" },
 					g = { name = "+[G]it" },
+					t = { name = "+[T]oggle" },
 				},
 			})
     end,
+  },
+
+  -- gitsigns.nvim
+  {
+    "lewis6991/gitsigns.nvim",
+    cmd = "Gitsigns",
   },
 
   -- noice.nvim
