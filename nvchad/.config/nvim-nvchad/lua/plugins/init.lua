@@ -259,7 +259,34 @@ return {
   -- gitsigns.nvim
   {
     "lewis6991/gitsigns.nvim",
-    cmd = "Gitsigns",
+    -- Overwrite NvChad's default config
+    opts = {
+      signs = {
+        add = { text = "│" },
+        change = { text = "│" },
+        delete = { text = "󰍵" },
+        topdelete = { text = "‾" },
+        changedelete = { text = "~" },
+        untracked = { text = "│" },
+      },
+
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+
+        local function opts(desc)
+          return { buffer = bufnr, desc = desc }
+        end
+
+        local map = vim.keymap.set
+
+        map("n", "<Leader>gb", gs.blame_line, opts("[B]lame line"))
+        map("n", "<Leader>gp", gs.preview_hunk, opts("[P]review hunk"))
+        map("n", "<Leader>gr", gs.reset_hunk, opts("[R]eset hunk"))
+        map("n", "<Leader>gs", gs.stage_hunk, opts("[S]tage hunk"))
+        map("n", "<Leader>gu", gs.undo_stage_hunk, opts("[U]ndo stage hunk"))
+        map("n", "<Leader>tb", gs.toggle_current_line_blame, opts("[B]lame rine"))
+      end,
+    }
   },
 
   -- noice.nvim
