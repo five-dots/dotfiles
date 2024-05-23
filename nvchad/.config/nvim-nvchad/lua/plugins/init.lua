@@ -35,11 +35,11 @@ return {
 
   -- mason.nvim
   {
-  	"williamboman/mason.nvim",
-  	opts = {
-  		ensure_installed = {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
         -- Default lsp servers
-  			"html-lsp",
+        "html-lsp",
         "css-lsp",
         "lua-language-server",
         -- Additional lsp servers
@@ -57,14 +57,14 @@ return {
         "stylua",
         -- Additional formatters
         "black",
-  		},
-  	},
+      },
+    },
   },
 
   -- nvim-treesitter
   {
-  	"nvim-treesitter/nvim-treesitter",
-  	opts = {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
       ensure_installed = {
         -- defaults
         "css",
@@ -91,8 +91,8 @@ return {
         -- missing noice.nvim requirements
         "markdown_inline",
         "regex",
-  		},
-  	},
+      },
+    },
   },
 
   -- nvim-tree.lua
@@ -259,14 +259,14 @@ return {
       dofile(vim.g.base46_cache .. "whichkey")
       require("which-key").setup(opts)
       -- Add groups
-			require("which-key").register({
-				["<leader>"] = {
-					c = { name = "Code" },
-					f = { name = "Find" },
-					g = { name = "Git" },
-					t = { name = "Toggle" },
-				},
-			})
+      require("which-key").register({
+        ["<leader>"] = {
+          c = { name = "Code" },
+          f = { name = "Find" },
+          g = { name = "Git" },
+          t = { name = "Toggle" },
+        },
+      })
     end,
   },
 
