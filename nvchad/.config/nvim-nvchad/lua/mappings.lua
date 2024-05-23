@@ -15,6 +15,7 @@ del("i", "<C-b>") -- Beginning of line
 del("i", "<C-e>") -- End of line
 
 del({ "n", "v" }, "<Leader>/") -- Comment toggle
+del("n", "<Leader>cc") -- Blankline Jump to current context
 del("n", "<Leader>ch") -- Toggle NvChaetsheet
 del("n", "<Leader>cm") -- Telescope Git commits
 del("n", "<Leader>fm") -- Format Files
@@ -23,8 +24,10 @@ del("n", "<Leader>fw") -- Telescope Live grep
 del("n", "<Leader>fz") -- Telescope find in current buffer
 del("n", "<Leader>gt") -- Telescope Git status
 del("n", "<Leader>h")  -- New horizontal terminal
+del("n", "<Leader>lf") -- Lsp floating diagnostics
 del("n", "<Leader>n")  -- Toggle line number
 del("n", "<Leader>pt") -- Telescope Pick hidden term
+del("n", "<Leader>q")  -- Lsp diagnostic loclist
 del("n", "<Leader>rn") -- Toggle relative number
 del("n", "<Leader>th") -- Telescope Nvchad themes
 del("n", "<Leader>v")  -- New vertical terminal
@@ -87,6 +90,7 @@ map(
 ]]
 
 -- Code
+map("n", "<leader>cd", vim.diagnostic.setloclist, { desc = "[D]iagnostics" })
 map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = true } end, { desc = "[F]ormat files" })
 
 -- Find
