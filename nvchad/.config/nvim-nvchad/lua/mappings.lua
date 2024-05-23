@@ -31,6 +31,8 @@ del("n", "<Leader>q")  -- Lsp diagnostic loclist
 del("n", "<Leader>rn") -- Toggle relative number
 del("n", "<Leader>th") -- Telescope Nvchad themes
 del("n", "<Leader>v")  -- New vertical terminal
+del("n", "<Leader>wK") -- Whichkey all keymaps
+del("n", "<Leader>wk") -- Whichkey query lookup
 
 del({ "n", "t" }, "<A-i>") -- Toggle float terminal
 del({ "n", "t" }, "<A-h>") -- Toggle horizontal terminal
@@ -88,23 +90,24 @@ map(
 --[[
   Leader
 ]]
+map("n", "<Leader>e", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus Explorer" })
 
 -- Code
-map("n", "<leader>cd", vim.diagnostic.setloclist, { desc = "[D]iagnostics" })
-map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = true } end, { desc = "[F]ormat files" })
+map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = true } end, { desc = "Format files" })
 
 -- Find
-map("n", "<Leader>fa", "<Cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "[A]ll files" })
-map("n", "<Leader>fb", "<Cmd>Telescope buffers<CR>", { desc = "[B]uffers" })
-map("n", "<Leader>ff", "<Cmd>Telescope find_files<CR>", { desc = "[F]iles" })
-map("n", "<Leader>fg", "<Cmd>Telescope live_grep<CR>", { desc = "[G]rep" })
-map("n", "<Leader>fh", "<Cmd>Telescope help_tags<CR>", { desc = "[H]elp pages" })
-map("n", "<Leader>fr", "<Cmd>Telescope oldfiles<CR>", { desc = "[R]ecent files" })
-map("n", "<Leader>ft", "<Cmd>Telescope terms<CR>", { desc = "[T]erminals" })
-map("n", "<Leader>fT", "<Cmd>Telescope themes<CR>", { desc = "[T]hemes" })
+map("n", "<Leader>fa", "<Cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "All files" })
+map("n", "<Leader>fb", "<Cmd>Telescope buffers<CR>", { desc = "Buffers" })
+map("n", "<Leader>ff", "<Cmd>Telescope find_files<CR>", { desc = "Files" })
+map("n", "<Leader>fm", "<Cmd>Telescope live_grep<CR>", { desc = "Matches by grep" })
+map("n", "<Leader>fh", "<Cmd>Telescope help_tags<CR>", { desc = "Help pages" })
+map("n", "<Leader>fr", "<Cmd>Telescope oldfiles<CR>", { desc = "Recent files" })
+map("n", "<Leader>ft", "<Cmd>Telescope terms<CR>", { desc = "Terminals" })
+map("n", "<Leader>fT", "<Cmd>Telescope themes<CR>", { desc = "Themes" })
 
 -- Git
-map("n", "<Leader>gc", "<Cmd>Telescope git_commits<CR>", { desc = "[C]ommits" })
+map("n", "<Leader>gc", "<Cmd>Telescope git_commits<CR>", { desc = "Commits" })
 
 -- Toggle
-map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "[I]ndent blank line" })
+map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "Indent blank line" })
+map("n", "<Leader>te", "<cmd>NvimTreeToggle<CR>", { desc = "Explorer" })

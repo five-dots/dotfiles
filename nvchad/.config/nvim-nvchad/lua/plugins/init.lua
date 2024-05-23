@@ -246,10 +246,10 @@ return {
       -- Add groups
 			require("which-key").register({
 				["<leader>"] = {
-					c = { name = "+[C]ode" },
-					f = { name = "+[F]ind" },
-					g = { name = "+[G]it" },
-					t = { name = "+[T]oggle" },
+					c = { name = "Code" },
+					f = { name = "Find" },
+					g = { name = "Git" },
+					t = { name = "Toggle" },
 				},
 			})
     end,
@@ -276,14 +276,32 @@ return {
           return { buffer = bufnr, desc = desc }
         end
 
+        local function next_hunk()
+          if vim.wo.diff then
+            vim.cmd.normal({']h', bang = true})
+          else
+            gs.nav_hunk('next')
+          end
+        end
+        local function prev_hunk()
+          if vim.wo.diff then
+            vim.cmd.normal({'[h', bang = true})
+          else
+            gs.nav_hunk('prev')
+          end
+        end
+
         local map = vim.keymap.set
 
-        map("n", "<Leader>gb", gs.blame_line, opts("[B]lame line"))
-        map("n", "<Leader>gp", gs.preview_hunk, opts("[P]review hunk"))
-        map("n", "<Leader>gr", gs.reset_hunk, opts("[R]eset hunk"))
-        map("n", "<Leader>gs", gs.stage_hunk, opts("[S]tage hunk"))
-        map("n", "<Leader>gu", gs.undo_stage_hunk, opts("[U]ndo stage hunk"))
-        map("n", "<Leader>tb", gs.toggle_current_line_blame, opts("[B]lame rine"))
+        map("n", "]h", next_hunk, opts("Next hunk"))
+        map("n", "[h", prev_hunk, opts("Previous hunk"))
+
+        map("n", "<Leader>gb", gs.blame_line, opts("Blame line"))
+        map("n", "<Leader>gp", gs.preview_hunk, opts("Preview hunk"))
+        map("n", "<Leader>gr", gs.reset_hunk, opts("Reset hunk"))
+        map("n", "<Leader>gs", gs.stage_hunk, opts("Stage hunk"))
+        map("n", "<Leader>gu", gs.undo_stage_hunk, opts("Undo stage hunk"))
+        map("n", "<Leader>tb", gs.toggle_current_line_blame, opts("Blame line"))
       end,
     }
   },
@@ -450,8 +468,8 @@ return {
     "sindrets/diffview.nvim",
     cmd = { "DiffviewOpen", "DiffviewFileHistory" },
     keys = {
-      { "<Leader>gd", "<Cmd>DiffviewOpen<CR>", desc = "[D]iff" },
-      { "<Leader>gf", "<Cmd>DiffviewFileHistory %<CR>", desc = "[F]ile history" },
+      { "<Leader>gd", "<Cmd>DiffviewOpen<CR>", desc = "Diff" },
+      { "<Leader>gf", "<Cmd>DiffviewFileHistory %<CR>", desc = "File history" },
     },
     opts = {
       keymaps = {

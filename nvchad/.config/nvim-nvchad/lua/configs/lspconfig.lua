@@ -13,14 +13,15 @@ local on_attach = function(client, bufnr)
   map("n", "gr", vim.lsp.buf.references, opts "LSP show references")
   map("n", "K",  vim.lsp.buf.hover, opts "LSP hover information")
 
-  map("n", "<leader>ch", vim.lsp.buf.signature_help, opts "Signature [H]elp")
-  map("n", "<leader>ci", "<Cmd>LspInfo<CR>", opts "LSP [I]nfo")
-  map("n", "<leader>cl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts "[L]ist workspace folders")
-  map("n", "<leader>cr", function() require "nvchad.lsp.renamer"() end, opts "[R]ename")
-  map("n", "<leader>ct", vim.lsp.buf.type_definition, opts "[T]ype definition")
-  map("n", "<leader>cw", vim.lsp.buf.add_workspace_folder, opts "Add [W]orkspace folder")
-  map("n", "<leader>cW", vim.lsp.buf.remove_workspace_folder, opts "Remove [W]orkspace folder")
-  map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts "Code [A]ction")
+  map("n", "<leader>cd", vim.diagnostic.setloclist, { desc = "Diagnostics" })
+  map("n", "<leader>ch", vim.lsp.buf.signature_help, opts "Signature help")
+  map("n", "<leader>ci", "<Cmd>LspInfo<CR>", opts "LSP info")
+  map("n", "<leader>cl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts "List workspace folders")
+  map("n", "<leader>cr", function() require "nvchad.lsp.renamer"() end, opts "Rename")
+  map("n", "<leader>ct", vim.lsp.buf.type_definition, opts "Type definition")
+  map("n", "<leader>cw", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
+  map("n", "<leader>cW", vim.lsp.buf.remove_workspace_folder, opts "Remove workspace folder")
+  map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts "Code action")
 
   -- setup signature popup
   if conf.signature and client.server_capabilities.signatureHelpProvider then
