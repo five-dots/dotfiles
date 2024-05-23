@@ -105,8 +105,6 @@ map("n", "<Leader>fT", "<Cmd>Telescope themes<CR>", { desc = "[T]hemes" })
 
 -- Git
 map("n", "<Leader>gc", "<Cmd>Telescope git_commits<CR>", { desc = "[C]ommits" })
--- map("n", "<Leader>gd", "<Cmd>DiffviewOpen<CR>", { desc = "[D]iff" })
--- map("n", "<Leader>gf", "<Cmd>DiffviewFileHistory %<CR>", { desc = "[F]ile history" })
 
 -- Toggle
 map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "[I]ndent blank line" })
