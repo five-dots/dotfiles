@@ -118,11 +118,11 @@ return {
 
         --[[ 再割り当てする  ]]
         -- Run sysmtem は ! に割り当て
-        vim.keymap.set('n', '!', api.node.run.system, opts('Run System'))
+        vim.keymap.set("n", "!", api.node.run.system, opts "Run System")
         -- 分割して開く系や Preview をより使いやすいキーに mapping
-        vim.keymap.set('n', '<C-h>', api.node.open.horizontal, opts('Open: Horizontal Split'))
-        vim.keymap.set('n', '<Tab>', api.node.open.vertical, opts('Open: Vertical Split'))
-        vim.keymap.set('n', '<C-p>', api.node.open.preview, opts('Open Preview'))
+        vim.keymap.set("n", "<C-h>", api.node.open.horizontal, opts "Open: Horizontal Split")
+        vim.keymap.set("n", "<Tab>", api.node.open.vertical, opts "Open: Vertical Split")
+        vim.keymap.set("n", "<C-p>", api.node.open.preview, opts "Open Preview")
       end,
       git = {
         ignore = false,
@@ -204,10 +204,9 @@ return {
           cmp.setup.cmdline(":", {
             mapping = cmp.mapping.preset.cmdline(),
             sources = cmp.config.sources({
-              { name = 'path' }
-            },
-            {
-              { name = 'cmdline' }
+              { name = "path" },
+            }, {
+              { name = "cmdline" },
             }),
             matching = { disallow_symbol_nonprefix_matching = false },
           })
@@ -231,7 +230,7 @@ return {
       -- copilot-cmp
       {
         "zbirenbaum/copilot-cmp",
-        config = function ()
+        config = function()
           require("copilot_cmp").setup()
         end,
         dependencies = {
@@ -318,7 +317,7 @@ return {
         map("n", "<Leader>gu", gs.undo_stage_hunk, opts("Undo stage hunk"))
         map("n", "<Leader>tb", gs.toggle_current_line_blame, opts("Blame line"))
       end,
-    }
+    },
   },
 
   -- noice.nvim
@@ -348,7 +347,7 @@ return {
     "ahmedkhalf/project.nvim",
     config = function(_, opts)
       require("project_nvim").setup(opts)
-    end
+    end,
   },
 
   -- nvim-surround
@@ -357,19 +356,19 @@ return {
     version = "*",
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup{}
+      require("nvim-surround").setup({})
     end,
   },
 
-  -- nvim-ufo 
+  -- nvim-ufo
   {
     -- Reference: https://github.com/chrisgrieser/.config/blob/main/nvim/lua/plugins/folding-plugins.lua
     "kevinhwang91/nvim-ufo",
     event = "VimEnter",
     dependencies = {
-      "kevinhwang91/promise-async"
+      "kevinhwang91/promise-async",
     },
-    init = function ()
+    init = function()
       vim.opt.foldlevel = 99
       vim.opt.foldlevelstart = 99
     end,
@@ -396,7 +395,7 @@ return {
           else
             chunkText = truncate(chunkText, targetWidth - curWidth)
             local hlGroup = chunk[2]
-            table.insert(newVirtText, {chunkText, hlGroup})
+            table.insert(newVirtText, { chunkText, hlGroup })
             chunkWidth = vim.fn.strdisplaywidth(chunkText)
             -- str width returned from truncate() may less than 2nd argument, need padding
             if curWidth + chunkWidth < targetWidth then
@@ -406,7 +405,7 @@ return {
           end
           curWidth = curWidth + chunkWidth
         end
-        table.insert(newVirtText, {suffix, "MoreMsg"})
+        table.insert(newVirtText, { suffix, "MoreMsg" })
         return newVirtText
       end
 
@@ -432,7 +431,7 @@ return {
             chunk_width = vim.fn.strdisplaywidth(chunk_text)
             -- str width returned from truncate() may less than 2nd argument, need padding
             if cur_width + chunk_width < target_width then
-              suffix = suffix .. (' '):rep(target_width - cur_width - chunk_width)
+              suffix = suffix .. (" "):rep(target_width - cur_width - chunk_width)
             end
             break
           end
@@ -455,17 +454,17 @@ return {
         open_fold_hl_timeout = 150,
         fold_virt_text_handler = fold_virt_text_line_nums,
       }
-    end
+    end,
   },
 
   -- leap.nvim
   {
     "ggandor/leap.nvim",
     keys = {
-      { "s", "<Plug>(leap-forward)" , desc = "Leap forward", mode = { "n", "x", "o" } },
+      { "s", "<Plug>(leap-forward)", desc = "Leap forward", mode = { "n", "x", "o" } },
       -- Visual mode (x) の S は、nvim-surround で使うので割り当てない
-      { "S", "<Plug>(leap-backward)" , desc = "Leap backward", mode = { "n","o" } },
-      { "gs", "<Plug>(leap-from-window)" , desc = "Leap from window", mode = { "n", "x", "o" } },
+      { "S", "<Plug>(leap-backward)", desc = "Leap backward", mode = { "n", "o" } },
+      { "gs", "<Plug>(leap-from-window)", desc = "Leap from window", mode = { "n", "x", "o" } },
     },
   },
 
