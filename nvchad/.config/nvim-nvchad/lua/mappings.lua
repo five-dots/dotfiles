@@ -17,6 +17,7 @@ del({ "n", "v" }, "<Leader>/") -- Comment toggle
 del("n", "<Leader>cc") -- Blankline Jump to current context
 del("n", "<Leader>ch") -- Toggle NvChaetsheet
 del("n", "<Leader>cm") -- Telescope Git commits
+del("n", "<Leader>ds") -- Lsp diagnostics loclist
 del("n", "<Leader>fm") -- Format Files
 del("n", "<Leader>fo") -- Telescope find oldfiles
 del("n", "<Leader>fw") -- Telescope Live grep
@@ -88,9 +89,6 @@ map(
   Leader
 ]]
 map("n", "<Leader>e", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus Explorer" })
-
--- Code
-map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = true } end, { desc = "Format files" })
 
 -- Find
 map("n", "<Leader>fa", "<Cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "All files" })
