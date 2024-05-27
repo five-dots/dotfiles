@@ -165,17 +165,9 @@ return {
         ["<Home>"] = cmp.mapping.abort(),
         ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
         ["<PageDown>"] = cmp.mapping.scroll_docs(4),
-        -- Preset された Tab の挙動をリセットする
-        ["<Tab>"] = cmp.mapping(function(fallback) fallback() end),
-
-        -- Expand if selected
-        ["<CR>"] = cmp.mapping(function(fallback)
-          if cmp.get_active_entry() then
-            cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace })
-          else
-            fallback()
-          end
-        end, { "i", "s" }), -- i=insert, c=command, s=select
+        ["<Tab>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+        -- Preset された CR の挙動をリセットする
+        ["<CR>"] = cmp.mapping(function(fallback) fallback() end),
 
         -- Toggle completion
         ["<C-S-Tab>"] = cmp.mapping(function()
@@ -238,6 +230,25 @@ return {
       -- cmp-dictionary
       {
         "uga-rosa/cmp-dictionary",
+        -- init = function ()
+        --   local dict = {
+        --     ["*"] = { os.getenv("XDG_CONFIG_HOME") .. "/nvim-cmp-dict/all" },
+        --     ft = {
+        --       sql = { os.getenv("XDG_CONFIG_HOME") .. "/nvim-cmp-dict/sql" },
+        --     },
+        --   }
+        --   vim.api.nvim_create_autocmd("FileType", {
+        --     pattern = "*",
+        --     callback = function(ev)
+        --       print(ev.match)
+        --       local paths = dict.ft[ev.match] or {}
+        --       vim.list_extend(paths, dict["*"])
+        --       require("cmp_dictionary").setup({
+        --         paths = paths,
+        --       })
+        --     end
+        --   })
+        -- end,
         opts = {
           paths = { os.getenv("XDG_CONFIG_HOME") .. "/nvim-cmp-dict/all" },
         },
@@ -254,10 +265,12 @@ return {
       require("copilot").setup({
         suggestion = {
           auto_trigger = true,
-          keymap = {
-            accept = "<Tab>",
-          }
         },
+        panel = {
+          keymap = {
+            open = "<M-o>",
+          }
+        }
       })
     end,
   },
