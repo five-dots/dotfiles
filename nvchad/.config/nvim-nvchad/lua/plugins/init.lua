@@ -10,39 +10,39 @@ return {
   -- mason.nvim
   {
     "williamboman/mason.nvim",
-    opts = require("configs.mason"),
+    opts = require "configs.mason",
   },
 
   -- nvim-treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = require("configs.treesitter"),
+    opts = require "configs.treesitter",
   },
 
   -- nvim-tree.lua
   {
     "nvim-tree/nvim-tree.lua",
-    opts = require("configs.nvimtree"),
+    opts = require "configs.nvimtree",
   },
 
   -- gitsigns.nvim
   {
     "lewis6991/gitsigns.nvim",
-    opts = require("configs.gitsigns"),
+    opts = require "configs.gitsigns",
   },
 
   -- which-key.nvim (Overwrite nvchad's config block to invoke `register()`)
-  require("plugins.whichkey"),
+  require "plugins.whichkey",
 
   -- Additional plugins
-  require("plugins.cmp"),
-  require("plugins.conform"),
-  require("plugins.copilot"),
-  require("plugins.dadbod"),
-  require("plugins.diffview"),
-  require("plugins.gp"),
-  require("plugins.leap"),
-  require("plugins.noice"),
-  require("plugins.surround"),
-  require("plugins.ufo"),
+  require "plugins.cmp",
+  require "plugins.conform",
+  require "plugins.copilot",
+  require "plugins.dadbod",
+  require "plugins.diffview",
+  require "plugins.gp",
+  require "plugins.leap",
+  require "plugins.noice",
+  require "plugins.surround",
+  require "plugins.ufo",
 }

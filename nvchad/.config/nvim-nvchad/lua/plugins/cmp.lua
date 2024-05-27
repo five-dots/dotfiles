@@ -1,4 +1,4 @@
-local cmp = require("cmp")
+local cmp = require "cmp"
 
 return {
   "hrsh7th/nvim-cmp",
@@ -18,9 +18,11 @@ return {
       ["<Home>"] = cmp.mapping.abort(),
       ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
       ["<PageDown>"] = cmp.mapping.scroll_docs(4),
-      ["<Tab>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+      ["<Tab>"] = cmp.mapping.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace },
       -- Preset された CR の挙動をリセットする
-      ["<CR>"] = cmp.mapping(function(fallback) fallback() end),
+      ["<CR>"] = cmp.mapping(function(fallback)
+        fallback()
+      end),
 
       -- Toggle completion
       ["<C-S-Tab>"] = cmp.mapping(function()
@@ -103,7 +105,7 @@ return {
       --   })
       -- end,
       opts = {
-        paths = { os.getenv("XDG_CONFIG_HOME") .. "/nvim-cmp-dict/all" },
+        paths = { os.getenv "XDG_CONFIG_HOME" .. "/nvim-cmp-dict/all" },
       },
     },
   },

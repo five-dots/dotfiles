@@ -10,11 +10,35 @@ return {
     vim.opt.foldlevelstart = 99
   end,
   keys = {
-    { "zr", function() require("ufo").openFoldsExceptKinds() end, desc = "Open folds except kinds" },
-    { "zR", function() require("ufo").openAllFolds() end, desc = "Open all folds" },
+    {
+      "zr",
+      function()
+        require("ufo").openFoldsExceptKinds()
+      end,
+      desc = "Open folds except kinds",
+    },
+    {
+      "zR",
+      function()
+        require("ufo").openAllFolds()
+      end,
+      desc = "Open all folds",
+    },
     -- closeFoldsWith(0) と closeAllFolds() は同じ挙動
-    { "zm", function() require("ufo").closeFoldsWith(0) end, desc = "Close folds with" },
-    { "zM", function() require("ufo").closeAllFolds() end, desc = "Close all folds" },
+    {
+      "zm",
+      function()
+        require("ufo").closeFoldsWith(0)
+      end,
+      desc = "Close folds with",
+    },
+    {
+      "zM",
+      function()
+        require("ufo").closeAllFolds()
+      end,
+      desc = "Close all folds",
+    },
   },
   opts = function()
     -- https://github.com/kevinhwang91/nvim-ufo?tab=readme-ov-file#customize-fold-text
