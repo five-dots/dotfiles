@@ -1,3 +1,5 @@
+local conform = require "conform"
+
 return {
   "stevearc/conform.nvim",
   -- event = 'BufWritePre', -- uncomment for format on save
@@ -5,7 +7,7 @@ return {
     {
       "<Leader>cf",
       function()
-        require("conform").format { lsp_fallback = true }
+        conform.format { lsp_fallback = true }
       end,
       desc = "Format files",
     },
@@ -23,6 +25,6 @@ return {
     -- },
   },
   config = function(_, opts)
-    require("conform").setup(opts)
+    conform.setup(opts)
   end,
 }
