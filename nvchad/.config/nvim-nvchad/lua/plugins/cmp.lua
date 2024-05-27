@@ -13,12 +13,46 @@ return {
       },
     },
     mapping = {
-      ["<Up>"] = cmp.mapping.select_prev_item(),
-      ["<Down>"] = cmp.mapping.select_next_item(),
       ["<Home>"] = cmp.mapping.abort(),
       ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
       ["<PageDown>"] = cmp.mapping.scroll_docs(4),
-      ["<Tab>"] = cmp.mapping.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace },
+
+      -- cmp とcopilot の両方に対応した Tab を定義する
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        local suggestion = require "copilot.suggestion"
+        if cmp.get_active_entry() then
+          cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
+        elseif suggestion.is_visible() then
+          suggestion.accept()
+        else
+          fallback()
+        end
+      end, { "i", "s" }), -- i=insert, c=command, s=select
+
+      -- cmp とcopilot の両方に対応した Down を定義する
+      ["<Down>"] = cmp.mapping(function(fallback)
+        local suggestion = require "copilot.suggestion"
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif suggestion.is_visible() then
+          suggestion.next()
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+
+      -- cmp とcopilot の両方に対応した Up を定義する
+      ["<Up>"] = cmp.mapping(function(fallback)
+        local suggestion = require "copilot.suggestion"
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif suggestion.is_visible() then
+          suggestion.prev()
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+
       -- Preset された CR の挙動をリセットする
       ["<CR>"] = cmp.mapping(function(fallback)
         fallback()
@@ -31,7 +65,7 @@ return {
         else
           cmp.complete()
         end
-      end, { "i", "s" }), -- i=insert, c=command, s=select
+      end, { "i", "s" }),
 
       -- Toggle docs
       ["<Insert>"] = cmp.mapping(function(fallback)
@@ -43,7 +77,7 @@ return {
         else
           cmp.open_docs()
         end
-      end, { "i", "s" }), -- i=insert, c=command, s=select
+      end, { "i", "s" }),
     },
     sources = {
       { name = "nvim_lsp" },
@@ -107,6 +141,30 @@ return {
       opts = {
         paths = { os.getenv "XDG_CONFIG_HOME" .. "/nvim-cmp-dict/all" },
       },
+    },
+    -- copilot.lua
+    {
+      "zbirenbaum/copilot.lua",
+      cmd = "Copilot",
+      keys = {
+        {
+          "<Leader>tc",
+          function()
+            require("copilot.suggestion").toggle_auto_trigger()
+          end,
+          desc = "Copilot auto suggestion",
+        },
+      },
+      config = function()
+        require("copilot").setup {
+          suggestion = {
+            auto_trigger = true,
+          },
+          panel = {
+            enabled = false,
+          },
+        }
+      end,
     },
   },
 }

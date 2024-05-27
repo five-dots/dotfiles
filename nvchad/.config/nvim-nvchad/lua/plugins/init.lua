@@ -37,7 +37,6 @@ return {
   -- Additional plugins
   require "plugins.cmp",
   require "plugins.conform",
-  require "plugins.copilot",
   require "plugins.dadbod",
   require "plugins.diffview",
   require "plugins.gp",
