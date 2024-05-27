@@ -162,13 +162,29 @@ return {
       mapping = {
         ["<Up>"] = cmp.mapping.select_prev_item(),
         ["<Down>"] = cmp.mapping.select_next_item(),
-        ["<C-S-Tab>"] = cmp.mapping.complete(),
         ["<Home>"] = cmp.mapping.abort(),
         ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
         ["<PageDown>"] = cmp.mapping.scroll_docs(4),
-        ["<Tab>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
-        -- Preset された CR の挙動をリセットする
-        ["<CR>"] = cmp.mapping(function(fallback) fallback() end),
+        -- Preset された Tab の挙動をリセットする
+        ["<Tab>"] = cmp.mapping(function(fallback) fallback() end),
+
+        -- Expand if selected
+        ["<CR>"] = cmp.mapping(function(fallback)
+          if cmp.get_active_entry() then
+            cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace })
+          else
+            fallback()
+          end
+        end, { "i", "s" }), -- i=insert, c=command, s=select
+
+        -- Toggle completion
+        ["<C-S-Tab>"] = cmp.mapping(function()
+          if cmp.visible() then
+            cmp.close()
+          else
+            cmp.complete()
+          end
+        end, { "i", "s" }), -- i=insert, c=command, s=select
 
         -- Toggle docs
         ["<Insert>"] = cmp.mapping(function(fallback)
@@ -189,7 +205,6 @@ return {
         { name = "nvim_lua" },
         { name = "path" },
         { name = "dictionary" },
-        { name = "copilot" },
       },
     },
 
@@ -227,28 +242,24 @@ return {
           paths = { os.getenv("XDG_CONFIG_HOME") .. "/nvim-cmp-dict/all" },
         },
       },
-      -- copilot-cmp
-      {
-        "zbirenbaum/copilot-cmp",
-        config = function()
-          require("copilot_cmp").setup()
-        end,
-        dependencies = {
-          -- copiot.lua
-          {
-            "zbirenbaum/copilot.lua",
-            cmd = "Copilot",
-            event = "InsertEnter",
-            config = function()
-              require("copilot").setup({
-                suggestion = { enabled = false },
-                panel = { enabled = false },
-              })
-            end,
-          },
-        },
-      },
     },
+  },
+
+  -- copilot.lua
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          auto_trigger = true,
+          keymap = {
+            accept = "<Tab>",
+          }
+        },
+      })
+    end,
   },
 
   -- which-key.nvim
