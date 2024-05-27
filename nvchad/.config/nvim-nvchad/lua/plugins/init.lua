@@ -224,7 +224,7 @@ return {
       {
         "uga-rosa/cmp-dictionary",
         opts = {
-          paths = { os.getenv("HOME") .. "/.nvim-cmp-dict" },
+          paths = { os.getenv("XDG_CONFIG_HOME") .. "/nvim-cmp-dict/all" },
         },
       },
       -- copilot-cmp
