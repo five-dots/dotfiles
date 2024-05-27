@@ -119,28 +119,29 @@ return {
     -- cmp-dictionary
     {
       "uga-rosa/cmp-dictionary",
-      -- init = function ()
-      --   local dict = {
-      --     ["*"] = { os.getenv("XDG_CONFIG_HOME") .. "/nvim-cmp-dict/all" },
-      --     ft = {
-      --       sql = { os.getenv("XDG_CONFIG_HOME") .. "/nvim-cmp-dict/sql" },
-      --     },
-      --   }
-      --   vim.api.nvim_create_autocmd("FileType", {
-      --     pattern = "*",
-      --     callback = function(ev)
-      --       print(ev.match)
-      --       local paths = dict.ft[ev.match] or {}
-      --       vim.list_extend(paths, dict["*"])
-      --       require("cmp_dictionary").setup({
-      --         paths = paths,
-      --       })
-      --     end
-      --   })
-      -- end,
-      opts = {
-        paths = { os.getenv "XDG_CONFIG_HOME" .. "/nvim-cmp-dict/all" },
-      },
+      config = function()
+        local dict_dir = os.getenv("XDG_CONFIG_HOME") .. "/nvim-cmp-dict/"
+        local dict = {
+          ["*"] = { dict_dir .. "all" },
+          ft = {
+            sql = { dict_dir .. "sql" },
+          },
+        }
+        require("cmp_dictionary").setup {
+          paths = dict["*"],
+        }
+        -- Enable dict by filetype
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = "*",
+          callback = function(ev)
+            local paths = dict.ft[ev.match] or {}
+            vim.list_extend(paths, dict["*"])
+            require("cmp_dictionary").setup({
+              paths = paths,
+            })
+          end
+        })
+      end,
     },
     -- copilot.lua
     {
