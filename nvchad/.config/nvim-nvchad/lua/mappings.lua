@@ -4,7 +4,6 @@ local map = vim.keymap.set
 local del = vim.keymap.del
 
 -- Disable default mappings
-del("t", "<Esc>") -- Close terminal
 del({ "n", "i" }, "<C-h>") -- Window left
 del({ "n", "i" }, "<C-j>") -- Window down
 del({ "n", "i" }, "<C-k>") -- Window up
@@ -24,10 +23,8 @@ del("n", "<Leader>fw") -- Telescope Live grep
 del("n", "<Leader>fz") -- Telescope find in current buffer
 del("n", "<Leader>gt") -- Telescope Git status
 del("n", "<Leader>h")  -- New horizontal terminal
-del("n", "<Leader>lf") -- Lsp floating diagnostics
 del("n", "<Leader>n")  -- Toggle line number
 del("n", "<Leader>pt") -- Telescope Pick hidden term
-del("n", "<Leader>q")  -- Lsp diagnostic loclist
 del("n", "<Leader>rn") -- Toggle relative number
 del("n", "<Leader>th") -- Telescope Nvchad themes
 del("n", "<Leader>v")  -- New vertical terminal
