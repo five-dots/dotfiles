@@ -30,17 +30,4 @@ return {
     "lewis6991/gitsigns.nvim",
     opts = require "configs.gitsigns",
   },
-
-  -- which-key.nvim (Overwrite nvchad's config block to invoke `register()`)
-  require "plugins.whichkey",
-
-  -- Additional plugins
-  require "plugins.cmp",
-  require "plugins.conform",
-  require "plugins.dadbod",
-  require "plugins.gp",
-  require "plugins.leap",
-  require "plugins.noice",
-  require "plugins.surround",
-  require "plugins.ufo",
 }
