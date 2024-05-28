@@ -3,6 +3,8 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 local del = vim.keymap.del
 
+vim.g.maplocalleader = ","
+
 -- Disable default mappings
 del({ "n", "i" }, "<C-h>") -- Window left
 del({ "n", "i" }, "<C-j>") -- Window down
