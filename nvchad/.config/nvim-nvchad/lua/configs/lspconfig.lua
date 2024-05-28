@@ -68,18 +68,6 @@ if not configs.bqls then
   }
 end
 
-vim.api.nvim_create_user_command("BQUpdateCache", function()
-  vim.lsp.buf_request(0, "bq/updateCache", nil, function() end)
-end, { desc = "Update BQ Cache" })
-
-vim.api.nvim_create_user_command("BQClearCache", function()
-  vim.lsp.buf_request(0, "bq/clearCache", nil, function() end)
-end, { desc = "Clear BQ Cache" })
-
-vim.api.nvim_create_user_command("BQDryRun", function()
-  vim.lsp.buf_request(0, "bq/dryRun", { uri = "file://" .. vim.fn.expand "%:p" }, function() end)
-end, { desc = "Dry run BQ" })
-
 -- Enable lua_ls
 dofile(vim.g.base46_cache .. "lsp")
 require "nvchad.lsp"

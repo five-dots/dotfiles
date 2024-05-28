@@ -104,5 +104,6 @@ map("n", "<Leader>fT", "<Cmd>Telescope themes<CR>", { desc = "Themes" })
 map("n", "<Leader>gc", "<Cmd>Telescope git_commits<CR>", { desc = "Commits" })
 
 -- Toggle
-map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "Indent blank line" })
+map("n", "<Leader>td", "<cmd>DiagnosticToggle<CR>", { desc = "Diagnostic" })
 map("n", "<Leader>te", "<cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
+map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "Indent blank line" })
