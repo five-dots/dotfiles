@@ -38,7 +38,6 @@ return {
   require "plugins.cmp",
   require "plugins.conform",
   require "plugins.dadbod",
-  require "plugins.diffview",
   require "plugins.gp",
   require "plugins.leap",
   require "plugins.noice",
