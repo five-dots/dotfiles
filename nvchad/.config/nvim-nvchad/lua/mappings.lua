@@ -24,6 +24,7 @@ del("n", "<Leader>fw") -- Telescope Live grep
 del("n", "<Leader>fz") -- Telescope find in current buffer
 del("n", "<Leader>gt") -- Telescope Git status
 del("n", "<Leader>h")  -- New horizontal terminal
+del("n", "<Leader>ma") -- Telescope find marks
 del("n", "<Leader>n")  -- Toggle line number
 del("n", "<Leader>pt") -- Telescope Pick hidden term
 del("n", "<Leader>rn") -- Toggle relative number
@@ -62,7 +63,8 @@ map("n", "<C-Tab>", function() require("nvchad.tabufline").next() end)
 map("n", "<C-S-Tab>", function() require("nvchad.tabufline").prev() end)
 
 -- Terminal
-map( { "n", "t" },
+map(
+  { "n", "t" },
   "<C-p>",
   function ()
     require("nvchad.term").toggle({
@@ -72,9 +74,10 @@ map( { "n", "t" },
   end,
   { desc = "Toggle float terminal" }
 )
+
 map(
   { "n", "t" },
-  "<C-k>",
+  "<C-h>",
   function ()
     require("nvchad.term").toggle({
       pos = "sp",
