@@ -1,5 +1,4 @@
 require "nvchad.mappings"
-
 local map = vim.keymap.set
 local del = vim.keymap.del
 
@@ -10,12 +9,17 @@ del({ "n", "i" }, "<C-h>") -- Window left
 del({ "n", "i" }, "<C-j>") -- Window down
 del({ "n", "i" }, "<C-k>") -- Window up
 del({ "n", "i" }, "<C-l>") -- Window right
+
 del("n", "<Tab>") -- Buffer next
 del("n", "<S-Tab>") -- Buffer prev
+del("n", "<C-n>") -- Nvimtree toggle window
+del("n", "<C-s>") -- File save
+
 del("i", "<C-b>") -- Beginning of line
 del("i", "<C-e>") -- End of line
 
 del({ "n", "v" }, "<Leader>/") -- Comment toggle
+
 del("n", "<Leader>cc") -- Blankline Jump to current context
 del("n", "<Leader>ch") -- Toggle NvChaetsheet
 del("n", "<Leader>cm") -- Telescope Git commits
@@ -43,7 +47,6 @@ del({ "n", "t" }, "<A-v>") -- Toggle vertical terminal
   Ex Command
 ]]
 map("n", "z;", "<Cmd>write<CR>")
-map({ "n", "i" }, "<C-s>", "<Cmd>write<CR>")
 
 -- hjkl motion
 map("n", "j", "gj")
@@ -67,7 +70,33 @@ map("n", "<C-S-Tab>", function() require("nvchad.tabufline").prev() end)
 -- Terminal
 map(
   { "n", "t" },
-  "<C-p>",
+  "<A-h>",
+  function ()
+    require("nvchad.term").toggle({
+      pos = "sp",
+      id = "horizontal",
+      size = 0.4,
+    })
+  end,
+  { desc = "Toggle horizontal terminal" }
+)
+
+map(
+  { "n", "t" },
+  "<A-v>",
+  function ()
+    require("nvchad.term").toggle({
+      pos = "vsp",
+      id = "vertical",
+      size = 0.4,
+    })
+  end,
+  { desc = "Toggle vertical terminal" }
+)
+
+map(
+  { "n", "t" },
+  "<A-f>",
   function ()
     require("nvchad.term").toggle({
       pos = "float",
@@ -79,15 +108,15 @@ map(
 
 map(
   { "n", "t" },
-  "<C-h>",
+  "<A-g>",
   function ()
     require("nvchad.term").toggle({
-      pos = "sp",
-      id = "horizontal",
-      size = 0.4,
+      pos = "float",
+      id = "lazygit",
+      cmd = "lazygit",
     })
   end,
-  { desc = "Toggle horizontal terminal" }
+  { desc = "Toggle lazygit terminal" }
 )
 
 --[[
