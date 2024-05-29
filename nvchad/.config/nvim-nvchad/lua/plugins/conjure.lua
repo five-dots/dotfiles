@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   "Olical/conjure",
   ft = { "lua", "python" },
   init = function()
