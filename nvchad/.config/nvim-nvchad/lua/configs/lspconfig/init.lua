@@ -1,6 +1,4 @@
 local lspconfig = require "lspconfig"
-local configs = require "lspconfig.configs"
-local conf = require("nvconfig").ui.lsp
 
 -- Define custome on_attach function
 local map = vim.keymap.set
@@ -30,12 +28,13 @@ local on_attach = function(client, bufnr)
   map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts "Code action")
 
   -- setup signature popup
+  local conf = require("nvconfig").ui.lsp
   if conf.signature and client.server_capabilities.signatureHelpProvider then
     require("nvchad.lsp.signature").setup(client, bufnr)
   end
 end
 
--- local on_attach = require("nvchad.configs.lspconfig").on_attach
+-- Load nvchad's default functions
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
@@ -45,59 +44,19 @@ capabilities.textDocument.foldingRange = {
   lineFoldingOnly = true,
 }
 
--- Add bqls config
-if not configs.bqls then
-  configs.bqls = {
-    default_config = {
-      cmd = { "bq-language-server", "--stdio" },
-      filetypes = { "sql" },
-      root_dir = function(fname)
-        return lspconfig.util.find_git_ancestor(fname) or vim.fn.fnamemodify(fname, ":h")
-      end,
-      settings = {
-        bqExtensionVSCode = {
-          diagnostic = {
-            forVSCode = false,
-          },
-          formatting = {
-            printKeywordsInUpperCase = false,
-          },
-        },
-      },
-    },
-  }
-end
+-- Add/Edit default configs for custom servers
+require "configs.lspconfig.bqls"
+require "configs.lspconfig.lua_ls"
+require "configs.lspconfig.yamlls"
 
--- Enable lua_ls
 dofile(vim.g.base46_cache .. "lsp")
 require "nvchad.lsp"
-lspconfig.lua_ls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  on_init = on_init,
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { "vim" },
-      },
-      workspace = {
-        library = {
-          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-          [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-          [vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
-          [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
-        },
-        maxPreload = 100000,
-        preloadFileSize = 10000,
-      },
-    },
-  },
-}
 
 local servers = {
-  -- Default servers (lua_ls is set by default, no need to add it)
+  -- Default servers
   "cssls",
   "html",
+  "lua_ls",
   -- Additional servers
   "bashls",
   "bqls",
@@ -106,6 +65,7 @@ local servers = {
   "pyright",
   "tsserver",
   "yamlls",
+  "yamlls_dbt",
 }
 
 -- lsps with default config
