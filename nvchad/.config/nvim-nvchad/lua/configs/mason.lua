@@ -16,6 +16,7 @@ return {
     "sqlfluff",
     -- Default formatters
     "prettier",
+    "shfmt",
     "stylua",
     "yamlfmt",
     -- Additional formatters
