@@ -70,7 +70,7 @@ map("n", "<C-S-Tab>", function() require("nvchad.tabufline").prev() end)
 -- Terminal
 map(
   { "n", "t" },
-  "<A-h>",
+  "<S-Down>",
   function ()
     require("nvchad.term").toggle({
       pos = "sp",
@@ -83,7 +83,7 @@ map(
 
 map(
   { "n", "t" },
-  "<A-v>",
+  "<S-Right>",
   function ()
     require("nvchad.term").toggle({
       pos = "vsp",
@@ -96,7 +96,7 @@ map(
 
 map(
   { "n", "t" },
-  "<A-f>",
+  "<S-Up>",
   function ()
     require("nvchad.term").toggle({
       pos = "float",
@@ -108,7 +108,7 @@ map(
 
 map(
   { "n", "t" },
-  "<A-g>",
+  "<S-Left>",
   function ()
     require("nvchad.term").toggle({
       pos = "float",
