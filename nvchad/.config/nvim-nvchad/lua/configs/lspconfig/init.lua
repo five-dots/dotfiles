@@ -13,7 +13,7 @@ local on_attach = function(client, bufnr)
   map("n", "gr", vim.lsp.buf.references, opts "LSP show references")
   map("n", "K", vim.lsp.buf.hover, opts "LSP hover information")
 
-  map("n", "<leader>cd", vim.diagnostic.setloclist, { desc = "Diagnostics" })
+  -- map("n", "<leader>cd", vim.diagnostic.setloclist, { desc = "Diagnostics" }) -- Use trouble.nvim instead
   map("n", "<leader>ch", vim.lsp.buf.signature_help, opts "Signature help")
   map("n", "<leader>ci", "<Cmd>LspInfo<CR>", opts "LSP info")
   map("n", "<leader>cl", function()

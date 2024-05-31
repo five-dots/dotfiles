@@ -34,9 +34,11 @@
   "plenary.nvim": { "branch": "master", "commit": "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" },
   "promise-async": { "branch": "main", "commit": "93540c168c5ed2b030ec3e6c40ab8bbb85e36355" },
   "telescope.nvim": { "branch": "master", "commit": "4c96370cf93e2ba287548da12d673442d0ffecc3" },
+  "trouble.nvim": { "branch": "main", "commit": "bda8de4205f06c3939b8b59e4da1f3713d04ea05" },
   "ui": { "branch": "v2.5", "commit": "b23a4dea45107305513e3c407179199cc2f1945e" },
   "vim-dadbod": { "branch": "master", "commit": "fb30422b7bee7e2fa4205a4d226f01477f4fc593" },
   "vim-dadbod-completion": { "branch": "master", "commit": "5d5ad196fcde223509d7dabbade0148f7884c5e3" },
   "vim-dadbod-ui": { "branch": "master", "commit": "70cd6278f826e0bd5415449b2a1cd0cb08c4351a" },
+  "wf.nvim": { "branch": "main", "commit": "d7de32119e933ddd4c006324475d487c87b8d80b" },
   "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" }
 }
