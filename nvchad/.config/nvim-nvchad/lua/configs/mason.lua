@@ -21,5 +21,7 @@ return {
     "yamlfmt",
     -- Additional formatters
     "black",
+    -- Additional dap adapters
+    "bash-debug-adaptor",
   },
 }
