@@ -17,6 +17,7 @@ return {
     -- Default formatters
     "prettier",
     "stylua",
+    "yamlfmt",
     -- Additional formatters
     "black",
   },
