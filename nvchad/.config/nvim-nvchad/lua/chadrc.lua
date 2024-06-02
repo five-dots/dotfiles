@@ -24,6 +24,8 @@ M.ui = {
       height = 0.7,
     },
   },
+
+  transparency = true,
 }
 
 return M
