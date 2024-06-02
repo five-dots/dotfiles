@@ -18,7 +18,7 @@ config.font_size = 13
 config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
 
-config.window_background_opacity = 0.8
+config.window_background_opacity = 0.7
 
 -- Windows: Set WSL as default domain
 -- https://wezfurlong.org/wezterm/config/lua/config/default_domain.html
