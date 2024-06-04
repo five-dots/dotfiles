@@ -1,14 +1,14 @@
 local map = vim.keymap.set
 
 -- Leader key
-map("", "<space>", "<nop>")
+map("", "<Space>", "<Nop>")
 
 --[[
   Ex Command
 ]]
-map("n", "z;", "<cmd>write<cr>")
-map("n", "<esc>", "<cmd>nohlsearch<cr>")
-map({ "n", "i" }, "<c-s>", "<cmd>write<cr>")
+map("n", "z;", "<Cmd>write<CR>")
+map("n", "<Esc>", "<Cmd>nohlsearch<CR>")
+map({ "n", "i" }, "<C-s>", "<Cmd>write<CR>")
 
 --[[
   Motion
@@ -18,18 +18,23 @@ map("n", "gj", "j")
 map("n", "k", "gk")
 map("n", "gk", "k")
 
-map("n", "<home>", "^")
-map("n", "<pageup>", "{")
-map("n", "<pagedown>", "}")
+map("n", "<Home>", "^")
+map("n", "<PageUp>", "{")
+map("n", "<PageDown>", "}")
 
 -- Window
-map("n", "<left>",  "<cmd>wincmd h<cr>")
-map("n", "<down>",  "<cmd>wincmd j<cr>")
-map("n", "<up>",    "<cmd>wincmd k<cr>")
-map("n", "<right>", "<cmd>wincmd l<cr>")
+map("n", "<Left>",  "<Cmd>wincmd h<CR>")
+map("n", "<Down>",  "<Cmd>wincmd j<CR>")
+map("n", "<Up>",    "<Cmd>wincmd k<CR>")
+map("n", "<Right>", "<Cmd>wincmd l<CR>")
 
 --[[
   Leader
 ]]
-map("n", "<leader>w", "<c-w>", { desc = "window" })
+map("n", "<Leader>e", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus Explorer" })
 
+-- Toggle
+map("n", "<Leader>te", "<Cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
+
+-- Window
+map("n", "<Leader>w", "<C-w>", { desc = "Window" })
