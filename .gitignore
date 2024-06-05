@@ -44,3 +44,6 @@ gcloud/.config/gcloud/*
 
 # nvim-cmp-dict
 nvim-cmp-dict/
+
+# nushell
+nushell/.config/nushell/history.txt
