@@ -127,6 +127,4 @@ plugins {
     }
 }
 
-pane_frames false
-
 theme "onedark_darker"
