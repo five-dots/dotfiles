@@ -20,6 +20,7 @@ return {
     "csv",
     "json",
     "jsonc",
+    "kdl",
     "toml",
     "yaml",
     -- missing noice.nvim requirements
