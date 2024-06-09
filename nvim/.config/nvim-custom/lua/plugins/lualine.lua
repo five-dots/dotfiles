@@ -2,46 +2,53 @@ return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
   dependencies = { "nvim-tree/nvim-web-devicons" },
-  config = function()
-    require("lualine").setup({
-      options = {
-        icons_enabled = true,
-        theme = "onedark", -- default "auto"
-        component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
-        disabled_filetypes = {
-          statusline = { "NvimTree" },
-          winbar = {},
-        },
-        ignore_focus = {},
-        always_divide_middle = true,
-        globalstatus = false,
-        refresh = {
-          statusline = 1000,
-          tabline = 1000,
-          winbar = 1000,
-        }
+  opts = {
+    options = {
+      theme = "onedark", -- default "auto"
+      disabled_filetypes = {
+        statusline = { "NvimTree" },
       },
-      sections = {
-        lualine_a = { "mode" },
-        lualine_b = { "branch", "diff", "diagnostics" },
-        lualine_c = { "filename" },
-        lualine_x = { "encoding", "fileformat", "filetype" },
-        lualine_y = { "progress" },
-        lualine_z = { "location", "selectioncount" },
+      ignore_focus = {
+        "NvimTree",
       },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { "filename" },
-        lualine_x = { "location" },
-        lualine_y = {},
-        lualine_z = {},
+      globalstatus = true,
+    },
+    sections = {
+      lualine_a = { "mode" },
+      lualine_b = { "branch", "diff", "diagnostics" },
+      lualine_c = { "filename" },
+      lualine_x = {
+        "encoding",
+        "fileformat",
+        "filetype",
+        -- Show LSP names
+        function()
+          local clients = {}
+          for _, client in ipairs(vim.lsp.get_clients { bufnr = 0 }) do
+            if client.name == "null-ls" then
+              local sources = {}
+              for _, source in ipairs(require("null-ls.sources").get_available(vim.bo.filetype)) do
+                table.insert(sources, source.name)
+              end
+              table.insert(clients, "null-ls(" .. table.concat(sources, ", ") .. ")")
+            else
+              table.insert(clients, client.name)
+            end
+          end
+          -- Retrun empty string if no clients are attached
+          if next(clients) == nil then
+            return ""
+          else
+            return " " .. table.concat(clients, ", ")
+          end
+        end,
       },
-      tabline = {},
-      winbar = {},
-      inactive_winbar = {},
-      extensions = {},
-    })
+      lualine_y = { "progress" },
+      lualine_z = { "location", "selectioncount" },
+    },
+    extensions = { "lazy", "toggleterm" },
+  },
+  config = function(_, opts)
+    require("lualine").setup(opts)
   end
 }
