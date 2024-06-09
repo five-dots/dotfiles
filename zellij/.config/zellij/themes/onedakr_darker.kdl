@@ -1,0 +1,16 @@
+// https://github.com/navarasu/onedark.nvim/blob/master/lua/onedark/palette.lua
+themes {
+    onedark_darker {
+        fg      "#A0A8B7"
+        bg      "#1F2329" // bg0
+        red     "#E55561"
+        green   "#8EBD6B"
+        yellow  "#E2B86B"
+        blue    "#4FA6ED"
+        magenta "#FF79C6" // magenta from dracula
+        orange  "#CC9057"
+        cyan    "#48B0BD"
+        black   "#0E1013"
+        white   "#FFFFFF"
+    }
+}

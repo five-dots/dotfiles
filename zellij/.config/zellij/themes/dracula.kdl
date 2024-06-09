@@ -1,0 +1,15 @@
+themes {
+    dracula {
+        fg      "#F8F8F2"
+        bg      "#282A36"
+        red     "#FF5555"
+        green   "#50FA7B"
+        yellow  "#F1FA8C"
+        blue    "#6272A4"
+        magenta "#FF79C6"
+        orange  "#FFB86C"
+        cyan    "#8BE9FD"
+        black   "#000000"
+        white   "#FFFFFF"
+    }
+}
