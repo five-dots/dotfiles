@@ -47,3 +47,6 @@ nvim-cmp-dict/
 
 # nushell
 nushell/.config/nushell/history.txt
+
+# zellij
+zellij/.config/zellij/plugins
