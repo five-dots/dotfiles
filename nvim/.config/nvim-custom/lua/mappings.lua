@@ -35,6 +35,7 @@ map("n", "<Leader>e", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus Explorer" })
 
 -- Toggle
 map("n", "<Leader>te", "<Cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
+map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "Indent blankline" })
 
 -- Window
 map("n", "<Leader>w", "<C-w>", { desc = "Window" })
