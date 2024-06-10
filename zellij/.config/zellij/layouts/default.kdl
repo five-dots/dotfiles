@@ -11,9 +11,9 @@ layout {
                 default_timezone "JST"
                 date_format "%Y-%m-%d %a"
                 time_format "%H:%M"
-                background_color "#8EBD6B" // onedark darker green
-                foreground_color "#0E1013"
-                pane_color "#0E1013"
+                background_color "#9ECE6A"
+                foreground_color "#383E5A"
+                pane_color "#383E5A"
             }
         }
     }

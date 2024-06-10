@@ -4,7 +4,7 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = {
     options = {
-      theme = "onedark", -- default "auto"
+      theme = "tokyonight", -- default "auto"
       disabled_filetypes = {
         statusline = { "NvimTree" },
       },
