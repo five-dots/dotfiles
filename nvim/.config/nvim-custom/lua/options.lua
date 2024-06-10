@@ -61,6 +61,7 @@ opt.numberwidth = 2
   - Double-click: 単語選択, Triple-click: 行選択, Quadruple-click: 矩形選択
 ]]
 opt.mouse = "a"
+opt.mousemoveevent = true
 
 --[[
   showmode
@@ -157,7 +158,7 @@ opt.list = true
 opt.listchars = {
   tab = "» ",
   -- lead = "·",
-  trail = "·",
+  -- trail = "·",
   -- eol = "↲",
   nbsp = "␣", -- non-breakable space (Ctrl-v x a 0 で入力できる)
   extends = "»", -- nowrap の折り返し末尾
