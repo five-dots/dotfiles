@@ -8,7 +8,6 @@ map("", "<Space>", "<Nop>")
 ]]
 map("n", "z;", "<Cmd>write<CR>")
 map("n", "<Esc>", "<Cmd>nohlsearch<CR>")
-map({ "n", "i" }, "<C-s>", "<Cmd>write<CR>")
 
 --[[
   Motion
@@ -29,6 +28,7 @@ map("n", "<A-k>", "<Cmd>ZellijNavigateUp<CR>")
 map("n", "<A-l>", "<Cmd>ZellijNavigateRight<CR>")
 
 -- Bufferline
+-- <C-S-Tab> does not work with zellij
 map("n", "<A-o>", "<Cmd>bnext<CR>")
 map("n", "<A-i>", "<Cmd>bprevious<CR>")
 
@@ -37,6 +37,17 @@ map("n", "<A-i>", "<Cmd>bprevious<CR>")
 ]]
 map("n", "<Leader>e", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus Explorer" })
 map("n", "<Leader>x", "<Cmd>BD<CR>", { desc = "Delete buffer" })
+
+-- Code
+map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = true } end, { desc = "Format files" })
+
+-- Find
+map("n", "<Leader>fa", "<Cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "All files" })
+map("n", "<Leader>fb", "<Cmd>Telescope buffers<CR>", { desc = "Buffers" })
+map("n", "<Leader>ff", "<Cmd>Telescope find_files<CR>", { desc = "Files" })
+map("n", "<Leader>fm", "<Cmd>Telescope live_grep<CR>", { desc = "Matches by grep" })
+map("n", "<Leader>fh", "<Cmd>Telescope help_tags<CR>", { desc = "Help pages" })
+map("n", "<Leader>fr", "<Cmd>Telescope oldfiles<CR>", { desc = "Recent files" })
 
 -- Toggle
 map("n", "<Leader>te", "<Cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
