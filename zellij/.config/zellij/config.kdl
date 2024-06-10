@@ -60,7 +60,7 @@ keybinds clear-defaults=true {
         // Session
         bind "Alt Q" { Quit; }
         bind "Alt d" { Detach; }
-        bind "Alt m" {
+        bind "Alt M" {
             LaunchOrFocusPlugin "session-manager" {
                 floating true
                 move_to_focused_tab true
@@ -81,20 +81,46 @@ keybinds clear-defaults=true {
         bind "Alt 9" { GoToTab 9; }
         // Pane
         bind "Alt n" { NewPane; }
-        bind "Alt -" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "Alt /" { NewPane "Down"; SwitchToMode "Normal"; }
         bind "Alt \\" { NewPane "Right"; SwitchToMode "Normal"; }
         bind "Alt q" { CloseFocus; }
         bind "Alt <" { SwitchToMode "RenamePane"; PaneNameInput 0;}
-        bind "Alt h" { MoveFocusOrTab "Left"; }
-        bind "Alt l" { MoveFocusOrTab "Right"; }
-        bind "Alt j" { MoveFocus "Down"; }
-        bind "Alt k" { MoveFocus "Up"; }
+        bind "Alt h" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "left";
+                move_mod "alt";
+            };
+        }
+        bind "Alt j" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "down";
+                move_mod "alt";
+            };
+        }
+        bind "Alt k" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "up";
+                move_mod "alt";
+            };
+        }
+        bind "Alt l" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "right";
+                move_mod "alt";
+            };
+        }
         bind "Alt H" { MovePane "Left"; }
         bind "Alt J" { MovePane "Down"; }
         bind "Alt K" { MovePane "Up"; }
         bind "Alt L" { MovePane "Right"; }
         bind "Alt b" { BreakPane; }
-        bind "Alt =" { ToggleFocusFullscreen; }
+        bind "Alt =" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
+        bind "Alt m" { ToggleFocusFullscreen; }
         bind "Alt f" { ToggleFloatingPanes; }
         bind "Alt e" { TogglePaneEmbedOrFloating; }
         bind "Alt z" { TogglePaneFrames; }
