@@ -28,10 +28,15 @@ map("n", "<A-j>", "<Cmd>ZellijNavigateDown<CR>")
 map("n", "<A-k>", "<Cmd>ZellijNavigateUp<CR>")
 map("n", "<A-l>", "<Cmd>ZellijNavigateRight<CR>")
 
+-- Bufferline
+map("n", "<A-o>", "<Cmd>bnext<CR>")
+map("n", "<A-i>", "<Cmd>bprevious<CR>")
+
 --[[
   Leader
 ]]
 map("n", "<Leader>e", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus Explorer" })
+map("n", "<Leader>x", "<Cmd>BD<CR>", { desc = "Delete buffer" })
 
 -- Toggle
 map("n", "<Leader>te", "<Cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
