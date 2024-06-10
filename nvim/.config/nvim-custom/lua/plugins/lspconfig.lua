@@ -106,9 +106,9 @@ return {
       "black",
       "stylua",
     })
-    require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+    require("mason-tool-installer").setup { ensure_installed = ensure_installed }
 
-    require("mason-lspconfig").setup({
+    require("mason-lspconfig").setup {
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
@@ -119,6 +119,6 @@ return {
           require("lspconfig")[server_name].setup(server)
         end,
       },
-    })
+    }
   end,
 }

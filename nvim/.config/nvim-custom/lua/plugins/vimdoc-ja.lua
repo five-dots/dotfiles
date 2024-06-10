@@ -2,6 +2,6 @@ return {
   "vim-jp/vimdoc-ja",
   enabled = false,
   keys = {
-    { "h", mode = "c", },
+    { "h", mode = "c" },
   },
 }

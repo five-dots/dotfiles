@@ -16,7 +16,7 @@ return {
         -- Disabled as nvim crashes when using window_picker
         window_picker = {
           enable = false,
-        }
+        },
       },
     },
     git = {

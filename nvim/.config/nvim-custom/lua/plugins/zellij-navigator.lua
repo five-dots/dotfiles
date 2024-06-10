@@ -6,10 +6,10 @@ return {
       "swaits/zellij-nav.nvim",
       config = function()
         require("zellij-nav").setup()
-      end
+      end,
     },
   },
   config = function()
-    require('vim-zellij-navigator').setup()
+    require("vim-zellij-navigator").setup()
   end,
 }

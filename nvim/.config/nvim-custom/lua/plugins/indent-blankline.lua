@@ -7,6 +7,6 @@ return {
     enabled = false,
     scope = {
       enabled = false,
-    }
+    },
   },
 }

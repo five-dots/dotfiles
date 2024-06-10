@@ -14,8 +14,8 @@ return {
     -- "saadparwaiz1/cmp_luasnip",
   },
   config = function()
-    local cmp = require("cmp")
-    cmp.setup({
+    local cmp = require "cmp"
+    cmp.setup {
       mapping = {
         ["<up>"] = cmp.mapping.select_prev_item(),
         ["<down>"] = cmp.mapping.select_next_item(),
@@ -47,23 +47,23 @@ return {
         -- { name = "luasnip" },
         -- { name = "nvim_lua" },
       },
-    })
+    }
 
     cmp.setup.cmdline({ "/", "?" }, {
       mapping = cmp.mapping.preset.cmdline(),
       sources = {
-        { name = "buffer" }
-      }
+        { name = "buffer" },
+      },
     })
 
     cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
-        { name = "path" }
+        { name = "path" },
       }, {
-        { name = "cmdline" }
+        { name = "cmdline" },
       }),
-      matching = { disallow_symbol_nonprefix_matching = false }
+      matching = { disallow_symbol_nonprefix_matching = false },
     })
   end,
 }

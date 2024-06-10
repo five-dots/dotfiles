@@ -13,7 +13,7 @@ local function fold_virt_text_line_nums(virtText, lnum, endLnum, width, truncate
     else
       chunkText = truncate(chunkText, targetWidth - curWidth)
       local hlGroup = chunk[2]
-      table.insert(newVirtText, {chunkText, hlGroup})
+      table.insert(newVirtText, { chunkText, hlGroup })
       chunkWidth = vim.fn.strdisplaywidth(chunkText)
       -- str width returned from truncate() may less than 2nd argument, need padding
       if curWidth + chunkWidth < targetWidth then
@@ -23,7 +23,7 @@ local function fold_virt_text_line_nums(virtText, lnum, endLnum, width, truncate
     end
     curWidth = curWidth + chunkWidth
   end
-  table.insert(newVirtText, {suffix, "MoreMsg"})
+  table.insert(newVirtText, { suffix, "MoreMsg" })
   return newVirtText
 end
 
@@ -48,7 +48,7 @@ local function fold_virt_text_line_nums_bottom_line(virt_text, lnum, end_lnum, w
       chunk_width = vim.fn.strdisplaywidth(chunk_text)
       -- str width returned from truncate() may less than 2nd argument, need padding
       if cur_width + chunk_width < target_width then
-        suffix = suffix .. (' '):rep(target_width - cur_width - chunk_width)
+        suffix = suffix .. (" "):rep(target_width - cur_width - chunk_width)
       end
       break
     end
@@ -64,18 +64,42 @@ return {
   "kevinhwang91/nvim-ufo",
   lazy = false,
   dependencies = {
-    "kevinhwang91/promise-async"
+    "kevinhwang91/promise-async",
   },
-  init = function ()
+  init = function()
     vim.opt.foldlevel = 99
     vim.opt.foldlevelstart = 99
   end,
   keys = {
-    { "zr", function() require("ufo").openFoldsExceptKinds() end, desc = "Open folds except kinds" },
-    { "zR", function() require("ufo").openAllFolds() end, desc = "Open all folds" },
+    {
+      "zr",
+      function()
+        require("ufo").openFoldsExceptKinds()
+      end,
+      desc = "Open folds except kinds",
+    },
+    {
+      "zR",
+      function()
+        require("ufo").openAllFolds()
+      end,
+      desc = "Open all folds",
+    },
     -- closeFoldsWith(0) と closeAllFolds() は同じ挙動
-    { "zm", function() require("ufo").closeFoldsWith(0) end, desc = "Close folds with" },
-    { "zM", function() require("ufo").closeAllFolds() end, desc = "Close all folds" },
+    {
+      "zm",
+      function()
+        require("ufo").closeFoldsWith(0)
+      end,
+      desc = "Close folds with",
+    },
+    {
+      "zM",
+      function()
+        require("ufo").closeAllFolds()
+      end,
+      desc = "Close all folds",
+    },
   },
   opts = {
     provider_selector = function(_, _, _)

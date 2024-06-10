@@ -50,5 +50,5 @@ return {
   },
   config = function(_, opts)
     require("lualine").setup(opts)
-  end
+  end,
 }

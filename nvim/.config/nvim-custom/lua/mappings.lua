@@ -39,7 +39,9 @@ map("n", "<Leader>e", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus Explorer" })
 map("n", "<Leader>x", "<Cmd>BD<CR>", { desc = "Delete buffer" })
 
 -- Code
-map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = true } end, { desc = "Format files" })
+map("n", "<Leader>cf", function()
+  require("conform").format { lsp_fallback = true }
+end, { desc = "Format files" })
 
 -- Find
 map("n", "<Leader>fa", "<Cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "All files" })

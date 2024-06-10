@@ -262,4 +262,3 @@ opt.scrolloff = 10
 -- opt.foldtext = "v:lua.vim.treesitter.foldtext()"
 -- opt.foldenable = false
 -- opt.foldcolumn = "1"
-
