@@ -23,10 +23,10 @@ map("n", "<PageUp>", "{")
 map("n", "<PageDown>", "}")
 
 -- Window
-map("n", "<Left>",  "<Cmd>wincmd h<CR>")
-map("n", "<Down>",  "<Cmd>wincmd j<CR>")
-map("n", "<Up>",    "<Cmd>wincmd k<CR>")
-map("n", "<Right>", "<Cmd>wincmd l<CR>")
+map("n", "<A-h>", "<Cmd>ZellijNavigateLeft<CR>")
+map("n", "<A-j>", "<Cmd>ZellijNavigateDown<CR>")
+map("n", "<A-k>", "<Cmd>ZellijNavigateUp<CR>")
+map("n", "<A-l>", "<Cmd>ZellijNavigateRight<CR>")
 
 --[[
   Leader
