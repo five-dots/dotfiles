@@ -1,9 +1,16 @@
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  }
+  config = function()
+    require("which-key").setup()
+    -- Add groups
+    require("which-key").register {
+      ["<leader>"] = {
+        c = { name = "Code" },
+        f = { name = "Find" },
+        g = { name = "Git" },
+        t = { name = "Toggle" },
+      },
+    }
+  end,
 }
