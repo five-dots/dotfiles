@@ -1,55 +1,33 @@
 return {
   "neovim/nvim-lspconfig",
-  dependencies = {
-    {
-      "williamboman/mason.nvim",
-      config = function()
-        require("mason").setup()
-      end,
-    },
-    {
-      "williamboman/mason-lspconfig.nvim",
-    },
-    {
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-    },
-    {
-      "nvim-telescope/telescope.nvim",
-      tag = "0.1.6",
-      dependencies = { "nvim-lua/plenary.nvim" },
-    },
-
-    -- Useful status updates for LSP.
-    -- NOTE: `opts = {}` is the same as calling `require("fidget").setup({})`
-    {
-      "j-hui/fidget.nvim",
-      opts = {},
-    },
-
-    -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
-    {
-      "folke/neodev.nvim",
-      opts = {},
-    },
-  },
   config = function()
     vim.api.nvim_create_autocmd("LspAttach", {
-      group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
       callback = function(event)
         local map = function(keys, func, desc)
-          vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+          vim.keymap.set("n", keys, func, { buffer = event.buf, desc = desc })
         end
-        map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-        map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-        map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-        map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-        map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-        map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
-        map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-        map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+        map("gd", require("telescope.builtin").lsp_definitions, "Go to definitions")
+        -- map("gd", vim.lsp.buf.definition, "Go to definition")
+        map("gD", vim.lsp.buf.declaration, "Go to declaration")
+        map("gI", require("telescope.builtin").lsp_implementations, "Go to implementations")
+        -- map("gI", vim.lsp.buf.implementation, "Go to implementation")
+        map("gr", require("telescope.builtin").lsp_references, "Go to references")
+        -- map("gr", vim.lsp.buf.references, "Go to references")
         map("K", vim.lsp.buf.hover, "Hover Documentation")
-        map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
+        map("<Leader>ca", vim.lsp.buf.code_action, "Code Action")
+        map("<Leader>ch", vim.lsp.buf.signature_help, "Signature help")
+        map("<Leader>ci", "<Cmd>LspInfo<CR>", "LSP info")
+        map("<Leader>cl", function()
+          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        end, "List workspace folders")
+        map("<Leader>cr", vim.lsp.buf.rename, "Rename")
+        map("<Leader>cs", require("telescope.builtin").lsp_document_symbols, "Document symbols")
+        map("<Leader>cS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace symbols")
+        map("<Leader>ct", require("telescope.builtin").lsp_type_definitions, "Type definitions")
+        -- map("<Leader>ct", vim.lsp.buf.type_definition, "Type definition")
+        map("<Leader>cw", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
+        map("<Leader>cW", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder")
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client and client.server_capabilities.documentHighlightProvider then
@@ -64,11 +42,11 @@ return {
           })
         end
 
-        if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-          map("<leader>th", function()
-            vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
-          end, "[T]oggle Inlay [H]ints")
-        end
+        -- if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+        --   map("<leader>th", function()
+        --     vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
+        --   end, "Inlay Hints")
+        -- end
       end,
     })
 
@@ -76,25 +54,21 @@ return {
     capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
     local servers = {
-      gopls = {},
       bashls = {},
+      gopls = {},
       jsonls = {},
-      pyright = {},
-      yamlls = {},
       lua_ls = {
-        -- cmd = {...},
-        -- filetypes = { ...},
-        -- capabilities = {},
         settings = {
           Lua = {
             completion = {
               callSnippet = "Replace",
             },
-            -- You can toggle below to ignore Lua_LS"s noisy `missing-fields` warnings
-            -- diagnostics = { disable = { "missing-fields" } },
+            diagnostics = { disable = { "missing-fields" } },
           },
         },
       },
+      pyright = {},
+      yamlls = {},
     }
 
     local ensure_installed = vim.tbl_keys(servers or {})
@@ -112,13 +86,48 @@ return {
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for tsserver)
           server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
           require("lspconfig")[server_name].setup(server)
         end,
       },
     }
+
+    -- Disable underline for diagnostics
+    -- https://www.reddit.com/r/neovim/comments/lciqhp/disable_annoying_underline_when_make_errors/
+    vim.lsp.handlers["textDocument/publishDiagnostics"] =
+      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { underline = false })
   end,
+  dependencies = {
+    -- mason.nvim
+    {
+      "williamboman/mason.nvim",
+      config = function()
+        require("mason").setup()
+      end,
+    },
+    -- mason-lspconfig.nvim
+    {
+      "williamboman/mason-lspconfig.nvim",
+    },
+    -- mason-tool-installer.nvim
+    {
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+    },
+    -- telescope.nvim
+    {
+      "nvim-telescope/telescope.nvim",
+      tag = "0.1.6",
+      dependencies = { "nvim-lua/plenary.nvim" },
+    },
+    -- fidget.nvim
+    {
+      "j-hui/fidget.nvim",
+      opts = {},
+    },
+    -- neodev.nvim
+    {
+      "folke/neodev.nvim",
+      opts = {},
+    },
+  },
 }
