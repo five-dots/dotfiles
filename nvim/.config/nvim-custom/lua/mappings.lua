@@ -58,6 +58,9 @@ map("n", "<Leader>cf", function()
   require("conform").format { lsp_fallback = true }
 end, { desc = "Format file" })
 
+map("n", "<Leader>cd", "<Cmd>Trouble diagnostics toggle<CR>", { desc = "Diagnostics" })
+map("n", "<Leader>cD", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", { desc = "Diagnostics (Buffer)" })
+
 -- Find
 map("n", "<Leader>fa", "<Cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "All files" })
 map("n", "<Leader>fb", "<Cmd>Telescope buffers<CR>", { desc = "Buffers" })
