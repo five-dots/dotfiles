@@ -94,7 +94,7 @@ return {
         { name = "nvim_lsp", group_index = 1 },
         { name = "buffer", group_index = 2 },
         { name = "path" },
-        { name = "dictionary" },
+        { name = "dictionary", keyword_length = 2 },
         -- { name = "nvim_lua" },
         -- { name = "luasnip" },
       },
