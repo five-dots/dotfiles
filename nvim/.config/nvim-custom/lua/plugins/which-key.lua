@@ -5,7 +5,7 @@ return {
     require("which-key").setup()
     -- Add groups
     require("which-key").register {
-      ["<leader>"] = {
+      ["<Leader>"] = {
         c = { name = "Code" },
         f = { name = "Find" },
         g = { name = "Git" },

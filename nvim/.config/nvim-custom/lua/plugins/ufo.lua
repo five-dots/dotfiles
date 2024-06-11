@@ -62,7 +62,7 @@ end
 
 return {
   "kevinhwang91/nvim-ufo",
-  lazy = false,
+  event = "VeryLazy",
   dependencies = {
     "kevinhwang91/promise-async",
   },
@@ -70,37 +70,6 @@ return {
     vim.opt.foldlevel = 99
     vim.opt.foldlevelstart = 99
   end,
-  keys = {
-    {
-      "zr",
-      function()
-        require("ufo").openFoldsExceptKinds()
-      end,
-      desc = "Open folds except kinds",
-    },
-    {
-      "zR",
-      function()
-        require("ufo").openAllFolds()
-      end,
-      desc = "Open all folds",
-    },
-    -- closeFoldsWith(0) と closeAllFolds() は同じ挙動
-    {
-      "zm",
-      function()
-        require("ufo").closeFoldsWith(0)
-      end,
-      desc = "Close folds with",
-    },
-    {
-      "zM",
-      function()
-        require("ufo").closeAllFolds()
-      end,
-      desc = "Close all folds",
-    },
-  },
   opts = {
     provider_selector = function(_, _, _)
       return { "treesitter", "indent" }

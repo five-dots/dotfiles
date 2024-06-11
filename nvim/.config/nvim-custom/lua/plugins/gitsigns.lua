@@ -42,6 +42,15 @@ return {
       map("n", "<Leader>gs", gs.stage_hunk, opts "Stage hunk")
       map("n", "<Leader>gu", gs.undo_stage_hunk, opts "Undo stage hunk")
       map("n", "<Leader>tb", gs.toggle_current_line_blame, opts "Blame line")
+
+      -- https://github.com/folke/which-key.nvim/discussions/564
+      local wk = require "which-key"
+      wk.register({
+        g = { name = "Git" },
+      }, {
+        prefix = "<Leader>",
+        buffer = bufnr,
+      })
     end,
   },
   config = function(_, opts)

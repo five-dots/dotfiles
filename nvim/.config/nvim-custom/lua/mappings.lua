@@ -32,6 +32,21 @@ map("n", "<A-l>", "<Cmd>ZellijNavigateRight<CR>")
 map("n", "<A-o>", "<Cmd>bnext<CR>")
 map("n", "<A-i>", "<Cmd>bprevious<CR>")
 
+-- Fold
+map("n", "zr", function()
+  require("ufo").openFoldsExceptKinds()
+end, { desc = "Open folds except kinds" })
+map("n", "zR", function()
+  require("ufo").openAllFolds()
+end, { desc = "Open all folds" })
+-- closeFoldsWith(0) is the same behavior as closeAllFolds()
+map("n", "zm", function()
+  require("ufo").closeFoldsWith(0)
+end, { desc = "Close folds with" })
+map("n", "zM", function()
+  require("ufo").closeAllFolds()
+end, { desc = "Close all folds" })
+
 --[[
   Leader
 ]]
@@ -41,7 +56,7 @@ map("n", "<Leader>x", "<Cmd>BD<CR>", { desc = "Delete buffer" })
 -- Code
 map("n", "<Leader>cf", function()
   require("conform").format { lsp_fallback = true }
-end, { desc = "Format files" })
+end, { desc = "Format file" })
 
 -- Find
 map("n", "<Leader>fa", "<Cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "All files" })
@@ -54,7 +69,9 @@ map("n", "<Leader>fr", "<Cmd>Telescope oldfiles<CR>", { desc = "Recent files" })
 -- Toggle
 map("n", "<Leader>te", "<Cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
 map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "Indent blankline" })
-map("n", "<Leader>tf", function() require("flash").toggle() end, { desc = "Flash search" })
+map("n", "<Leader>tf", function()
+  require("flash").toggle()
+end, { desc = "Flash search" })
 
 -- Window
 map("n", "<Leader>w", "<C-w>", { desc = "Window" })
