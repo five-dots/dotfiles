@@ -6,86 +6,100 @@ return {
     "InsertEnter",
     "CmdlineEnter",
   },
-  opts = {
-    completion = {
-      completeopt = "menu,menuone,preview,noinsert,noselect",
-    },
-    view = {
-      docs = {
-        auto_open = false,
+  opts = function()
+    local lspkind = require("lspkind")
+    return {
+      completion = {
+        completeopt = "menu,menuone,preview,noinsert,noselect",
       },
-    },
-    mapping = {
-      ["<Home>"] = cmp.mapping.abort(),
-      ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
-      ["<PageDown>"] = cmp.mapping.scroll_docs(4),
+      view = {
+        docs = {
+          auto_open = false,
+        },
+      },
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      },
+      formatting = {
+        format = lspkind.cmp_format {
+          mode = "symbol_text",
+          maxwidth = 40,
+          ellipsis_char = "...",
+        },
+      },
+      mapping = {
+        ["<Home>"] = cmp.mapping.abort(),
+        ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
+        ["<PageDown>"] = cmp.mapping.scroll_docs(4),
 
-      -- Right for cmp and copilot
-      ["<Right>"] = cmp.mapping(function(fallback)
-        local suggestion = require "copilot.suggestion"
-        if cmp.get_active_entry() then
-          cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
-        elseif suggestion.is_visible() then
-          suggestion.accept()
-        else
-          fallback()
-        end
-      end, { "i", "s" }), -- i=insert, c=command, s=select
+        -- Right for cmp and copilot
+        ["<Right>"] = cmp.mapping(function(fallback)
+          local suggestion = require "copilot.suggestion"
+          if cmp.get_active_entry() then
+            cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
+          elseif suggestion.is_visible() then
+            suggestion.accept()
+          else
+            fallback()
+          end
+        end, { "i", "s" }), -- i=insert, c=command, s=select
 
-      -- Down for cmp and copilot
-      ["<Down>"] = cmp.mapping(function(fallback)
-        local suggestion = require "copilot.suggestion"
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif suggestion.is_visible() then
-          suggestion.next()
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
+        -- Down for cmp and copilot
+        ["<Down>"] = cmp.mapping(function(fallback)
+          local suggestion = require "copilot.suggestion"
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif suggestion.is_visible() then
+            suggestion.next()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
 
-      -- Up for cmp and copilot
-      ["<Up>"] = cmp.mapping(function(fallback)
-        local suggestion = require "copilot.suggestion"
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif suggestion.is_visible() then
-          suggestion.prev()
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
+        -- Up for cmp and copilot
+        ["<Up>"] = cmp.mapping(function(fallback)
+          local suggestion = require "copilot.suggestion"
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif suggestion.is_visible() then
+            suggestion.prev()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
 
-      -- Toggle completion
-      ["<C-Tab>"] = cmp.mapping(function()
-        if cmp.visible() then
-          cmp.close()
-        else
-          cmp.complete()
-        end
-      end, { "i", "s" }),
+        -- Toggle completion
+        ["<C-Tab>"] = cmp.mapping(function()
+          if cmp.visible() then
+            cmp.close()
+          else
+            cmp.complete()
+          end
+        end, { "i", "s" }),
 
-      -- Toggle docs
-      ["<Insert>"] = cmp.mapping(function(fallback)
-        if not cmp.visible() then
-          fallback()
-        end
-        if cmp.visible_docs() then
-          cmp.close_docs()
-        else
-          cmp.open_docs()
-        end
-      end, { "i", "s" }),
-    },
-    sources = {
-      { name = "buffer" },
-      { name = "path" },
-      { name = "nvim_lsp" },
-      { name = "dictionary" },
-      -- { name = "nvim_lua" },
-      -- { name = "luasnip" },
-    },
-  },
+        -- Toggle docs
+        ["<Insert>"] = cmp.mapping(function(fallback)
+          if not cmp.visible() then
+            fallback()
+          end
+          if cmp.visible_docs() then
+            cmp.close_docs()
+          else
+            cmp.open_docs()
+          end
+        end, { "i", "s" }),
+      },
+      sources = {
+        { name = "nvim_lsp", group_index = 1 },
+        { name = "buffer", group_index = 2 },
+        { name = "path" },
+        { name = "dictionary" },
+        -- { name = "nvim_lua" },
+        -- { name = "luasnip" },
+      },
+    }
+  end,
   config = function(_, opts)
     cmp.setup(opts)
   end,
@@ -107,11 +121,10 @@ return {
         -- Enable ":" completion
         cmp.setup.cmdline(":", {
           mapping = cmp.mapping.preset.cmdline(),
-          sources = cmp.config.sources({
+          sources = {
             { name = "path" },
-          }, {
             { name = "cmdline" },
-          }),
+          },
           matching = { disallow_symbol_nonprefix_matching = false },
         })
         -- Enable "/" and "?" completion
@@ -167,6 +180,10 @@ return {
           },
         }
       end,
+    },
+    -- lspkind.nvim
+    {
+      "onsails/lspkind.nvim",
     },
   },
 }
