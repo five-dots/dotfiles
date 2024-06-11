@@ -54,6 +54,7 @@ map("n", "<Leader>fr", "<Cmd>Telescope oldfiles<CR>", { desc = "Recent files" })
 -- Toggle
 map("n", "<Leader>te", "<Cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
 map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "Indent blankline" })
+map("n", "<Leader>tf", function() require("flash").toggle() end, { desc = "Flash search" })
 
 -- Window
 map("n", "<Leader>w", "<C-w>", { desc = "Window" })
