@@ -9,6 +9,7 @@ return {
 
     -- Load server specific configs
     require("plugins.lspconfig.bqls")
+    require("plugins.lspconfig.lua_ls")
     require("plugins.lspconfig.yamlls")
 
     local servers = {
