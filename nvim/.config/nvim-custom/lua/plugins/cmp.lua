@@ -91,10 +91,10 @@ return {
         end, { "i", "s" }),
       },
       sources = {
-        { name = "nvim_lsp", group_index = 1 },
-        { name = "buffer", group_index = 2 },
+        { name = "nvim_lsp" },
+        { name = "buffer" },
         { name = "path" },
-        { name = "dictionary", keyword_length = 2 },
+        { name = "dictionary" },
         -- { name = "nvim_lua" },
         -- { name = "luasnip" },
       },
