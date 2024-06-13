@@ -59,7 +59,7 @@ return {
         end,
       },
       lualine_y = { "progress" },
-      lualine_z = { "location", "selectioncount" },
+      lualine_z = { "location" },
     },
     extensions = { "lazy", "toggleterm" },
   },
