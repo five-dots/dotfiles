@@ -24,6 +24,7 @@ default_dbt_config.settings = {
   },
   -- Add dbt's JSON schemas (https://github.com/dbt-labs/dbt-jsonschema)
   yaml = {
+    validate = false,
     schemas = {
       ["https://raw.githubusercontent.com/dbt-labs/dbt-jsonschema/main/schemas/latest/dbt_yml_files-latest.json"] = {
         "/analyses/**/*.yml",
