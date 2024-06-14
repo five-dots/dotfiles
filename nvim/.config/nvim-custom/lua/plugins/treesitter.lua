@@ -27,6 +27,7 @@ return {
       "query",
       "r",
       "regex",
+      "rnoweb",
       "sql",
       "toml",
       "typescript",

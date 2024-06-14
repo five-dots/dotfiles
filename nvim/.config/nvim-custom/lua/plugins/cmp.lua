@@ -106,6 +106,7 @@ return {
         end, { "i", "s" }),
       },
       sources = {
+        { name = "cmp_r" },
         { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "path" },
@@ -199,6 +200,10 @@ return {
     -- lspkind.nvim
     {
       "onsails/lspkind.nvim",
+    },
+    -- cmp-r
+    {
+      "R-nvim/cmp-r",
     },
   },
 }
