@@ -2,6 +2,10 @@ return {
   "nvim-treesitter/nvim-treesitter",
   -- Plugin が Install or Update されるタイミングで TSUpdate する
   build = ":TSUpdate",
+  dependencies = {
+    -- Additional parsers
+    { "nushell/tree-sitter-nu" },
+  },
   opts = {
     ensure_installed = {
       "bash",
