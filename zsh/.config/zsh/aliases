@@ -69,7 +69,7 @@ if (( $+commands[nvim] )); then
     alias nvim-nvchad='NVIM_APPNAME=nvim-nvchad nvim'
     alias nvim-nvchad-clean='NVIM_APPNAME=nvim-nvchad-clean nvim'
     alias nvim-kickstart='NVIM_APPNAME=nvim-kickstart nvim'
-    alias nv='nvim-nvchad'
+    alias nv='nvim-custom'
 fi
 
 # nvim switcher
