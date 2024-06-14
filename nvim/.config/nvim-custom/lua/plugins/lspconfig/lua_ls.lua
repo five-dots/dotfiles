@@ -10,9 +10,8 @@ default_config.settings = {
       callSnippet = "Replace",
     },
     diagnostics = {
-      disable = {
-        disable = { "missing-fields" },
-      },
+      disable = { "missing-fields" },
+      telemetry = { enable = false },
     },
   },
 }
