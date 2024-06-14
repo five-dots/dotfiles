@@ -8,17 +8,22 @@ return {
     local capabilities = util.capabilities
 
     -- Load server specific configs
-    require("plugins.lspconfig.bqls")
-    require("plugins.lspconfig.lua_ls")
-    require("plugins.lspconfig.yamlls")
+    require "plugins.lspconfig.bqls"
+    require "plugins.lspconfig.lua_ls"
+    require "plugins.lspconfig.yamlls"
 
     local servers = {
-      "lua_ls",
+      "autotools_ls", -- for Makefile
       "bashls",
       "bqls",
+      "dockerls",
       "gopls",
       "jsonls",
+      "lua_ls",
+      "nushell",
       "pyright",
+      "r_language_server",
+      "taplo",
       "tsserver",
       "yamlls",
       "yamlls_dbt",
