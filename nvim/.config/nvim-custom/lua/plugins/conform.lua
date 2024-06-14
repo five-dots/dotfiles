@@ -2,23 +2,31 @@ return {
   "stevearc/conform.nvim",
   event = "VeryLazy",
   -- event = 'BufWritePre', -- uncomment for format on save
-  opts = {
-    formatters = {
-      shfmt = {
-        prepend_args = { "--indent", "4", "--binary-next-line" },
+  opts = function()
+    local util = require("conform.util")
+    return {
+      formatters = {
+        shfmt = {
+          prepend_args = { "--indent", "4", "--binary-next-line" },
+        },
+        sqlfluff = {
+          command = util.find_executable({ ".venv/bin/sqlfluff" }, "sqlfluff"),
+        },
       },
-    },
-    formatters_by_ft = {
-      lua = { "stylua" },
-      sh = { "shfmt" },
-      yaml = { "yamlfmt" },
-    },
-    -- format_on_save = {
-    --   -- These options will be passed to conform.format()
-    --   timeout_ms = 500,
-    --   lsp_fallback = true,
-    -- },
-  },
+      formatters_by_ft = {
+        lua = { "stylua" },
+        python = { "black" },
+        sh = { "shfmt" },
+        sql = { "sqlfmt" },
+        yaml = { "yamlfmt" },
+      },
+      -- format_on_save = {
+      --   -- These options will be passed to conform.format()
+      --   timeout_ms = 500,
+      --   lsp_fallback = true,
+      -- },
+    }
+  end,
   config = function(_, opts)
     require("conform").setup(opts)
   end,
