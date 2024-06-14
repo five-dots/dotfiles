@@ -7,7 +7,22 @@ return {
     "CmdlineEnter",
   },
   opts = function()
-    local lspkind = require("lspkind")
+    local lspkind = require "lspkind"
+
+    local border = function()
+      local hl = "FloatBorder"
+      return {
+        { "╭", hl },
+        { "─", hl },
+        { "╮", hl },
+        { "│", hl },
+        { "╯", hl },
+        { "─", hl },
+        { "╰", hl },
+        { "│", hl },
+      }
+    end
+
     return {
       completion = {
         completeopt = "menu,menuone,preview,noinsert,noselect",
@@ -18,8 +33,8 @@ return {
         },
       },
       window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
+        completion = { border = border() },
+        documentation = { border = border() },
       },
       formatting = {
         format = lspkind.cmp_format {
