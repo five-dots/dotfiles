@@ -11,7 +11,7 @@ return {
   },
   opts = {
     options = {
-      theme = "tokyonight", -- default "auto"
+      theme = "onedark", -- default "auto"
       disabled_filetypes = {
         statusline = { "NvimTree" },
       },

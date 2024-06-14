@@ -153,4 +153,4 @@ plugins {
     }
 }
 
-theme "tokyonight"
+theme "onedark_darker"

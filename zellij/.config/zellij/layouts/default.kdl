@@ -11,22 +11,15 @@ layout {
                 default_timezone "JST"
                 date_format "%Y-%m-%d %a"
                 time_format "%H:%M"
-                background_color "#9ECE6A"
-                foreground_color "#383E5A"
-                pane_color "#383E5A"
+                background_color "#8EBD6B"
+                foreground_color "#0E1013"
+                pane_color "#0E1013"
             }
         }
     }
     pane
-    // floating_panes {
-    //     pane {
-    //         x "5%"
-    //         y "10%"
-    //         width "90%"
-    //         height "80%"
-    //     }
-    // }
-    // pane size=2 borderless=true {
-    //      plugin location="status-bar"
-    //  }
+    pane size=2 borderless=true {
+         plugin location="status-bar"
+    }
 }
+
