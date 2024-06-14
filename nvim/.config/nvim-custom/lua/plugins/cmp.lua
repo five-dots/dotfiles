@@ -8,21 +8,6 @@ return {
   },
   opts = function()
     local lspkind = require "lspkind"
-
-    local border = function()
-      local hl = "FloatBorder"
-      return {
-        { "╭", hl },
-        { "─", hl },
-        { "╮", hl },
-        { "│", hl },
-        { "╯", hl },
-        { "─", hl },
-        { "╰", hl },
-        { "│", hl },
-      }
-    end
-
     return {
       completion = {
         completeopt = "menu,menuone,preview,noinsert,noselect",
@@ -31,10 +16,6 @@ return {
         docs = {
           auto_open = false,
         },
-      },
-      window = {
-        completion = { border = border() },
-        documentation = { border = border() },
       },
       formatting = {
         format = lspkind.cmp_format {
