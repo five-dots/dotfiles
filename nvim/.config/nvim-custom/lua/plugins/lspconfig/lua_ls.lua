@@ -4,7 +4,6 @@ local lua_ls_config = require "lspconfig.server_configurations.lua_ls"
 -- Edit lua_ls default config
 local default_config = lua_ls_config.default_config
 default_config.settings = {
-  -- disable missing fields
   Lua = {
     completion = {
       callSnippet = "Replace",
