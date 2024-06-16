@@ -48,7 +48,6 @@ map("n", "<Leader>x", "<Cmd>BD<CR>", { desc = "Delete buffer" })
 
 -- Code
 map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = true } end, { desc = "Format file" })
-
 map("n", "<Leader>cd", "<Cmd>Trouble diagnostics toggle<CR>", { desc = "Diagnostics" })
 map("n", "<Leader>cD", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", { desc = "Diagnostics (Buffer)" })
 
@@ -72,9 +71,9 @@ map("n", "<Leader>fr", "<Cmd>Telescope oldfiles<CR>", { desc = "Recent files" })
 
 -- Toggle
 map("n", "<Leader>tc", function() require("copilot.suggestion").toggle_auto_trigger() end, { desc = "Copilot auto suggestion" })
+map("n", "<Leader>td", "<cmd>DiagnosticToggle<CR>", { desc = "Diagnostic" })
 map("n", "<Leader>tD", function() require("dapui").toggle() end, { desc = "Debugger UI" })
 map("n", "<Leader>te", "<Cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
-map("n", "<Leader>tf", function() require("flash").toggle() end, { desc = "Flash search" })
 map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "Indent blankline" })
 
 -- Window
