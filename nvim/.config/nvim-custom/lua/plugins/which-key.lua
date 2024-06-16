@@ -7,6 +7,7 @@ return {
     require("which-key").register {
       ["<Leader>"] = {
         c = { name = "Code" },
+        d = { name = "Debug" },
         f = { name = "Find" },
         g = { name = "Git" },
         t = { name = "Toggle" },

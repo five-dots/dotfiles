@@ -52,6 +52,16 @@ map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = tru
 map("n", "<Leader>cd", "<Cmd>Trouble diagnostics toggle<CR>", { desc = "Diagnostics" })
 map("n", "<Leader>cD", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", { desc = "Diagnostics (Buffer)" })
 
+-- Debug
+map("n", "<Leader>dc", "<Cmd>DapContinue<CR>", { desc = "Continue" })
+map("n", "<Leader>db", "<Cmd>DapToggleBreakpoint<CR>", { desc = "Breakpoint" })
+map("n", "<Leader>dq", "<Cmd>DapTerminate<CR>", { desc = "Terminate" })
+map("n", "<Leader>d.", function() require("dapui").eval() end, { desc = "Eval" })
+
+map("n", "<Leader>di", "<Cmd>DapStepInto<CR>", { desc = "Step into" })
+map("n", "<Leader>do", "<Cmd>DapStepOver<CR>", { desc = "Step over" })
+map("n", "<Leader>dO", "<Cmd>DapStepOut<CR>", { desc = "Step out" })
+
 -- Find
 map("n", "<Leader>fa", "<Cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "All files" })
 map("n", "<Leader>fb", "<Cmd>Telescope buffers<CR>", { desc = "Buffers" })
@@ -62,6 +72,7 @@ map("n", "<Leader>fr", "<Cmd>Telescope oldfiles<CR>", { desc = "Recent files" })
 
 -- Toggle
 map("n", "<Leader>tc", function() require("copilot.suggestion").toggle_auto_trigger() end, { desc = "Copilot auto suggestion" })
+map("n", "<Leader>tD", function() require("dapui").toggle() end, { desc = "Debugger UI" })
 map("n", "<Leader>te", "<Cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
 map("n", "<Leader>tf", function() require("flash").toggle() end, { desc = "Flash search" })
 map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "Indent blankline" })

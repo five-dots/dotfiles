@@ -59,6 +59,13 @@ return {
     {
       "folke/neodev.nvim",
       opts = {},
+      config = function()
+        -- For dap-ui
+        -- https://github.com/rcarriga/nvim-dap-ui?tab=readme-ov-file#installation
+        require("neodev").setup {
+          library = { plugins = { "nvim-dap-ui" }, types = true },
+        }
+      end,
     },
   },
 }
