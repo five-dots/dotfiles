@@ -75,6 +75,7 @@ map("n", "<Leader>td", "<cmd>DiagnosticToggle<CR>", { desc = "Diagnostic" })
 map("n", "<Leader>tD", function() require("dapui").toggle() end, { desc = "Debugger UI" })
 map("n", "<Leader>te", "<Cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
 map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "Indent blankline" })
+map("n", "<Leader>tl", "<Cmd>set wrap!<CR>", { desc = "Line wrap" })
 
 -- Window
 map("n", "<Leader>w", "<C-w>", { desc = "Window" })
