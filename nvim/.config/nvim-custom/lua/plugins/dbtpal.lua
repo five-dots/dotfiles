@@ -1,6 +1,7 @@
 return {
   "PedramNavid/dbtpal",
-  lazy = false,
+  enabled = false,
+  lazy = "VeryLazy",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope.nvim",
