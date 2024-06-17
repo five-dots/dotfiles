@@ -44,7 +44,7 @@ map("n", "zM", function() require("ufo").closeAllFolds() end, { desc = "Close al
   Leader
 ]]
 map("n", "<Leader>e", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus Explorer" })
-map("n", "<Leader>x", "<Cmd>BD<CR>", { desc = "Delete buffer" })
+map("n", "<Leader>x", "<Cmd>Bdelete<CR>", { desc = "Delete buffer" })
 
 -- Code
 map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = true } end, { desc = "Format file" })
