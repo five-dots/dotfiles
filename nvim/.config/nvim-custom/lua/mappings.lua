@@ -46,6 +46,11 @@ map("n", "zM", function() require("ufo").closeAllFolds() end, { desc = "Close al
 map("n", "<Leader>e", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus Explorer" })
 map("n", "<Leader>x", "<Cmd>Bdelete<CR>", { desc = "Delete buffer" })
 
+-- AI
+map("n", "<Leader>ac", "<Cmd>GpChatNew<CR>", { desc = "ChatGPT" })
+map("n", "<Leader>at", "<Cmd>GpChatToggle<CR>", { desc = "Toggle ChatGPT" })
+map("n", "<Leader>an", "<Cmd>GpNextAgent<CR>", { desc = "Next agent" })
+
 -- Code
 map("n", "<Leader>cf", function() require("conform").format { lsp_fallback = true } end, { desc = "Format file" })
 map("n", "<Leader>cd", "<Cmd>Trouble diagnostics toggle<CR>", { desc = "Diagnostics" })
