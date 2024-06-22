@@ -11,10 +11,10 @@ return {
       strings = "none",
       variables = "none",
     },
-    -- transparent = true,
-    -- lualine = {
-    --   transparent = true,
-    -- },
+    transparent = true,
+    lualine = {
+      transparent = true,
+    },
   },
   config = function(_, opts)
     require("onedark").setup(opts)
