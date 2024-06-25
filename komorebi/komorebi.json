@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/master/schema.json",
+  "app_specific_configuration_path": "$Env:USERPROFILE/.config/komorebi/applications.yaml",
+  "window_hiding_behaviour": "Cloak",
+  "cross_monitor_move_behaviour": "Insert",
+  "alt_focus_hack": true,
+  "default_workspace_padding": 5,
+  "default_container_padding": 5,
+  "border": true,
+  "border_width": 5,
+  "monitors": [
+    {
+      "workspaces": [
+        { "name": "I", "layout": "BSP" },
+        { "name": "II", "layout": "BSP" },
+        { "name": "III", "layout": "BSP" }
+      ]
+    },
+    {
+      "workspaces": [
+        { "name": "I", "layout": "Rows" },
+        { "name": "II", "layout": "Rows" },
+        { "name": "III", "layout": "Rows" }
+      ]
+    }
+  ],
+  "resize_delta": 200
+}
