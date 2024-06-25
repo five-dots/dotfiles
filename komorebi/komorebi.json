@@ -40,5 +40,12 @@
       ]
     }
   ],
-  "resize_delta": 200
+  "resize_delta": 200,
+  "float_rules": [
+    { 
+      "kind": "Exe",
+      "id": "explorer.exe",
+      "matching_strategy": "Equals"
+    }
+  ]
 }
