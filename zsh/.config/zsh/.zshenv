@@ -37,6 +37,10 @@ export NNN_PLUG="d:dragdrop;c:fzcd;f:fzopen;g:gitroot;j:autojump;p:preview-tui;;
 # fzf config
 export FZF_DEFAULT_OPTS="--layout=reverse --border"
 
+# gcloud
+# Grant gcloud access to external python packages
+export CLOUDSDK_PYTHON_SITEPACKAGES=1
+
 # Environment Variables - Secrets
 [[ -f "${ZDOTDIR}/secrets" ]] && source "${ZDOTDIR}/secrets"
 
