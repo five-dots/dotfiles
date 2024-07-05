@@ -20,6 +20,8 @@
 data.location=~/.local/share/task
 hooks.location=~/.config/task/hooks
 
+confirmation=0
+
 # Color theme (uncomment one to use)
 #include light-16.theme
 #include light-256.theme
@@ -36,9 +38,13 @@ hooks.location=~/.config/task/hooks
 #include solarized-light-256.theme
 #include no-color.theme
 
+# Make priority L sort lower than no priority
+uda.priority.values=H,M,,L
+
 # taskwarrior-tui
 uda.taskwarrior-tui.keyconfig.next-tab=[
 uda.taskwarrior-tui.keyconfig.previous-tab=]
+uda.taskwarrior-tui.selection.reverse=yes
 
 # Inthe.AM
 taskd.certificate=/home/shun/.ssh/inthe.am.private.certificate.pem
@@ -47,3 +53,19 @@ taskd.ca=/home/shun/.ssh/inthe.am.ca.cert.pem
 taskd.server=inthe.am:53589
 taskd.credentials=inthe_am/shun.asai/d57cd08a-38f3-457e-9ebe-13cd16b1377c
 taskd.trust=strict
+
+# Deine contexts
+context.private.read=project:private
+context.private.write=project:private
+
+context.work.read=project:work
+context.work.write=project:work
+context.tmk.read=project:tmk
+context.tmk.write=project:tmk
+
+context.unerry.read=project:unerry
+context.unerry.write=project:unerry
+context.unerry_mieru.read=project:unerry.mieru
+context.unerry_mieru.write=project:unerry.mieru
+context.unerry_kassai.read=project:unerry.kassai
+context.unerry_kassai.write=project:unerry.kassai
