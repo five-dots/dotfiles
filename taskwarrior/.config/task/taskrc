@@ -22,6 +22,9 @@ hooks.location=~/.config/task/hooks
 
 confirmation=0
 
+# Delete `limit:page` from the default report
+report.next.filter=status:pending -WAITING
+
 # Color theme (uncomment one to use)
 #include light-16.theme
 #include light-256.theme
