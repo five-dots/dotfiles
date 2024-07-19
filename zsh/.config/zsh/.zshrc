@@ -77,6 +77,7 @@ autoload -Uz lzg
 autoload -Uz n
 autoload -Uz nvims
 autoload -Uz showoptions
+autoload -Uz yy
 
 # Load alias setting after function load
 [[ -f "${ZDOTDIR}/aliases" ]] && source "${ZDOTDIR}/aliases"
