@@ -6,8 +6,12 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 
 export EDITOR="nv"
 export VISUAL="nv"
-export PAGER="less"
+
+# Don't quit-if-one-screen for nnn
+export PAGER="less -+F"
+
 export LANG='en_US.UTF-8'
+export LC_COLLATE="C"
 
 # Enviroment Variables - User
 export REPOS="${HOME}/repos"
