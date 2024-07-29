@@ -24,7 +24,7 @@ sqlite 3.39.3
 terraform 1.6.6
 tflint 0.40.0
 tfsec 1.27.6
-tmux 3.3a
+tmux 3.4
 r system
 luajit 2.0.5--2.4.4
 lua-language-server 3.9.3
