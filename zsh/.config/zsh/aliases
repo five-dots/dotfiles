@@ -54,7 +54,7 @@ alias relogin='exec ${SHELL} -l'
 (( $+functions[cd-gitroot] )) && alias cdr='cd-gitroot'
 
 # nnn (n = cd on quit for nnn)
-(( $+functions[n] )) && alias n='n -aedG'
+(( $+functions[n] )) && alias n='n -acdGH'
 
 # taskwarrior-tui
 (( $+commands[taskwarrior-tui] )) && alias tt='taskwarrior-tui'

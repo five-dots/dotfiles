@@ -50,3 +50,6 @@ nushell/.config/nushell/history.txt
 
 # zellij
 zellij/.config/zellij/plugins
+
+# nnn
+nnn/.config/nnn/plugins*

@@ -36,7 +36,8 @@ done
 export ZIM_HOME="${XDG_CACHE_HOME}/zim"
 
 # nnn config
-export NNN_PLUG="d:dragdrop;c:fzcd;f:fzopen;g:gitroot;j:autojump;p:preview-tui;;:fzplug"
+export NNN_PLUG="c:fzcd;f:fzopen;g:gitroot;j:autojump;;:fzplug"
+export NNN_OPENER="${XDG_CONFIG_HOME}/nnn/opener.sh"
 
 # fzf config
 export FZF_DEFAULT_OPTS="--layout=reverse --border"
