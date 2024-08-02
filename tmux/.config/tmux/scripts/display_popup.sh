@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 base_session_name="${1}"
 base_window_index="${2}"
@@ -21,7 +21,7 @@ if ! tmux has-session -t "${session_name}" 2>/dev/null; then
 fi
 
 # Toggle popup window
-if [ "$(tmux display-message -p -F "#{session_name}")" = "${session_name}" ]; then
+if [[ "$(tmux display-message -p "#{session_name}")" == "${session_name}" ]]; then
     tmux detach-client
 else
     # Create window if not exists
