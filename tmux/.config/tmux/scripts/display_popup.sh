@@ -5,10 +5,8 @@ base_window_index="${2}"
 base_current_path="${3}"
 command="${4:-zsh}"
 
-readonly session_name="popup"
-readonly window_name="${base_session_name}_${base_window_index}_${command}"
-
 # Create a session specifically for popup windows if not exists
+readonly session_name="popup"
 if ! tmux has-session -t "${session_name}" 2>/dev/null; then
     tmux new-session -d -s "${session_name}"
     
@@ -25,6 +23,7 @@ if [[ "$(tmux display-message -p "#{session_name}")" == "${session_name}" ]]; th
     tmux detach-client
 else
     # Create window if not exists
+    readonly window_name="${base_session_name}_${base_window_index}_${command}"
     if ! tmux list-windows -t "${session_name}" -F "#{window_name}" | grep -q "^${window_name}$"; then
         tmux new-window -t "${session_name}" -n "${window_name}" -c "${base_current_path}" "${command}"
     fi
