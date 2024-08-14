@@ -9,10 +9,10 @@ command="${4:-zsh}"
 readonly session_name="popup"
 if ! tmux has-session -t "${session_name}" 2>/dev/null; then
     tmux new-session -d -s "${session_name}"
-    
+
     # Disable status line for popup session
     tmux set-option -t "${session_name}" status off
-    
+
     # Creating a new session from run-shell switches to the new session for popup even if `-d` is specified,
     # so have to change it back to the original session.
     tmux switch-client -t "${base_session_name}:${base_window_index}"
@@ -22,6 +22,17 @@ fi
 if [[ "$(tmux display-message -p "#{session_name}")" == "${session_name}" ]]; then
     tmux detach-client
 else
+    # Change winow name by command
+    case "${command}" in
+    taskwarrior-tui)
+        # Commands shared from multiple windows
+        readonly window_name="${command}"
+        ;;
+    *)
+        readonly window_name="${base_session_name}_${base_window_index}_${command}"
+        ;;
+    esac
+
     # Create window if not exists
     readonly window_name="${base_session_name}_${base_window_index}_${command}"
     if ! tmux list-windows -t "${session_name}" -F "#{window_name}" | grep -q "^${window_name}$"; then
@@ -30,11 +41,11 @@ else
 
     # Change popup window size based on the command
     case "${command}" in
-      zsh|taskwarrior-tui)
+    zsh | taskwarrior-tui)
         height="80%"
         width="60%"
         ;;
-      *)
+    *)
         height="80%"
         width="80%"
         ;;
