@@ -1,0 +1,32 @@
+session_name: default
+start_directory: ~/
+windows:
+  - window_name: dotfiles
+    fucus: true
+    start_directory: ~/repos/github/five-dots/dotfiles
+    layout: 74cb,382x96,0,0{120x96,0,0,50,210x96,121,0,51,50x96,332,0,52}
+    panes:
+      - pane:
+        shell_command:
+          - clear
+      - pane:
+        shell_command:
+          - ${EDITOR}
+      - pane:
+        shell_command:
+          - nnn -aeGH
+        focus: true
+  - window_name: dwh
+    start_directory: ~/repos/unerry/kassai/dwh
+    layout: 74cb,382x96,0,0{120x96,0,0,50,210x96,121,0,51,50x96,332,0,52}
+    panes:
+      - pane:
+        shell_command:
+          - clear
+      - pane:
+        shell_command:
+          - ${EDITOR}
+      - pane:
+        shell_command:
+          - nnn -aeGH
+        focus: true
