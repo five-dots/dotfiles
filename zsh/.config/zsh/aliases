@@ -64,7 +64,8 @@ alias relogin='exec ${SHELL} -l'
 
 # nvim
 if (( $+commands[nvim] )); then
-    alias nvim-clean='NVIM_APPNAME="" nvim'
+    alias nvim-clean='NVIM_APPNAME=nvim-clean nvim'
+    alias nvim-clean='NVIM_APPNAME=nvim-clean nvim'
     alias nvim-custom='NVIM_APPNAME=nvim-custom nvim'
     alias nvim-nvchad='NVIM_APPNAME=nvim-nvchad nvim'
     alias nvim-nvchad-clean='NVIM_APPNAME=nvim-nvchad-clean nvim'

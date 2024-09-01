@@ -4,8 +4,8 @@ export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_STATE_HOME="${HOME}/.local/state"
 
-export EDITOR="nv"
-export VISUAL="nv"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # Don't quit-if-one-screen for nnn
 export PAGER="less -+F"
