@@ -31,6 +31,20 @@ config.default_domain = "WSL:Ubuntu"
 -- https://wezfurlong.org/wezterm/config/lua/config/allow_win32_input_mode.html
 config.allow_win32_input_mode = false
 
+-- Disable default keybindings
+config.keys = {
+  {
+    key = "Tab",
+    mods = "CTRL",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+  {
+    key = "Tab",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+}
+
 -- -- Keybindings
 -- local mappings = require "mappings"
 -- mappings.apply_to_config(config)
