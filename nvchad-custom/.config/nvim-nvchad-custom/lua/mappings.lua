@@ -103,4 +103,4 @@ map("n", "<Leader>fT", "<Cmd>Telescope themes<CR>", { desc = "Themes" })
 map("n", "<Leader>td", "<cmd>DiagnosticToggle<CR>", { desc = "Diagnostic" })
 map("n", "<Leader>te", "<cmd>NvimTreeToggle<CR>", { desc = "Explorer" })
 map("n", "<Leader>ti", "<Cmd>IBLToggle<CR>", { desc = "Indent blank line" })
-
+map("n", "<Leader>tc", function() require("copilot.suggestion").toggle_auto_trigger() end, { desc = "Copilot auto suggestion" })
