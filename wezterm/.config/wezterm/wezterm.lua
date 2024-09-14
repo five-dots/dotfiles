@@ -11,10 +11,9 @@ config.color_scheme = "OneDark (base16)"
 
 -- Font
 config.font = wezterm.font_with_fallback {
-  "JetBrainsMono Nerd Font",
-  "MeiryoKe_Console"
+  "UDEV Gothic NFLG",
 }
-config.font_size = 13
+config.font_size = 14
 
 -- Tab
 config.hide_tab_bar_if_only_one_tab = true
