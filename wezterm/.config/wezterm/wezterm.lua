@@ -20,7 +20,7 @@ config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
 
 -- Transparency
-config.window_background_opacity = 0.9
+-- config.window_background_opacity = 0.9
 
 -- Windows: Set WSL as default domain
 -- https://wezfurlong.org/wezterm/config/lua/config/default_domain.html
