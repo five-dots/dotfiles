@@ -8,12 +8,16 @@ return {
     "vimdoc",
     -- language
     "bash",
+    "c",
     "dockerfile",
     "go",
     "javascript",
+    "luadoc",
     "markdown",
     "python",
+    "query",
     "r",
+    "rnoweb",
     "sql",
     "typescript",
     -- data
