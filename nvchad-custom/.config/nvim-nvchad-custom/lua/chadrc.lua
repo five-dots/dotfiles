@@ -15,6 +15,9 @@ M.base46 = {
 }
 
 M.ui = {
+  tabufline = {
+    order = { "buffers", "tabs", "btns", "treeOffset" },
+  },
   telescope = {
     style = "bordered",
   }

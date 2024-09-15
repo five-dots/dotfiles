@@ -19,7 +19,13 @@ return {
     "lewis6991/gitsigns.nvim",
     opts = require "configs.gitsigns",
   },
-  
+
+  -- nvim-tree.lua
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = require "configs.nvimtree",
+  },
+
   -- nvim-treesitter
   {
     "nvim-treesitter/nvim-treesitter",
