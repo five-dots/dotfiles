@@ -16,7 +16,7 @@ lsp_configs.yamlls = {
 local default_dbt_config = yamlls_config.default_config
 default_dbt_config.root_dir = lsp_util.root_pattern "dbt_project.yml"
 default_dbt_config.single_file_support = false
-default_dbt_config.filetypes = { 'yaml' }
+default_dbt_config.filetypes = { "yaml" }
 default_dbt_config.settings = {
   -- https://github.com/redhat-developer/vscode-redhat-telemetry#how-to-disable-telemetry-reporting
   redhat = {
