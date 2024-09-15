@@ -81,6 +81,13 @@ map("n", "<C-A-l>", function() require("tmux").resize_right() end)
 map("n", "<A-o>", "<Cmd>bnext<CR>")
 map("n", "<A-i>", "<Cmd>bprevious<CR>")
 
+-- Fold
+map("n", "zr", function() require("ufo").openFoldsExceptKinds() end, { desc = "Open folds except kinds" })
+map("n", "zR", function() require("ufo").openAllFolds() end, { desc = "Open all folds" })
+-- closeFoldsWith(0) is the same behavior as closeAllFolds()
+map("n", "zm", function() require("ufo").closeFoldsWith(0) end, { desc = "Close folds with" })
+map("n", "zM", function() require("ufo").closeAllFolds() end, { desc = "Close all folds" })
+
 --[[
   Leader
 ]]
