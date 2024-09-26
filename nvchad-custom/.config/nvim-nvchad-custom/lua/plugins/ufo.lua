@@ -63,6 +63,13 @@ end
 return {
   "kevinhwang91/nvim-ufo",
   event = "VeryLazy",
+  keys = {
+    { "zr", function() require("ufo").openFoldsExceptKinds() end, desc = "Open folds except kinds" },
+    { "zR", function() require("ufo").openAllFolds() end, desc = "Open all folds" },
+    -- closeFoldsWith(0) is the same behavior as closeAllFolds()
+    { "zm", function() require("ufo").closeFoldsWith(0) end, desc = "Close folds with" },
+    { "zM", function() require("ufo").closeAllFolds() end, desc = "Close all folds" },
+  },
   dependencies = {
     "kevinhwang91/promise-async",
   },

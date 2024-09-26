@@ -162,7 +162,9 @@ return {
             enabled = false,
           },
           filetypes = {
+            -- Enable filetype which is disabled by default
             yaml = true,
+            markdown = true,
           },
         }
       end,

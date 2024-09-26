@@ -1,6 +1,15 @@
 return {
   "rcarriga/nvim-dap-ui",
   event = "VeryLazy",
+  keys = {
+    { "<Leader>dc", "<Cmd>DapContinue<CR>", desc = "Continue" },
+    { "<Leader>db", "<Cmd>DapToggleBreakpoint<CR>", desc = "Breakpoint" },
+    { "<Leader>dq", "<Cmd>DapTerminate<CR>", desc = "Terminate" },
+    { "<Leader>d.", function() require("dapui").eval() end, desc = "Eval" },
+    { "<Leader>di", "<Cmd>DapStepInto<CR>", desc = "Step into" },
+    { "<Leader>do", "<Cmd>DapStepOver<CR>", desc = "Step over" },
+    { "<Leader>dO", "<Cmd>DapStepOut<CR>", desc = "Step out" },
+  },
   config = function()
     local dap = require "dap"
     local dapui = require "dapui"
