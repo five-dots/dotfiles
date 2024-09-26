@@ -7,7 +7,11 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+-- Colors
 config.color_scheme = "OneDark (base16)"
+config.colors = {
+  background = "#1e222a", -- Same as NvChad's onedark bgcolor
+}
 
 -- Font
 config.font = wezterm.font_with_fallback {

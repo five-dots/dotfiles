@@ -23,10 +23,14 @@ map("n", "<PageUp>", "{")
 map("n", "<PageDown>", "}")
 
 -- Window
-map("n", "<A-h>", "<Cmd>ZellijNavigateLeft<CR>")
-map("n", "<A-j>", "<Cmd>ZellijNavigateDown<CR>")
-map("n", "<A-k>", "<Cmd>ZellijNavigateUp<CR>")
-map("n", "<A-l>", "<Cmd>ZellijNavigateRight<CR>")
+map("n", "<A-h>", function() require("tmux").move_left() end)
+map("n", "<A-j>", function() require("tmux").move_bottom() end)
+map("n", "<A-k>", function() require("tmux").move_top() end)
+map("n", "<A-l>", function() require("tmux").move_right() end)
+map("n", "<C-A-h>", function() require("tmux").resize_left() end)
+map("n", "<C-A-j>", function() require("tmux").resize_bottom() end)
+map("n", "<C-A-k>", function() require("tmux").resize_top() end)
+map("n", "<C-A-l>", function() require("tmux").resize_right() end)
 
 -- Bufferline
 -- <C-S-Tab> does not work with zellij

@@ -91,7 +91,7 @@ return {
         { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "path" },
-        { name = "dictionary" },
+        -- { name = "dictionary" },
         -- { name = "nvim_lua" },
         -- { name = "luasnip" },
       },

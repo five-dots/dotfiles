@@ -17,6 +17,7 @@ export LC_COLLATE="C"
 export REPOS="${HOME}/repos"
 export GITHUB_REPO="${REPOS}/github/five-dots"
 export NOTES="${HOME}/notes"
+export ZK_NOTEBOOK_DIR="${HOME}/zk-notes"
 export SPARK_HOME="${HOME}/src/spark/spark-3.3.0-bin-hadoop3"
 
 # Enviroment Variables - PATH
